@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 33% 97%;
+    --foreground: 195 30% 12%;
+
+    --card: 36 33% 97%;
+    --card-foreground: 195 30% 12%;
+
+    --popover: 36 33% 97%;
+    --popover-foreground: 195 30% 12%;
+
+    --primary: 195 45% 14%;
+    --primary-foreground: 36 33% 97%;
+
+    --secondary: 36 25% 92%;
+    --secondary-foreground: 195 45% 14%;
+
+    --muted: 36 20% 90%;
+    --muted-foreground: 195 15% 35%;
+
+    --accent: 38 55% 55%;
+    --accent-foreground: 195 45% 10%;
+    --accent-soft: 38 60% 70%;
+
+    --gold: 38 55% 55%;
+    --gold-foreground: 195 45% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 36 20% 85%;
+    --input: 36 20% 85%;
+    --ring: 38 55% 55%;
+
+    --radius: 0.25rem;
+
+    --gradient-hero: linear-gradient(135deg, hsl(195 45% 10% / 0.85), hsl(195 50% 18% / 0.7));
+    --gradient-gold: linear-gradient(135deg, hsl(38 65% 60%), hsl(38 45% 45%));
+    --gradient-dark: linear-gradient(180deg, hsl(195 45% 14%), hsl(195 50% 10%));
+
+    --shadow-elegant: 0 30px 80px -20px hsl(195 45% 10% / 0.35);
+    --shadow-gold: 0 10px 40px -10px hsl(38 55% 55% / 0.5);
+    --shadow-soft: 0 4px 20px -4px hsl(195 30% 20% / 0.15);
+
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+  .bg-gradient-gold {
+    background-image: var(--gradient-gold);
+  }
+  .bg-gradient-dark {
+    background-image: var(--gradient-dark);
+  }
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+}

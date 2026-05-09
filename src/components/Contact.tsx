@@ -1,0 +1,70 @@
+import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
+const Contact = () => {
+  return (
+    <section id="kontakt" className="py-24 md:py-32 bg-gradient-dark text-background">
+      <div className="container">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <span className="text-xs uppercase tracking-[0.3em] text-gold">Besøg os</span>
+            <h2 className="font-serif text-4xl md:text-6xl mt-4 mb-8 text-balance">
+              Drop-in eller book online.
+            </h2>
+            <p className="text-background/70 font-light text-lg mb-12 max-w-md">
+              Du finder os midt i Sønderborg. Kig forbi for et klip,
+              eller reservér din tid med få klik.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { icon: MapPin, label: "Adresse", value: "Perlegade 64, Sønderborg" },
+                { icon: Phone, label: "Telefon", value: "+45 91 75 24 70", href: "tel:+4591752470" },
+                { icon: Clock, label: "Åbningstider", value: "Man–Lør: 09–18 · Søn: lukket" },
+              ].map((c) => (
+                <div key={c.label} className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0">
+                    <c.icon className="w-4 h-4 text-gold" />
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-background/50 mb-1">{c.label}</div>
+                    {c.href ? (
+                      <a href={c.href} className="text-background hover:text-gold">{c.value}</a>
+                    ) : (
+                      <div className="text-background">{c.value}</div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-4 mt-10">
+              {/* TODO: replace with real Instagram profile URL */}
+              <a href="https://instagram.com/ab_barberlounge2" aria-label="Instagram" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+                <Instagram className="w-4 h-4" />
+              </a>
+              {/* TODO: replace with real Facebook page URL */}
+              <a href="https://facebook.com/ab_barberlounge2" aria-label="Facebook" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+                <Facebook className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="bg-background/5 backdrop-blur-sm border border-gold/20 rounded-sm p-10 text-center shadow-elegant">
+            <h3 className="font-serif text-3xl mb-4">Klar til et nyt klip?</h3>
+            <p className="text-background/70 mb-8 font-light">
+              Book din tid online via vores bookingsystem — det tager under 30 sekunder.
+            </p>
+            <Button variant="gold" size="xl" className="w-full" asChild>
+              <Link to="/booking">Gå til booking</Link>
+            </Button>
+            <p className="text-xs text-background/50 mt-6">eller ring 91 75 24 70 for drop-in</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;
