@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#0f2b35"/>
+  <text x="32" y="24" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#c49a2e" text-anchor="middle" dominant-baseline="middle">A&amp;B</text>
+  <text x="32" y="44" font-family="Georgia, serif" font-size="9" fill="#c49a2e" text-anchor="middle" dominant-baseline="middle" letter-spacing="1">BARBER</text>
+</svg>
