@@ -34,7 +34,7 @@ const Hero = () => {
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up [animation-delay:400ms]">
           <Button variant="gold" size="xl" asChild>
             <Link to="/booking">
-              Book din tid <ArrowRight className="ml-2 w-4 h-4" />
+              {hero.ctaBook} <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
           <Button variant="ghostLight" size="xl" asChild>

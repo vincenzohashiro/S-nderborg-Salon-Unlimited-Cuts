@@ -8,7 +8,7 @@ import type { SiteConfig, Service, MembershipPlan, SEOPage } from "@/types/site-
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle,
   Loader2, Settings as SettingsIcon, LogOut, Monitor, Check,
-  Globe, Search, Facebook, ChevronDown, ChevronRight,
+  Globe, Search, Facebook,
 } from "lucide-react";
 
 const REPO_OWNER = "vincenzohashiro";
@@ -17,43 +17,44 @@ const CONFIG_PATH = "public/site-config.json";
 const toBase64 = (s: string) => btoa(unescape(encodeURIComponent(s)));
 
 const ROLES: Record<string, { label: string; color: string }> = {
-  "Barber$SEO-2025":  { label: "SEO",      color: "bg-blue-500" },
-  "Wasim$Owner-2025": { label: "Ejer",      color: "bg-green-600" },
-  "Dev$Panel-2025":   { label: "Udvikler",  color: "bg-purple-600" },
+  "Barber$SEO-2025":  { label: "SEO",     color: "bg-blue-500"   },
+  "Wasim$Owner-2025": { label: "Ejer",     color: "bg-green-600"  },
+  "Dev$Panel-2025":   { label: "Udvikler", color: "bg-purple-600" },
 };
 
 type Tab = "forside" | "services" | "booking" | "seo" | "publish";
 
-const TABS: { id: Tab; label: string; icon: string; previewPath: string }[] = [
-  { id: "forside",   label: "Forside",   icon: "🏠", previewPath: "/"         },
-  { id: "services",  label: "Services",  icon: "✂️", previewPath: "/services"  },
-  { id: "booking",   label: "Book Tid",  icon: "📅", previewPath: "/booking"   },
-  { id: "seo",       label: "SEO",       icon: "🔍", previewPath: "/"         },
-  { id: "publish",   label: "Udgiv",     icon: "🚀", previewPath: "/"         },
+const TABS: { id: Tab; label: string; icon: string; path: string }[] = [
+  { id: "forside",  label: "Forside",  icon: "🏠", path: "/"         },
+  { id: "services", label: "Services", icon: "✂️", path: "/services"  },
+  { id: "booking",  label: "Book Tid", icon: "📅", path: "/booking"   },
+  { id: "seo",      label: "SEO",      icon: "🔍", path: "/"         },
+  { id: "publish",  label: "Udgiv",    icon: "🚀", path: "/"         },
 ];
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// ── Shared UI helpers (defined at module level — stable refs) ──────────────
 
 const Field = ({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) => (
   <div className="mb-3">
-    <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wide">{label}</label>
+    <label className="block text-[11px] font-semibold text-gray-500 mb-1 uppercase tracking-wider">{label}</label>
     {hint && <p className="text-[11px] text-gray-400 mb-1 leading-relaxed">{hint}</p>}
     {children}
   </div>
 );
 
-const Section = ({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) => {
+const SectionBlock = ({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+    <div className="mb-3 border border-gray-200 rounded-lg overflow-hidden">
       <button
+        type="button"
         className="w-full flex items-center justify-between px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen((o) => !o)}
       >
-        <span className="text-xs font-semibold text-gray-700 uppercase tracking-widest">{title}</span>
-        {open ? <ChevronDown className="w-3.5 h-3.5 text-gray-400" /> : <ChevronRight className="w-3.5 h-3.5 text-gray-400" />}
+        <span className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">{title}</span>
+        <span className="text-gray-400 text-xs">{open ? "▲" : "▼"}</span>
       </button>
-      {open && <div className="p-4">{children}</div>}
+      {open && <div className="p-4 space-y-0">{children}</div>}
     </div>
   );
 };
@@ -65,17 +66,13 @@ const CharCount = ({ text, min, max }: { text: string; min: number; max: number 
   return (
     <div className={`flex items-center gap-1.5 mt-1 text-[11px] ${color}`}>
       <span className={`w-1.5 h-1.5 rounded-full inline-block ${color.replace("text-", "bg-")}`} />
-      <span>{n} tegn · {label} ({min}–{max})</span>
+      {n} tegn · {label} ({min}–{max})
     </div>
   );
 };
 
-// ── Google/Social preview (for SEO tab only) ───────────────────────────────
-
 const GooglePreview = ({ page, config }: { page: SEOPage; config: SiteConfig }) => {
   const domain = config.seo.canonicalBase.replace(/^https?:\/\//, "");
-  const title = page.title || "Ingen titel";
-  const desc = page.description || "Ingen beskrivelse";
   return (
     <div className="p-4 bg-white border border-gray-200 rounded-lg font-sans">
       <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-1">
@@ -85,8 +82,12 @@ const GooglePreview = ({ page, config }: { page: SEOPage; config: SiteConfig }) 
         <div className="w-4 h-4 rounded-full bg-[#1a73e8] text-white text-[7px] flex items-center justify-center font-bold">A</div>
         <div className="text-[11px] text-gray-500">{domain}</div>
       </div>
-      <div className="text-[#1a0dab] text-base leading-tight hover:underline cursor-pointer mb-0.5 line-clamp-1">{title.length > 60 ? title.slice(0, 57) + "…" : title}</div>
-      <div className="text-xs text-gray-600 leading-snug line-clamp-2">{desc.length > 160 ? desc.slice(0, 157) + "…" : desc}</div>
+      <div className="text-[#1a0dab] text-base leading-tight hover:underline cursor-pointer mb-0.5 line-clamp-1">
+        {(page.title || "Ingen titel").slice(0, 60)}
+      </div>
+      <div className="text-xs text-gray-600 leading-snug line-clamp-2">
+        {(page.description || "Ingen beskrivelse").slice(0, 160)}
+      </div>
     </div>
   );
 };
@@ -114,8 +115,6 @@ const SocialPreview = ({ page, config }: { page: SEOPage; config: SiteConfig }) 
   );
 };
 
-// ── Token setup (developer only) ───────────────────────────────────────────
-
 const TokenSetup = () => {
   const [t, setT] = useState(localStorage.getItem("ab_gh_token") || "");
   const [vis, setVis] = useState(false);
@@ -127,7 +126,7 @@ const TokenSetup = () => {
   };
   return (
     <div className="space-y-2">
-      <p className="text-xs text-gray-500">GitHub token — gemmes lokalt i browseren. Kun nødvendigt at sætte op én gang.</p>
+      <p className="text-xs text-gray-500">GitHub token — gemmes lokalt i browseren. Sæt én gang op, alle roller kan derefter udgive.</p>
       <div className="relative">
         <Input type={vis ? "text" : "password"} value={t} onChange={(e) => setT(e.target.value)} placeholder="github_pat_..." className="pr-10 font-mono text-xs" />
         <button type="button" onClick={() => setVis(!vis)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -144,20 +143,19 @@ const TokenSetup = () => {
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function Settings() {
-  const [authed, setAuthed]       = useState(false);
-  const [role, setRole]           = useState("");
-  const [pw, setPw]               = useState("");
-  const [showPw, setShowPw]       = useState(false);
-  const [config, setConfig]       = useState<SiteConfig>(defaultConfig);
-  const [activeTab, setActiveTab] = useState<Tab>("forside");
-  const [seoPage, setSeoPage]     = useState<"home" | "services" | "booking">("home");
+  const [authed, setAuthed]         = useState(false);
+  const [role, setRole]             = useState("");
+  const [pw, setPw]                 = useState("");
+  const [showPw, setShowPw]         = useState(false);
+  const [config, setConfig]         = useState<SiteConfig>(defaultConfig);
+  const [activeTab, setActiveTab]   = useState<Tab>("forside");
+  const [seoPage, setSeoPage]       = useState<"home" | "services" | "booking">("home");
   const [publishStatus, setPublishStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [publishMsg, setPublishMsg] = useState("");
   const [showPreview, setShowPreview] = useState(true);
   const [iframeReady, setIframeReady] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // ── Auth + config fetch ──────────────────────────────────────────────────
   useEffect(() => {
     const storedRole = sessionStorage.getItem("ab_admin_role");
     if (storedRole) { setAuthed(true); setRole(storedRole); }
@@ -167,7 +165,7 @@ export default function Settings() {
       .catch(() => setConfig(defaultConfig));
   }, []);
 
-  // ── Listen for iframe "ready" signal, then push config ───────────────────
+  // Listen for iframe ready signal
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       if (e.data?.type === "ab-preview-ready") {
@@ -179,23 +177,21 @@ export default function Settings() {
     return () => window.removeEventListener("message", handler);
   }, [config]);
 
-  // ── Push config to iframe on every change ───────────────────────────────
+  // Push config to iframe on every change
   useEffect(() => {
     if (iframeReady) {
       iframeRef.current?.contentWindow?.postMessage({ type: "ab-config-update", config }, "*");
     }
   }, [config, iframeReady]);
 
-  // ── Reset iframe ready state when tab (page) changes ────────────────────
   const activeTabDef = TABS.find((t) => t.id === activeTab)!;
-  const previewUrl = `${import.meta.env.BASE_URL}`.replace(/\/$/, "") + activeTabDef.previewPath + "?preview=1";
+  const previewUrl = `${import.meta.env.BASE_URL}`.replace(/\/$/, "") + activeTabDef.path + "?preview=1";
 
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     setIframeReady(false);
   };
 
-  // ── Login ────────────────────────────────────────────────────────────────
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const matched = ROLES[pw];
@@ -209,7 +205,6 @@ export default function Settings() {
     }
   };
 
-  // ── Publish ──────────────────────────────────────────────────────────────
   const handlePublish = useCallback(async () => {
     const token = localStorage.getItem("ab_gh_token") || "";
     if (!token.trim()) {
@@ -250,42 +245,51 @@ export default function Settings() {
   }, [role, config]);
 
   // ── Updaters ─────────────────────────────────────────────────────────────
-  const upG  = (k: keyof SiteConfig["general"], v: string) => setConfig((c) => ({ ...c, general: { ...c.general, [k]: v } }));
-  const upH  = (k: keyof SiteConfig["hero"], v: unknown)   => setConfig((c) => ({ ...c, hero:    { ...c.hero,    [k]: v } }));
-  const upStat = (i: number, f: "value" | "label", v: string) =>
-    setConfig((c) => ({ ...c, hero: { ...c.hero, stats: c.hero.stats.map((s, idx) => idx === i ? { ...s, [f]: v } : s) } }));
-  const upA  = (k: keyof SiteConfig["about"], v: string)   => setConfig((c) => ({ ...c, about:   { ...c.about,   [k]: v } }));
-  const upSvc = (id: string, f: keyof Service, v: string)  =>
-    setConfig((c) => ({ ...c, services: c.services.map((s) => s.id === id ? { ...s, [f]: v } : s) }));
+  const upG   = (k: keyof SiteConfig["general"], v: string)        => setConfig((c) => ({ ...c, general: { ...c.general, [k]: v } }));
+  const upH   = (k: keyof SiteConfig["hero"], v: string)           => setConfig((c) => ({ ...c, hero:    { ...c.hero,    [k]: v } }));
+  const upStat = (i: number, f: "value" | "label", v: string)      => setConfig((c) => ({ ...c, hero: { ...c.hero, stats: c.hero.stats.map((s, idx) => idx === i ? { ...s, [f]: v } : s) } }));
+  const upA   = (k: keyof SiteConfig["about"], v: string)          => setConfig((c) => ({ ...c, about:  { ...c.about,  [k]: v } }));
+  const upO   = (k: keyof SiteConfig["offer"], v: string)          => setConfig((c) => ({ ...c, offer:  { ...c.offer,  [k]: v } }));
+  const upSS  = (k: keyof SiteConfig["servicesSection"], v: string) => setConfig((c) => ({ ...c, servicesSection: { ...c.servicesSection, [k]: v } }));
+  const upGal = (k: keyof SiteConfig["gallery"], v: string)        => setConfig((c) => ({ ...c, gallery: { ...c.gallery, [k]: v } }));
+  const upCon = (k: keyof SiteConfig["contact"], v: string)        => setConfig((c) => ({ ...c, contact: { ...c.contact, [k]: v } }));
+  const upPS  = (k: keyof SiteConfig["pages"]["services"], v: string) => setConfig((c) => ({ ...c, pages: { ...c.pages, services: { ...c.pages.services, [k]: v } } }));
+  const upPB  = (k: keyof SiteConfig["pages"]["booking"],  v: string) => setConfig((c) => ({ ...c, pages: { ...c.pages, booking:  { ...c.pages.booking,  [k]: v } } }));
+  const upSvc = (id: string, f: keyof Service, v: string)          => setConfig((c) => ({ ...c, services: c.services.map((s) => s.id === id ? { ...s, [f]: v } : s) }));
   const addSvc = () => setConfig((c) => ({ ...c, services: [...c.services, { id: crypto.randomUUID(), icon: "scissors", title: "Ny tjeneste", price: "0 kr", time: "30 min", desc: "" }] }));
   const rmSvc  = (id: string) => setConfig((c) => ({ ...c, services: c.services.filter((s) => s.id !== id) }));
-  const upM    = (id: string, f: keyof MembershipPlan, v: unknown) =>
-    setConfig((c) => ({ ...c, memberships: c.memberships.map((m) => m.id === id ? { ...m, [f]: v } : m) }));
+  const upM    = (id: string, f: keyof MembershipPlan, v: unknown)  => setConfig((c) => ({ ...c, memberships: c.memberships.map((m) => m.id === id ? { ...m, [f]: v } : m) }));
   const upPerks = (id: string, text: string) => upM(id, "perks", text.split("\n").filter(Boolean));
   const upSEO  = (page: "home" | "services" | "booking", f: keyof SEOPage, v: string) =>
     setConfig((c) => ({ ...c, seo: { ...c.seo, [page]: { ...c.seo[page], [f]: v } } }));
   const upSEORoot = (k: "canonicalBase" | "ogImage", v: string) =>
     setConfig((c) => ({ ...c, seo: { ...c.seo, [k]: v } }));
 
-  // ── Form content per tab ─────────────────────────────────────────────────
-  const FormContent = () => {
+  // ── Form content — called as a function (not a component) to preserve focus ──
+  // IMPORTANT: renderForm() must NOT be used as <RenderForm /> — it must be
+  // called as {renderForm()} so React doesn't treat it as a new component type
+  // on each render, which would unmount inputs and lose focus.
+  const renderForm = () => {
     if (activeTab === "forside") return (
       <div>
-        <Section title="Hero — øverste sektion">
-          <Field label="Badge-tekst" hint="Den lille tekst øverst i hero-sektionen.">
+        <SectionBlock title="Hero — øverste sektion">
+          <Field label="Badge-tekst">
             <Input value={config.hero.badge} onChange={(e) => upH("badge", e.target.value)} className="h-8 text-sm" />
           </Field>
-          <Field label="Overskrift linje 1">
+          <Field label="Overskrift — linje 1">
             <Input value={config.hero.headline1} onChange={(e) => upH("headline1", e.target.value)} className="h-8 text-sm" />
           </Field>
-          <Field label="Overskrift linje 2 (guld, kursiv)">
+          <Field label="Overskrift — linje 2 (guld, kursiv)">
             <Input value={config.hero.headline2} onChange={(e) => upH("headline2", e.target.value)} className="h-8 text-sm" />
           </Field>
           <Field label="Undertekst">
             <Textarea value={config.hero.subtext} onChange={(e) => upH("subtext", e.target.value)} rows={3} className="text-sm" />
           </Field>
-          <div className="border-t border-gray-100 pt-3 mt-3">
-            <p className="text-[11px] text-gray-400 uppercase tracking-widest mb-2">Statistikker</p>
+          <Field label="Knap — book-tekst">
+            <Input value={config.hero.ctaBook} onChange={(e) => upH("ctaBook", e.target.value)} className="h-8 text-sm" />
+          </Field>
+          <div className="border-t border-gray-100 pt-3 mt-1">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Statistikker (tal + label)</p>
             {config.hero.stats.map((s, i) => (
               <div key={i} className="grid grid-cols-2 gap-2 mb-2">
                 <Input value={s.value} onChange={(e) => upStat(i, "value", e.target.value)} placeholder="499" className="h-8 text-sm" />
@@ -293,22 +297,24 @@ export default function Settings() {
               </div>
             ))}
           </div>
-        </Section>
+        </SectionBlock>
 
-        <Section title="Om os">
-          <Field label="Ejernavn">
-            <Input value={config.about.ownerName} onChange={(e) => upA("ownerName", e.target.value)} className="h-8 text-sm" />
+        <SectionBlock title="Om os">
+          <Field label="Badge-tekst"><Input value={config.about.badge} onChange={(e) => upA("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — præfiks" hint='Fx "Velkommen til"'>
+            <Input value={config.about.welcomePrefix} onChange={(e) => upA("welcomePrefix", e.target.value)} className="h-8 text-sm" />
           </Field>
-          <Field label="Intro-sætning" hint='Fx: "og jeg er indehaver af A&B Barberlounge2 i Sønderborg."'>
-            <Textarea value={config.about.intro} onChange={(e) => upA("intro", e.target.value)} rows={2} className="text-sm" />
+          <Field label="Overskrift — navn (guld, kursiv)">
+            <Input value={config.about.nameDisplay} onChange={(e) => upA("nameDisplay", e.target.value)} className="h-8 text-sm" />
           </Field>
-          <Field label="Biografi — afsnit 1">
-            <Textarea value={config.about.bio1} onChange={(e) => upA("bio1", e.target.value)} rows={3} className="text-sm" />
+          <Field label="Intro-præfiks" hint='Fx "Mit navn er"'>
+            <Input value={config.about.introPrefix} onChange={(e) => upA("introPrefix", e.target.value)} className="h-8 text-sm" />
           </Field>
-          <Field label="Biografi — afsnit 2">
-            <Textarea value={config.about.bio2} onChange={(e) => upA("bio2", e.target.value)} rows={3} className="text-sm" />
-          </Field>
-          <div className="grid grid-cols-2 gap-2 mt-2">
+          <Field label="Ejernavn"><Input value={config.about.ownerName} onChange={(e) => upA("ownerName", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Intro-sætning"><Textarea value={config.about.intro} onChange={(e) => upA("intro", e.target.value)} rows={2} className="text-sm" /></Field>
+          <Field label="Biografi — afsnit 1"><Textarea value={config.about.bio1} onChange={(e) => upA("bio1", e.target.value)} rows={3} className="text-sm" /></Field>
+          <Field label="Biografi — afsnit 2"><Textarea value={config.about.bio2} onChange={(e) => upA("bio2", e.target.value)} rows={3} className="text-sm" /></Field>
+          <div className="grid grid-cols-2 gap-3 mt-1">
             <div>
               <Field label="Certifikat 1 — titel"><Input value={config.about.cert1Title} onChange={(e) => upA("cert1Title", e.target.value)} className="h-8 text-sm" /></Field>
               <Field label="Certifikat 1 — detalje"><Input value={config.about.cert1Sub} onChange={(e) => upA("cert1Sub", e.target.value)} className="h-8 text-sm" /></Field>
@@ -318,34 +324,76 @@ export default function Settings() {
               <Field label="Certifikat 2 — detalje"><Input value={config.about.cert2Sub} onChange={(e) => upA("cert2Sub", e.target.value)} className="h-8 text-sm" /></Field>
             </div>
           </div>
-          <Field label="Års erfaring (tal + tegn, fx '10+')">
-            <Input value={config.about.yearsExp} onChange={(e) => upA("yearsExp", e.target.value)} className="h-8 text-sm w-32" />
-          </Field>
-        </Section>
+          <div className="grid grid-cols-2 gap-2 mt-1">
+            <Field label="Års erfaring (fx '10+')"><Input value={config.about.yearsExp} onChange={(e) => upA("yearsExp", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="Label (fx 'års erfaring')"><Input value={config.about.yearsLabel} onChange={(e) => upA("yearsLabel", e.target.value)} className="h-8 text-sm" /></Field>
+          </div>
+        </SectionBlock>
 
-        <Section title="Kontaktinfo (vises på forsiden og andre steder)" defaultOpen={false}>
-          <Field label="Telefonnummer"><Input value={config.general.phone} onChange={(e) => upG("phone", e.target.value)} className="h-8 text-sm" /></Field>
-          <Field label="Adresse"><Input value={config.general.address} onChange={(e) => upG("address", e.target.value)} className="h-8 text-sm" /></Field>
-          <Field label="Åbningstider"><Input value={config.general.hours} onChange={(e) => upG("hours", e.target.value)} className="h-8 text-sm" /></Field>
-          <Field label="Instagram URL"><Input value={config.general.instagram} onChange={(e) => upG("instagram", e.target.value)} className="h-8 text-sm" placeholder="https://instagram.com/..." /></Field>
-          <Field label="Facebook URL"><Input value={config.general.facebook} onChange={(e) => upG("facebook", e.target.value)} className="h-8 text-sm" placeholder="https://facebook.com/..." /></Field>
-          <Field label="Virksomhedsnavn (logo-tekst)"><Input value={config.general.businessName} onChange={(e) => upG("businessName", e.target.value)} className="h-8 text-sm" /></Field>
-        </Section>
+        <SectionBlock title="Medlemskaber — sektion på forsiden">
+          <Field label="Badge-tekst"><Input value={config.offer.badge} onChange={(e) => upO("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — linje 1"><Input value={config.offer.heading1} onChange={(e) => upO("heading1", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — linje 2 (guld, kursiv)"><Input value={config.offer.heading2} onChange={(e) => upO("heading2", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Undertekst"><Textarea value={config.offer.subtext} onChange={(e) => upO("subtext", e.target.value)} rows={2} className="text-sm" /></Field>
+          <Field label="Småt under knap" hint='Fx "Ingen oprettelsesgebyr · Opsig når som helst"'>
+            <Input value={config.offer.smallPrint} onChange={(e) => upO("smallPrint", e.target.value)} className="h-8 text-sm" />
+          </Field>
+        </SectionBlock>
+
+        <SectionBlock title="Services — sektion på forsiden">
+          <Field label="Badge-tekst"><Input value={config.servicesSection.badge} onChange={(e) => upSS("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift"><Input value={config.servicesSection.heading} onChange={(e) => upSS("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Brødtekst"><Textarea value={config.servicesSection.body} onChange={(e) => upSS("body", e.target.value)} rows={3} className="text-sm" /></Field>
+          <Field label="Knap-tekst"><Input value={config.servicesSection.cta} onChange={(e) => upSS("cta", e.target.value)} className="h-8 text-sm" /></Field>
+        </SectionBlock>
+
+        <SectionBlock title="Galleri" defaultOpen={false}>
+          <Field label="Badge-tekst"><Input value={config.gallery.badge} onChange={(e) => upGal("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift"><Input value={config.gallery.heading} onChange={(e) => upGal("heading", e.target.value)} className="h-8 text-sm" /></Field>
+        </SectionBlock>
+
+        <SectionBlock title="Kontakt" defaultOpen={false}>
+          <Field label="Badge-tekst"><Input value={config.contact.badge} onChange={(e) => upCon("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift"><Input value={config.contact.heading} onChange={(e) => upCon("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Brødtekst"><Textarea value={config.contact.body} onChange={(e) => upCon("body", e.target.value)} rows={2} className="text-sm" /></Field>
+          <Field label="Booking-boks — overskrift"><Input value={config.contact.cardHeading} onChange={(e) => upCon("cardHeading", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Booking-boks — tekst"><Textarea value={config.contact.cardBody} onChange={(e) => upCon("cardBody", e.target.value)} rows={2} className="text-sm" /></Field>
+          <Field label="Booking-boks — knap"><Input value={config.contact.cardCta} onChange={(e) => upCon("cardCta", e.target.value)} className="h-8 text-sm" /></Field>
+          <div className="border-t border-gray-100 pt-3 mt-1">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Kontaktinfo</p>
+            <Field label="Telefon"><Input value={config.general.phone} onChange={(e) => upG("phone", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="Adresse"><Input value={config.general.address} onChange={(e) => upG("address", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="Åbningstider"><Input value={config.general.hours} onChange={(e) => upG("hours", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="Instagram URL"><Input value={config.general.instagram} onChange={(e) => upG("instagram", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="Facebook URL"><Input value={config.general.facebook} onChange={(e) => upG("facebook", e.target.value)} className="h-8 text-sm" /></Field>
+          </div>
+        </SectionBlock>
+
+        <SectionBlock title="Navigation & generelt" defaultOpen={false}>
+          <Field label="Virksomhedsnavn (logo)"><Input value={config.general.businessName} onChange={(e) => upG("businessName", e.target.value)} className="h-8 text-sm" /></Field>
+        </SectionBlock>
       </div>
     );
 
     if (activeTab === "services") return (
       <div>
-        <Section title="Tjenester">
+        <SectionBlock title="Sideoverskrift">
+          <Field label="Badge-tekst"><Input value={config.pages.services.badge} onChange={(e) => upPS("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — del 1"><Input value={config.pages.services.heading1} onChange={(e) => upPS("heading1", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — del 2 (guld, kursiv)"><Input value={config.pages.services.heading2} onChange={(e) => upPS("heading2", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Undertekst"><Textarea value={config.pages.services.subtext} onChange={(e) => upPS("subtext", e.target.value)} rows={2} className="text-sm" /></Field>
+        </SectionBlock>
+
+        <SectionBlock title="Tjenester">
           {config.services.map((s) => (
             <div key={s.id} className="border border-gray-100 rounded-lg p-3 mb-3 bg-gray-50 relative">
-              <button onClick={() => rmSvc(s.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
+              <button type="button" onClick={() => rmSvc(s.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
               <Field label="Navn"><Input value={s.title} onChange={(e) => upSvc(s.id, "title", e.target.value)} className="h-8 text-sm" /></Field>
               <div className="grid grid-cols-2 gap-2">
-                <Field label="Pris"><Input value={s.price} onChange={(e) => upSvc(s.id, "price", e.target.value)} className="h-8 text-sm" placeholder="199 kr" /></Field>
-                <Field label="Tid"><Input value={s.time} onChange={(e) => upSvc(s.id, "time", e.target.value)} className="h-8 text-sm" placeholder="30 min" /></Field>
+                <Field label="Pris"><Input value={s.price} onChange={(e) => upSvc(s.id, "price", e.target.value)} className="h-8 text-sm" /></Field>
+                <Field label="Tid"><Input value={s.time} onChange={(e) => upSvc(s.id, "time", e.target.value)} className="h-8 text-sm" /></Field>
               </div>
               <Field label="Beskrivelse"><Textarea value={s.desc} onChange={(e) => upSvc(s.id, "desc", e.target.value)} rows={2} className="text-sm" /></Field>
             </div>
@@ -353,37 +401,50 @@ export default function Settings() {
           <Button variant="outline" size="sm" onClick={addSvc} className="w-full mt-1">
             <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj tjeneste
           </Button>
-        </Section>
+        </SectionBlock>
 
-        <Section title="Medlemskaber" defaultOpen={false}>
+        <SectionBlock title="Medlemskaber" defaultOpen={false}>
           {config.memberships.map((m) => (
             <div key={m.id} className={`border rounded-lg p-3 mb-3 ${m.highlight ? "border-yellow-300 bg-yellow-50/40" : "border-gray-100 bg-gray-50"}`}>
               {m.highlight && <div className="text-[10px] bg-yellow-400 text-gray-900 px-2 py-0.5 rounded-full font-medium inline-block mb-2">Mest populær</div>}
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Navn"><Input value={m.name} onChange={(e) => upM(m.id, "name", e.target.value)} className="h-8 text-sm" /></Field>
-                <Field label="Pris (kun tal)"><Input value={m.price} onChange={(e) => upM(m.id, "price", e.target.value)} className="h-8 text-sm" placeholder="499" /></Field>
+                <Field label="Pris (tal)"><Input value={m.price} onChange={(e) => upM(m.id, "price", e.target.value)} className="h-8 text-sm" /></Field>
               </div>
               <Field label="Slogan"><Input value={m.tagline} onChange={(e) => upM(m.id, "tagline", e.target.value)} className="h-8 text-sm" /></Field>
-              <Field label="Knaptekst"><Input value={m.cta} onChange={(e) => upM(m.id, "cta", e.target.value)} className="h-8 text-sm" /></Field>
+              <Field label="Knap-tekst"><Input value={m.cta} onChange={(e) => upM(m.id, "cta", e.target.value)} className="h-8 text-sm" /></Field>
               <Field label="Fordele — én per linje">
                 <Textarea value={m.perks.join("\n")} onChange={(e) => upPerks(m.id, e.target.value)} rows={m.perks.length + 1} className="text-sm font-mono" />
               </Field>
             </div>
           ))}
-        </Section>
+        </SectionBlock>
       </div>
     );
 
     if (activeTab === "booking") return (
       <div>
-        <Section title="Booking-side info">
-          <Field label="Telefonnummer"><Input value={config.general.phone} onChange={(e) => upG("phone", e.target.value)} className="h-8 text-sm" /></Field>
+        <SectionBlock title="Sideoverskrift">
+          <Field label="Badge-tekst"><Input value={config.pages.booking.badge} onChange={(e) => upPB("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — del 1"><Input value={config.pages.booking.heading1} onChange={(e) => upPB("heading1", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift — del 2 (guld, kursiv)"><Input value={config.pages.booking.heading2} onChange={(e) => upPB("heading2", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Undertekst"><Textarea value={config.pages.booking.subtext} onChange={(e) => upPB("subtext", e.target.value)} rows={2} className="text-sm" /></Field>
+        </SectionBlock>
+
+        <SectionBlock title="Booking-widget">
+          <Field label="Overskrift"><Input value={config.pages.booking.iframeHeading} onChange={(e) => upPB("iframeHeading", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Undertitel" hint='Fx "Drevet af Planway"'>
+            <Input value={config.pages.booking.iframeSubtext} onChange={(e) => upPB("iframeSubtext", e.target.value)} className="h-8 text-sm" />
+          </Field>
+          <Field label="Knap-tekst"><Input value={config.pages.booking.iframeCta} onChange={(e) => upPB("iframeCta", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Planway URL"><Input value={config.general.planwayUrl} onChange={(e) => upG("planwayUrl", e.target.value)} className="h-8 text-sm" /></Field>
+        </SectionBlock>
+
+        <SectionBlock title="Info-kort" defaultOpen={false}>
+          <Field label="Telefon"><Input value={config.general.phone} onChange={(e) => upG("phone", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Adresse"><Input value={config.general.address} onChange={(e) => upG("address", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Åbningstider"><Input value={config.general.hours} onChange={(e) => upG("hours", e.target.value)} className="h-8 text-sm" /></Field>
-          <Field label="Planway booking-URL" hint="Link til dit Planway-bookingsystem.">
-            <Input value={config.general.planwayUrl} onChange={(e) => upG("planwayUrl", e.target.value)} className="h-8 text-sm" />
-          </Field>
-        </Section>
+        </SectionBlock>
       </div>
     );
 
@@ -393,6 +454,7 @@ export default function Settings() {
           {(["home", "services", "booking"] as const).map((p) => (
             <button
               key={p}
+              type="button"
               onClick={() => setSeoPage(p)}
               className={`flex-1 py-2 text-xs font-medium transition-colors ${seoPage === p ? "bg-gray-900 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
             >
@@ -400,26 +462,20 @@ export default function Settings() {
             </button>
           ))}
         </div>
-
-        <Field label="Sidetitel (Title tag)" hint="Vises i Google og browser-fanen. Optimal: 30–60 tegn.">
+        <Field label="Sidetitel (Title tag)" hint="Optimal: 30–60 tegn">
           <Input value={config.seo[seoPage].title} onChange={(e) => upSEO(seoPage, "title", e.target.value)} className="text-sm" />
           <CharCount text={config.seo[seoPage].title} min={30} max={60} />
         </Field>
-
-        <Field label="Meta-beskrivelse" hint="Vises under titlen i Google. Optimal: 120–160 tegn.">
+        <Field label="Meta-beskrivelse" hint="Optimal: 120–160 tegn">
           <Textarea value={config.seo[seoPage].description} onChange={(e) => upSEO(seoPage, "description", e.target.value)} rows={4} className="text-sm" />
           <CharCount text={config.seo[seoPage].description} min={120} max={160} />
         </Field>
-
-        <div className="mt-4 space-y-0">
-          <Field label="Canonical URL" hint="Din primære domæne — fortæller Google din rigtige URL.">
-            <Input value={config.seo.canonicalBase} onChange={(e) => upSEORoot("canonicalBase", e.target.value)} className="text-sm" placeholder="https://ab-barberlounge2.dk" />
-          </Field>
-          <Field label="OG-billede URL" hint="Vist ved deling på Facebook/Instagram. 1200×630 px anbefalet.">
-            <Input value={config.seo.ogImage} onChange={(e) => upSEORoot("ogImage", e.target.value)} className="text-sm" placeholder="https://ab-barberlounge2.dk/og-image.jpg" />
-          </Field>
-        </div>
-
+        <Field label="Canonical URL">
+          <Input value={config.seo.canonicalBase} onChange={(e) => upSEORoot("canonicalBase", e.target.value)} className="text-sm" />
+        </Field>
+        <Field label="OG-billede URL" hint="1200×630 px anbefalet">
+          <Input value={config.seo.ogImage} onChange={(e) => upSEORoot("ogImage", e.target.value)} className="text-sm" />
+        </Field>
         <div className="mt-4 space-y-3">
           <GooglePreview page={config.seo[seoPage]} config={config} />
           <SocialPreview page={config.seo[seoPage]} config={config} />
@@ -427,6 +483,7 @@ export default function Settings() {
       </div>
     );
 
+    // Publish tab
     return (
       <div>
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6 text-center">
@@ -439,7 +496,7 @@ export default function Settings() {
             </span>
           </p>
           <p className="text-xs text-gray-400 mt-2">
-            Preview-siden afspejler dine ændringer. Udgiv for at gøre dem live for alle besøgende.
+            Preview-siden afspejler dine ændringer. Udgiv for at gøre dem permanente.
           </p>
         </div>
 
@@ -514,7 +571,6 @@ export default function Settings() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
-      {/* Header */}
       <header className="bg-gray-900 text-white px-4 py-3 flex items-center justify-between flex-shrink-0 z-50">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center">
@@ -523,11 +579,7 @@ export default function Settings() {
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm">A&B Admin</span>
             <span className="text-gray-400 text-xs hidden sm:inline">Website Editor</span>
-            {role && (
-              <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full text-white ${roleColor}`}>
-                {role}
-              </span>
-            )}
+            {role && <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full text-white ${roleColor}`}>{role}</span>}
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -550,7 +602,6 @@ export default function Settings() {
         </div>
       </header>
 
-      {/* Tab bar */}
       <div className="bg-white border-b border-gray-200 flex-shrink-0 overflow-x-auto">
         <div className="flex min-w-max">
           {TABS.map((t) => (
@@ -564,20 +615,18 @@ export default function Settings() {
               }`}
             >
               <span>{t.icon}</span> {t.label}
-              {t.id === "publish" && publishStatus === "idle" && (
-                <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
-              )}
+              {t.id === "publish" && publishStatus === "idle" && <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Split layout */}
       <div className="flex flex-1 overflow-hidden">
         {/* Settings panel */}
         <div className={`flex-shrink-0 overflow-y-auto bg-white border-r border-gray-200 ${showPreview ? "w-full lg:w-[400px]" : "w-full"}`}>
           <div className="p-4">
-            <FormContent />
+            {/* Called as a function — NOT as <Component /> — to prevent focus loss on re-render */}
+            {renderForm()}
           </div>
           {activeTab !== "publish" && (
             <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-2.5">
@@ -588,10 +637,9 @@ export default function Settings() {
           )}
         </div>
 
-        {/* Live preview panel — actual iframe of the real site */}
+        {/* Real iframe preview */}
         {showPreview && (
           <div className="hidden lg:flex flex-1 flex-col overflow-hidden bg-[#e8eaed]">
-            {/* Preview header bar */}
             <div className="flex items-center gap-3 px-4 py-2 bg-[#dee1e6] border-b border-gray-300 flex-shrink-0">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-400" />
@@ -600,12 +648,11 @@ export default function Settings() {
               </div>
               <div className="flex-1 bg-white rounded-md px-3 py-1 text-xs text-gray-500 flex items-center gap-1.5 border border-gray-300 max-w-sm">
                 <Globe className="w-3 h-3 flex-shrink-0" />
-                <span className="truncate">ab-barberlounge2.dk{activeTabDef.previewPath} · PREVIEW</span>
+                <span className="truncate">ab-barberlounge2.dk{activeTabDef.path} · PREVIEW</span>
               </div>
               <span className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">Live Preview</span>
             </div>
 
-            {/* iframe */}
             <div className="flex-1 overflow-hidden relative">
               {!iframeReady && (
                 <div className="absolute inset-0 flex items-center justify-center bg-[#e8eaed] z-10">

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Contact = () => {
-  const { general } = useSiteConfig();
+  const { general, contact } = useSiteConfig();
 
   const items = [
-    { icon: MapPin, label: "Adresse", value: general.address },
-    { icon: Phone, label: "Telefon", value: general.phone, href: `tel:${general.phone.replace(/\s/g, "")}` },
-    { icon: Clock, label: "Åbningstider", value: general.hours },
+    { icon: MapPin, label: "Adresse",      value: general.address },
+    { icon: Phone,  label: "Telefon",      value: general.phone, href: `tel:${general.phone.replace(/\s/g, "")}` },
+    { icon: Clock,  label: "Åbningstider", value: general.hours },
   ];
 
   return (
@@ -17,13 +17,12 @@ const Contact = () => {
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <span className="text-xs uppercase tracking-[0.3em] text-gold">Besøg os</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-gold">{contact.badge}</span>
             <h2 className="font-serif text-4xl md:text-6xl mt-4 mb-8 text-balance">
-              Drop-in eller book online.
+              {contact.heading}
             </h2>
             <p className="text-background/70 font-light text-lg mb-12 max-w-md">
-              Du finder os midt i Sønderborg. Kig forbi for et klip,
-              eller reservér din tid med få klik.
+              {contact.body}
             </p>
 
             <div className="space-y-6">
@@ -45,11 +44,9 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4 mt-10">
-              {/* TODO: replace with real Instagram profile URL */}
               <a href={general.instagram} aria-label="Instagram" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Instagram className="w-4 h-4" />
               </a>
-              {/* TODO: replace with real Facebook page URL */}
               <a href={general.facebook} aria-label="Facebook" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Facebook className="w-4 h-4" />
               </a>
@@ -57,12 +54,10 @@ const Contact = () => {
           </div>
 
           <div className="bg-background/5 backdrop-blur-sm border border-gold/20 rounded-sm p-10 text-center shadow-elegant">
-            <h3 className="font-serif text-3xl mb-4">Klar til et nyt klip?</h3>
-            <p className="text-background/70 mb-8 font-light">
-              Book din tid online via vores bookingsystem — det tager under 30 sekunder.
-            </p>
+            <h3 className="font-serif text-3xl mb-4">{contact.cardHeading}</h3>
+            <p className="text-background/70 mb-8 font-light">{contact.cardBody}</p>
             <Button variant="gold" size="xl" className="w-full" asChild>
-              <Link to="/booking">Gå til booking</Link>
+              <Link to="/booking">{contact.cardCta}</Link>
             </Button>
             <p className="text-xs text-background/50 mt-6">
               eller ring {general.phone} for drop-in

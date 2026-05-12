@@ -17,17 +17,17 @@ const About = () => {
             />
             <div className="absolute -bottom-6 -right-6 bg-gold text-primary p-6 rounded-sm shadow-elegant hidden md:block">
               <div className="font-serif text-4xl">{about.yearsExp}</div>
-              <div className="text-xs uppercase tracking-widest">års erfaring</div>
+              <div className="text-xs uppercase tracking-widest">{about.yearsLabel}</div>
             </div>
           </div>
 
           <div>
-            <span className="text-xs uppercase tracking-[0.3em] text-gold">Om os</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-gold">{about.badge}</span>
             <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 text-balance">
-              Velkommen til <span className="italic text-gold">A&B Barberlounge2</span>
+              {about.welcomePrefix} <span className="italic text-gold">{about.nameDisplay}</span>
             </h2>
             <p className="text-muted-foreground font-light text-lg mb-4 leading-relaxed">
-              Mit navn er <span className="text-foreground font-medium">{about.ownerName}</span>, {about.intro}
+              {about.introPrefix} <span className="text-foreground font-medium">{about.ownerName}</span>, {about.intro}
             </p>
             <p className="text-muted-foreground font-light leading-relaxed mb-4">{about.bio1}</p>
             <p className="text-muted-foreground font-light leading-relaxed mb-8">{about.bio2}</p>

@@ -9,7 +9,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { getIcon } from "@/lib/icons";
 
 const ServicesPage = () => {
-  const { services, memberships, seo } = useSiteConfig();
+  const { services, memberships, seo, pages } = useSiteConfig();
   useSEO(seo.services.title, seo.services.description, seo.ogImage);
 
   return (
@@ -19,12 +19,12 @@ const ServicesPage = () => {
       <section className="relative pt-40 pb-20 bg-gradient-dark text-background overflow-hidden">
         <img src={shave} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />
         <div className="container relative z-10 text-center">
-          <span className="text-xs uppercase tracking-[0.3em] text-gold">Services</span>
+          <span className="text-xs uppercase tracking-[0.3em] text-gold">{pages.services.badge}</span>
           <h1 className="font-serif text-5xl md:text-7xl mt-4 text-balance">
-            Priser & <span className="italic text-gold">behandlinger</span>
+            {pages.services.heading1} <span className="italic text-gold">{pages.services.heading2}</span>
           </h1>
           <p className="mt-6 max-w-xl mx-auto text-background/80 font-light">
-            Transparente priser. Ingen overraskelser. Bliv medlem og få det hele ubegrænset.
+            {pages.services.subtext}
           </p>
         </div>
       </section>

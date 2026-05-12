@@ -42,9 +42,14 @@ export interface SiteConfig {
     headline1: string;
     headline2: string;
     subtext: string;
+    ctaBook: string;
     stats: StatItem[];
   };
   about: {
+    badge: string;
+    welcomePrefix: string;
+    nameDisplay: string;
+    introPrefix: string;
     ownerName: string;
     intro: string;
     bio1: string;
@@ -54,6 +59,49 @@ export interface SiteConfig {
     cert2Title: string;
     cert2Sub: string;
     yearsExp: string;
+    yearsLabel: string;
+  };
+  offer: {
+    badge: string;
+    heading1: string;
+    heading2: string;
+    subtext: string;
+    smallPrint: string;
+  };
+  servicesSection: {
+    badge: string;
+    heading: string;
+    body: string;
+    cta: string;
+  };
+  gallery: {
+    badge: string;
+    heading: string;
+  };
+  contact: {
+    badge: string;
+    heading: string;
+    body: string;
+    cardHeading: string;
+    cardBody: string;
+    cardCta: string;
+  };
+  pages: {
+    services: {
+      badge: string;
+      heading1: string;
+      heading2: string;
+      subtext: string;
+    };
+    booking: {
+      badge: string;
+      heading1: string;
+      heading2: string;
+      subtext: string;
+      iframeHeading: string;
+      iframeSubtext: string;
+      iframeCta: string;
+    };
   };
   services: Service[];
   memberships: MembershipPlan[];

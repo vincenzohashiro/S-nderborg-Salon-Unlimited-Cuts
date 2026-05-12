@@ -5,7 +5,7 @@ import { useSiteConfig } from "@/context/SiteConfigContext";
 import { getIcon } from "@/lib/icons";
 
 const Services = () => {
-  const { services } = useSiteConfig();
+  const { services, servicesSection } = useSiteConfig();
   const preview = services.slice(0, 4);
 
   return (
@@ -25,16 +25,15 @@ const Services = () => {
             </div>
           </div>
           <div>
-            <span className="text-xs uppercase tracking-[0.3em] text-gold">Vores håndværk</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-gold">{servicesSection.badge}</span>
             <h2 className="font-serif text-4xl md:text-5xl mt-4 mb-6 text-balance">
-              Hver klip er en kunstform.
+              {servicesSection.heading}
             </h2>
             <p className="text-muted-foreground text-lg font-light leading-relaxed mb-6">
-              Hos A&B Barber Lounge 2 i Sønderborg kombinerer vi klassisk barberhåndværk med moderne teknikker.
-              Vores barbere uddannes løbende — så du altid får det skarpeste resultat.
+              {servicesSection.body}
             </p>
             <Button variant="default" asChild>
-              <Link to="/services">Se alle services</Link>
+              <Link to="/services">{servicesSection.cta}</Link>
             </Button>
           </div>
         </div>

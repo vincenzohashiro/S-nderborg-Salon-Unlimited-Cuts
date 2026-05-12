@@ -2,6 +2,7 @@ import salon from "@/assets/salon-wide.jpg";
 import shave from "@/assets/barber-shave.jpg";
 import chairs from "@/assets/interior-chairs.jpg";
 import storefront from "@/assets/storefront.jpg";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const items = [
   { src: chairs, alt: "Sorte og guld barberstole hos A&B Barber Lounge 2", className: "row-span-2" },
@@ -11,13 +12,15 @@ const items = [
 ];
 
 const Gallery = () => {
+  const { gallery } = useSiteConfig();
+
   return (
     <section id="galleri" className="py-24 md:py-32 bg-secondary">
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs uppercase tracking-[0.3em] text-gold">Galleri</span>
+          <span className="text-xs uppercase tracking-[0.3em] text-gold">{gallery.badge}</span>
           <h2 className="font-serif text-4xl md:text-5xl mt-4 text-balance">
-            Et kig indenfor.
+            {gallery.heading}
           </h2>
         </div>
 

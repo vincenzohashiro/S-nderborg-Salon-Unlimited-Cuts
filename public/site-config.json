@@ -13,6 +13,7 @@
     "headline1": "A&B Barber Lounge 2",
     "headline2": "Klip uden grænser.",
     "subtext": "Ubegrænset klip fra 499 kr/md — eller klip & skæg for 599 kr/md. Drop-in eller book online.",
+    "ctaBook": "Book din tid",
     "stats": [
       { "value": "499", "label": "kr/md klip" },
       { "value": "599", "label": "kr/md klip & skæg" },
@@ -20,6 +21,10 @@
     ]
   },
   "about": {
+    "badge": "Om os",
+    "welcomePrefix": "Velkommen til",
+    "nameDisplay": "A&B Barberlounge2",
+    "introPrefix": "Mit navn er",
     "ownerName": "Wasim",
     "intro": "og jeg er indehaver af A&B Barberlounge2 i Sønderborg.",
     "bio1": "Jeg er uddannet frisør fra Damaskus og har over 10 års erfaring i branchen. Jeg har desuden et certificeret herrefrisørkursus fra Københavns Professionshøjskole, hvilket sikrer moderne teknikker og høj faglig kvalitet.",
@@ -28,17 +33,60 @@
     "cert1Sub": "Københavns Professionshøjskole",
     "cert2Title": "Uddannet",
     "cert2Sub": "Frisør fra Damaskus",
-    "yearsExp": "10+"
+    "yearsExp": "10+",
+    "yearsLabel": "års erfaring"
+  },
+  "offer": {
+    "badge": "Vores medlemskaber",
+    "heading1": "To medlemskaber.",
+    "heading2": "Ubegrænset velpleje.",
+    "subtext": "Vælg det medlemskab der passer dig — kun klip, eller klip kombineret med skæg.",
+    "smallPrint": "Ingen oprettelsesgebyr · Opsig når som helst"
+  },
+  "servicesSection": {
+    "badge": "Vores håndværk",
+    "heading": "Hver klip er en kunstform.",
+    "body": "Hos A&B Barber Lounge 2 i Sønderborg kombinerer vi klassisk barberhåndværk med moderne teknikker. Vores barbere uddannes løbende — så du altid får det skarpeste resultat.",
+    "cta": "Se alle services"
+  },
+  "gallery": {
+    "badge": "Galleri",
+    "heading": "Et kig indenfor."
+  },
+  "contact": {
+    "badge": "Besøg os",
+    "heading": "Drop-in eller book online.",
+    "body": "Du finder os midt i Sønderborg. Kig forbi for et klip, eller reservér din tid med få klik.",
+    "cardHeading": "Klar til et nyt klip?",
+    "cardBody": "Book din tid online via vores bookingsystem — det tager under 30 sekunder.",
+    "cardCta": "Gå til booking"
+  },
+  "pages": {
+    "services": {
+      "badge": "Services",
+      "heading1": "Priser &",
+      "heading2": "behandlinger",
+      "subtext": "Transparente priser. Ingen overraskelser. Bliv medlem og få det hele ubegrænset."
+    },
+    "booking": {
+      "badge": "Book tid",
+      "heading1": "Reservér din",
+      "heading2": "stol",
+      "subtext": "Vælg tid og service nedenfor — eller ring til os for drop-in.",
+      "iframeHeading": "Online booking",
+      "iframeSubtext": "Drevet af Planway",
+      "iframeCta": "Åbn i nyt vindue"
+    }
   },
   "services": [
-    { "id": "1", "icon": "scissors", "title": "Herreklip", "price": "200 kr", "time": "30 min", "desc": "Klassisk eller moderne klipning, vask og styling inkluderet." },
-    { "id": "2", "icon": "user", "title": "Skægtrim", "price": "149 kr", "time": "20 min", "desc": "Præcis trimning og formgivning af dit skæg." },
-    { "id": "3", "icon": "flame", "title": "Varm Barbering", "price": "199 kr", "time": "25 min", "desc": "Klassisk barbering med varmt håndklæde og barberkniv." },
-    { "id": "4", "icon": "sparkles", "title": "Klip + Skæg", "price": "349 kr", "time": "45 min", "desc": "Den komplette pakke — klipning og fuld skægbehandling." },
-    { "id": "5", "icon": "crown", "title": "Den Royale", "price": "499 kr", "time": "60 min", "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse." },
-    { "id": "6", "icon": "baby", "title": "Børneklip (0–12)", "price": "179 kr", "time": "20 min", "desc": "Tålmodig klipning for de små i en rolig stol." },
-    { "id": "7", "icon": "droplet", "title": "Hårfarve", "price": "fra 299 kr", "time": "30 min", "desc": "Dækning af grå hår eller fuld farveændring." },
-    { "id": "8", "icon": "gift", "title": "Gavekort", "price": "valgfrit", "time": "—", "desc": "Den perfekte gave til ham. Fås i alle beløb." }
+    { "id": "1", "icon": "scissors", "title": "Herreklip",       "price": "200 kr",     "time": "30 min", "desc": "Klassisk eller moderne klipning, vask og styling inkluderet." },
+    { "id": "2", "icon": "user",     "title": "Skægtrim",        "price": "149 kr",     "time": "20 min", "desc": "Præcis trimning og formgivning af dit skæg." },
+    { "id": "3", "icon": "flame",    "title": "Varm Barbering",  "price": "199 kr",     "time": "25 min", "desc": "Klassisk barbering med varmt håndklæde og barberkniv." },
+    { "id": "4", "icon": "sparkles", "title": "Klip + Skæg",    "price": "349 kr",     "time": "45 min", "desc": "Den komplette pakke — klipning og fuld skægbehandling." },
+    { "id": "5", "icon": "crown",    "title": "Den Royale",      "price": "499 kr",     "time": "60 min", "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse." },
+    { "id": "6", "icon": "baby",     "title": "Børneklip (0–12)","price": "179 kr",     "time": "20 min", "desc": "Tålmodig klipning for de små i en rolig stol." },
+    { "id": "7", "icon": "droplet",  "title": "Hårfarve",        "price": "fra 299 kr", "time": "30 min", "desc": "Dækning af grå hår eller fuld farveændring." },
+    { "id": "8", "icon": "gift",     "title": "Gavekort",        "price": "valgfrit",   "time": "—",     "desc": "Den perfekte gave til ham. Fås i alle beløb." }
   ],
   "memberships": [
     {

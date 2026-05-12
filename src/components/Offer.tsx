@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Offer = () => {
-  const { memberships } = useSiteConfig();
+  const { memberships, offer } = useSiteConfig();
 
   return (
     <section id="tilbud" className="py-24 md:py-32 bg-gradient-dark text-background relative overflow-hidden">
@@ -16,15 +16,13 @@ const Offer = () => {
       <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <span className="inline-flex items-center gap-2 text-gold text-xs uppercase tracking-[0.3em] mb-6">
-            <Sparkles className="w-4 h-4" /> Vores medlemskaber
+            <Sparkles className="w-4 h-4" /> {offer.badge}
           </span>
           <h2 className="font-serif text-4xl md:text-6xl text-balance">
-            To medlemskaber.<br />
-            <span className="italic text-gold">Ubegrænset velpleje.</span>
+            {offer.heading1}<br />
+            <span className="italic text-gold">{offer.heading2}</span>
           </h2>
-          <p className="mt-6 text-background/70 font-light">
-            Vælg det medlemskab der passer dig — kun klip, eller klip kombineret med skæg.
-          </p>
+          <p className="mt-6 text-background/70 font-light">{offer.subtext}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -61,9 +59,7 @@ const Offer = () => {
               <Button variant="gold" size="xl" className="w-full mt-auto" asChild>
                 <Link to="/booking">{p.cta}</Link>
               </Button>
-              <p className="text-xs text-background/50 mt-4 text-center">
-                Ingen oprettelsesgebyr · Opsig når som helst
-              </p>
+              <p className="text-xs text-background/50 mt-4 text-center">{offer.smallPrint}</p>
             </div>
           ))}
         </div>
