@@ -1,38 +1,11 @@
 import { Check, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-const plans = [
-  {
-    name: "Klip Medlemskab",
-    price: "499",
-    tagline: "Ubegrænset herreklip hver måned.",
-    perks: [
-      "Ubegrænset antal klipninger",
-      "Drop-in eller online booking",
-      "Også samme dag",
-      "Ingen binding — opsig når du vil",
-    ],
-    cta: "Vælg Klip 499",
-    highlight: false,
-  },
-  {
-    name: "Klip & Skæg Medlemskab",
-    price: "599",
-    tagline: "Klip + skæg og skægtrimning ubegrænset.",
-    perks: [
-      "Ubegrænset herreklip",
-      "Ubegrænset skæg & skægtrim",
-      "Drop-in eller online booking",
-      "10% rabat på produkter",
-      "Ingen binding — opsig når du vil",
-    ],
-    cta: "Vælg Klip & Skæg 599",
-    highlight: true,
-  },
-];
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Offer = () => {
+  const { memberships } = useSiteConfig();
+
   return (
     <section id="tilbud" className="py-24 md:py-32 bg-gradient-dark text-background relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -55,9 +28,9 @@ const Offer = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {plans.map((p) => (
+          {memberships.map((p) => (
             <div
-              key={p.name}
+              key={p.id}
               className={`relative bg-background/5 backdrop-blur-sm border rounded-sm p-8 md:p-10 shadow-elegant flex flex-col ${
                 p.highlight ? "border-gold" : "border-gold/20"
               }`}

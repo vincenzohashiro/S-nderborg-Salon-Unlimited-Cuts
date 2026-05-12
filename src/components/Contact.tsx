@@ -1,8 +1,17 @@
 import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Contact = () => {
+  const { general } = useSiteConfig();
+
+  const items = [
+    { icon: MapPin, label: "Adresse", value: general.address },
+    { icon: Phone, label: "Telefon", value: general.phone, href: `tel:${general.phone.replace(/\s/g, "")}` },
+    { icon: Clock, label: "Åbningstider", value: general.hours },
+  ];
+
   return (
     <section id="kontakt" className="py-24 md:py-32 bg-gradient-dark text-background">
       <div className="container">
@@ -18,11 +27,7 @@ const Contact = () => {
             </p>
 
             <div className="space-y-6">
-              {[
-                { icon: MapPin, label: "Adresse", value: "Perlegade 64, Sønderborg" },
-                { icon: Phone, label: "Telefon", value: "+45 91 75 24 70", href: "tel:+4591752470" },
-                { icon: Clock, label: "Åbningstider", value: "Man–Lør: 09–18 · Søn: lukket" },
-              ].map((c) => (
+              {items.map((c) => (
                 <div key={c.label} className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center flex-shrink-0">
                     <c.icon className="w-4 h-4 text-gold" />
@@ -41,11 +46,11 @@ const Contact = () => {
 
             <div className="flex gap-4 mt-10">
               {/* TODO: replace with real Instagram profile URL */}
-              <a href="https://instagram.com/ab_barberlounge2" aria-label="Instagram" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+              <a href={general.instagram} aria-label="Instagram" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Instagram className="w-4 h-4" />
               </a>
               {/* TODO: replace with real Facebook page URL */}
-              <a href="https://facebook.com/ab_barberlounge2" aria-label="Facebook" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+              <a href={general.facebook} aria-label="Facebook" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Facebook className="w-4 h-4" />
               </a>
             </div>
@@ -59,7 +64,9 @@ const Contact = () => {
             <Button variant="gold" size="xl" className="w-full" asChild>
               <Link to="/booking">Gå til booking</Link>
             </Button>
-            <p className="text-xs text-background/50 mt-6">eller ring 91 75 24 70 for drop-in</p>
+            <p className="text-xs text-background/50 mt-6">
+              eller ring {general.phone} for drop-in
+            </p>
           </div>
         </div>
       </div>

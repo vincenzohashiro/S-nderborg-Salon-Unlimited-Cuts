@@ -1,16 +1,13 @@
 import shaveImg from "@/assets/barber-shave.jpg";
-import { Scissors, Sparkles, Crown, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-const services = [
-  { icon: Scissors, title: "Herreklip", price: "fra 200 kr", desc: "Klassisk eller moderne klipning — tilpasset dig." },
-  { icon: User, title: "Skæg & Trim", price: "fra 149 kr", desc: "Præcis trimning med varm barbering og olie." },
-  { icon: Sparkles, title: "Klip + Skæg", price: "fra 349 kr", desc: "Den komplette behandling fra top til hage." },
-  { icon: Crown, title: "Børneklip", price: "fra 179 kr", desc: "Tålmodig klipning for de mindste herrer." },
-];
+import { useSiteConfig } from "@/context/SiteConfigContext";
+import { getIcon } from "@/lib/icons";
 
 const Services = () => {
+  const { services } = useSiteConfig();
+  const preview = services.slice(0, 4);
+
   return (
     <section id="services" className="py-24 md:py-32">
       <div className="container">
@@ -43,17 +40,20 @@ const Services = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="group p-8 bg-secondary border border-border rounded-sm hover:bg-primary hover:text-background transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
-            >
-              <s.icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
-              <h3 className="font-serif text-2xl mb-2">{s.title}</h3>
-              <p className="text-sm text-gold mb-4 uppercase tracking-widest">{s.price}</p>
-              <p className="font-light text-sm opacity-80 leading-relaxed">{s.desc}</p>
-            </div>
-          ))}
+          {preview.map((s) => {
+            const Icon = getIcon(s.icon);
+            return (
+              <div
+                key={s.id}
+                className="group p-8 bg-secondary border border-border rounded-sm hover:bg-primary hover:text-background transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
+              >
+                <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
+                <h3 className="font-serif text-2xl mb-2">{s.title}</h3>
+                <p className="text-sm text-gold mb-4 uppercase tracking-widest">{s.price}</p>
+                <p className="font-light text-sm opacity-80 leading-relaxed">{s.desc}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

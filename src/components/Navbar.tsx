@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const links = [
   { href: "/", label: "Forside" },
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const { general } = useSiteConfig();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -31,7 +33,7 @@ const Navbar = () => {
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <div className={`font-serif text-xl md:text-2xl leading-tight tracking-tight ${transparent ? "text-background" : "text-foreground"}`}>
-            A&B <span className="text-gold italic">Barberlounge2</span>
+            {general.businessName.split(" ")[0]} <span className="text-gold italic">{general.businessName.split(" ").slice(1).join(" ")}</span>
           </div>
         </Link>
         <nav className="hidden md:flex items-center gap-10">

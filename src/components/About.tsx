@@ -1,7 +1,10 @@
 import salonImg from "@/assets/salon-wide.jpg";
 import { Award, Scissors } from "lucide-react";
+import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const About = () => {
+  const { about } = useSiteConfig();
+
   return (
     <section id="om" className="py-24 md:py-32 bg-background">
       <div className="container">
@@ -13,7 +16,7 @@ const About = () => {
               className="w-full h-[500px] object-cover rounded-sm shadow-elegant"
             />
             <div className="absolute -bottom-6 -right-6 bg-gold text-primary p-6 rounded-sm shadow-elegant hidden md:block">
-              <div className="font-serif text-4xl">10+</div>
+              <div className="font-serif text-4xl">{about.yearsExp}</div>
               <div className="text-xs uppercase tracking-widest">års erfaring</div>
             </div>
           </div>
@@ -24,25 +27,21 @@ const About = () => {
               Velkommen til <span className="italic text-gold">A&B Barberlounge2</span>
             </h2>
             <p className="text-muted-foreground font-light text-lg mb-4 leading-relaxed">
-              Mit navn er <span className="text-foreground font-medium">Wasim</span>, og jeg er indehaver af A&B Barberlounge2 i Sønderborg.
+              Mit navn er <span className="text-foreground font-medium">{about.ownerName}</span>, {about.intro}
             </p>
-            <p className="text-muted-foreground font-light leading-relaxed mb-4">
-              Jeg er uddannet frisør fra Damaskus og har over 10 års erfaring i branchen. Jeg har desuden et certificeret herrefrisørkursus fra Københavns Professionshøjskole, hvilket sikrer moderne teknikker og høj faglig kvalitet.
-            </p>
-            <p className="text-muted-foreground font-light leading-relaxed mb-8">
-              Hos os får du en skarp klipning og professionel skægtrimning i rolige omgivelser med fokus på kvalitet og detaljer.
-            </p>
+            <p className="text-muted-foreground font-light leading-relaxed mb-4">{about.bio1}</p>
+            <p className="text-muted-foreground font-light leading-relaxed mb-8">{about.bio2}</p>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="p-5 border border-border rounded-sm">
                 <Award className="w-6 h-6 text-gold mb-3" strokeWidth={1.5} />
-                <div className="font-serif text-lg">Certificeret</div>
-                <div className="text-xs text-muted-foreground">Københavns Professionshøjskole</div>
+                <div className="font-serif text-lg">{about.cert1Title}</div>
+                <div className="text-xs text-muted-foreground">{about.cert1Sub}</div>
               </div>
               <div className="p-5 border border-border rounded-sm">
                 <Scissors className="w-6 h-6 text-gold mb-3" strokeWidth={1.5} />
-                <div className="font-serif text-lg">Uddannet</div>
-                <div className="text-xs text-muted-foreground">Frisør fra Damaskus</div>
+                <div className="font-serif text-lg">{about.cert2Title}</div>
+                <div className="text-xs text-muted-foreground">{about.cert2Sub}</div>
               </div>
             </div>
           </div>
