@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,9 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { defaultConfig } from "@/config/defaultConfig";
 import type { SiteConfig, Service, MembershipPlan, SEOPage } from "@/types/site-config";
 import {
-  ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle,
+  ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
   Loader2, Settings as SettingsIcon, LogOut, Monitor, Check,
-  Globe, Search, Facebook,
+  Globe, Search, Facebook, Terminal,
 } from "lucide-react";
 
 const REPO_OWNER = "vincenzohashiro";
@@ -22,14 +22,23 @@ const ROLES: Record<string, { label: string; color: string }> = {
   "Dev$Panel-2025":   { label: "Udvikler", color: "bg-purple-600" },
 };
 
-type Tab = "forside" | "services" | "booking" | "seo" | "publish";
+interface LogEntry {
+  id: string;
+  type: "success" | "error";
+  timestamp: string;
+  role: string;
+  message: string;
+}
+
+type Tab = "forside" | "services" | "booking" | "seo" | "publish" | "advanced";
 
 const TABS: { id: Tab; label: string; icon: string; path: string }[] = [
-  { id: "forside",  label: "Forside",  icon: "🏠", path: "/"         },
-  { id: "services", label: "Services", icon: "✂️", path: "/services"  },
-  { id: "booking",  label: "Book Tid", icon: "📅", path: "/booking"   },
-  { id: "seo",      label: "SEO",      icon: "🔍", path: "/"         },
-  { id: "publish",  label: "Udgiv",    icon: "🚀", path: "/"         },
+  { id: "forside",  label: "Forside",   icon: "🏠", path: "/"        },
+  { id: "services", label: "Services",  icon: "✂️", path: "/services" },
+  { id: "booking",  label: "Book Tid",  icon: "📅", path: "/booking"  },
+  { id: "seo",      label: "SEO",       icon: "🔍", path: "/"        },
+  { id: "publish",  label: "Udgiv",     icon: "🚀", path: "/"        },
+  { id: "advanced", label: "Avanceret", icon: "⚙️", path: "/"        },
 ];
 
 // ── Shared UI helpers (defined at module level — stable refs) ──────────────
@@ -140,6 +149,46 @@ const TokenSetup = () => {
   );
 };
 
+// ── Toast notification (module level — stable ref) ────────────────────────
+const Toast = ({
+  show, type, message, onClose,
+}: {
+  show: boolean; type: "success" | "error"; message: string; onClose: () => void;
+}) => {
+  if (!show) return null;
+  return (
+    <div
+      className={`fixed bottom-6 right-6 z-[9999] flex items-start gap-3 px-5 py-4 rounded-xl shadow-2xl text-white max-w-sm border ${
+        type === "success"
+          ? "bg-green-700 border-green-500"
+          : "bg-red-700 border-red-500"
+      }`}
+    >
+      <div className="flex-shrink-0 mt-0.5">
+        {type === "success" ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="font-semibold text-sm leading-tight">
+          {type === "success" ? "Udgivet!" : "Udgivelse fejlede"}
+        </p>
+        <p className="text-xs text-white/80 mt-0.5 break-words leading-relaxed">{message}</p>
+        {type === "success" && (
+          <p className="text-[10px] text-white/55 mt-1.5 flex items-center gap-1">
+            <Terminal className="w-3 h-3" />
+            GitHub Actions deployer → live om ~2 min
+          </p>
+        )}
+      </div>
+      <button
+        onClick={onClose}
+        className="text-white/50 hover:text-white flex-shrink-0 -mt-0.5 -mr-1 p-1 rounded"
+      >
+        <X className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  );
+};
+
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function Settings() {
@@ -153,6 +202,23 @@ export default function Settings() {
   const [publishStatus, setPublishStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [publishMsg, setPublishMsg] = useState("");
   const [showPreview, setShowPreview] = useState(true);
+  const [toast, setToast]           = useState<{ show: boolean; type: "success" | "error"; message: string }>({ show: false, type: "success", message: "" });
+  const [logs, setLogs]             = useState<LogEntry[]>(() => {
+    try { return JSON.parse(localStorage.getItem("ab_publish_logs") || "[]"); } catch { return []; }
+  });
+
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Auto-dismiss toast after 5 seconds
+  useEffect(() => {
+    if (toast.show) {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+      toastTimerRef.current = setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 5000);
+    }
+    return () => { if (toastTimerRef.current) clearTimeout(toastTimerRef.current); };
+  }, [toast.show]);
 
   useEffect(() => {
     const storedRole = sessionStorage.getItem("ab_admin_role");
@@ -187,6 +253,21 @@ export default function Settings() {
     }
   };
 
+  const appendLog = useCallback((type: "success" | "error", message: string, currentRole: string) => {
+    const entry: LogEntry = {
+      id: crypto.randomUUID(),
+      type,
+      timestamp: new Date().toISOString(),
+      role: currentRole,
+      message,
+    };
+    setLogs((prev) => {
+      const next = [entry, ...prev].slice(0, 100);
+      localStorage.setItem("ab_publish_logs", JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const handlePublish = useCallback(async () => {
     const token = localStorage.getItem("ab_gh_token") || "";
     if (!token.trim()) {
@@ -218,13 +299,24 @@ export default function Settings() {
         const e = await putRes.json().catch(() => ({}));
         throw new Error((e as { message?: string }).message || `HTTP ${putRes.status}`);
       }
+      const successMsg = `Udgivet af ${role} — live-siden opdateres om ca. 2 minutter.`;
       setPublishStatus("success");
-      setPublishMsg(`Udgivet af ${role} — live-siden opdateres om ca. 2 minutter.`);
+      setPublishMsg(successMsg);
+      appendLog("success", successMsg, role);
+      setToast({ show: true, type: "success", message: `Ændringer gemt og sendt til GitHub.` });
     } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Ukendt fejl.";
       setPublishStatus("error");
-      setPublishMsg(err instanceof Error ? err.message : "Ukendt fejl.");
+      setPublishMsg(errMsg);
+      appendLog("error", errMsg, role);
+      setToast({ show: true, type: "error", message: errMsg });
     }
-  }, [role, config]);
+  }, [role, config, appendLog]);
+
+  const clearLogs = () => {
+    setLogs([]);
+    localStorage.removeItem("ab_publish_logs");
+  };
 
   // ── Updaters ─────────────────────────────────────────────────────────────
   const upG   = (k: keyof SiteConfig["general"], v: string)        => setConfig((c) => ({ ...c, general: { ...c.general, [k]: v } }));
@@ -500,8 +592,7 @@ export default function Settings() {
       </div>
     );
 
-    // Publish tab
-    return (
+    if (activeTab === "publish") return (
       <div>
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6 text-center">
           <div className="text-4xl mb-3">🚀</div>
@@ -544,6 +635,102 @@ export default function Settings() {
         )}
       </div>
     );
+
+    // Advanced tab (Udvikler only)
+    if (activeTab === "advanced") {
+      const successLogs = logs.filter((l) => l.type === "success");
+      const errorLogs   = logs.filter((l) => l.type === "error");
+      return (
+        <div>
+          {/* Header */}
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Terminal className="w-4 h-4 text-purple-500" />
+              <h3 className="font-semibold text-gray-900 text-sm">Avancerede indstillinger</h3>
+            </div>
+            <span className="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">Kun Udvikler</span>
+          </div>
+
+          {/* Token setup */}
+          <SectionBlock title="GitHub Token">
+            <TokenSetup />
+          </SectionBlock>
+
+          {/* System info */}
+          <SectionBlock title="System info" defaultOpen={false}>
+            <div className="space-y-1.5 font-mono text-xs text-gray-500 bg-gray-950 rounded-lg p-4 text-green-400">
+              <div><span className="text-gray-500">repo</span>    <span className="ml-2">{REPO_OWNER}/{REPO_NAME}</span></div>
+              <div><span className="text-gray-500">config</span>  <span className="ml-2">{CONFIG_PATH}</span></div>
+              <div><span className="text-gray-500">token</span>   <span className="ml-2">{localStorage.getItem("ab_gh_token") ? "✓ konfigureret" : "✗ mangler"}</span></div>
+              <div><span className="text-gray-500">logs</span>    <span className="ml-2">{logs.length} entries</span></div>
+              <div><span className="text-gray-500">version</span> <span className="ml-2">{new Date().toLocaleDateString("da-DK")}</span></div>
+            </div>
+          </SectionBlock>
+
+          {/* Publish log */}
+          <SectionBlock title={`Publish-log (${successLogs.length} ok)`}>
+            {successLogs.length === 0 ? (
+              <p className="text-xs text-gray-400 text-center py-4">Ingen publiceringer endnu</p>
+            ) : (
+              <div className="space-y-2">
+                {successLogs.map((entry) => (
+                  <div key={entry.id} className="p-3 rounded-lg border border-green-200 bg-green-50">
+                    <div className="flex items-center gap-2 mb-1">
+                      <CheckCircle className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
+                      <span className="text-[10px] font-bold text-green-700 uppercase tracking-widest">UDGIV OK</span>
+                      <span className="text-[10px] text-gray-400 ml-auto font-mono">{entry.role}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 leading-relaxed">{entry.message}</p>
+                    <p className="text-[10px] text-gray-400 mt-1 font-mono">
+                      {new Date(entry.timestamp).toLocaleString("da-DK", { dateStyle: "short", timeStyle: "medium" })}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </SectionBlock>
+
+          {/* Error log */}
+          <SectionBlock title={`Fejllog (${errorLogs.length} fejl)`} defaultOpen={errorLogs.length > 0}>
+            {errorLogs.length === 0 ? (
+              <p className="text-xs text-gray-400 text-center py-4">Ingen fejl registreret</p>
+            ) : (
+              <div className="space-y-2">
+                {errorLogs.map((entry) => (
+                  <div key={entry.id} className="p-3 rounded-lg border border-red-200 bg-red-50">
+                    <div className="flex items-center gap-2 mb-1">
+                      <XCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
+                      <span className="text-[10px] font-bold text-red-700 uppercase tracking-widest">FEJL</span>
+                      <span className="text-[10px] text-gray-400 ml-auto font-mono">{entry.role}</span>
+                    </div>
+                    <p className="text-xs text-red-700 leading-relaxed font-mono break-all">{entry.message}</p>
+                    <p className="text-[10px] text-gray-400 mt-1 font-mono">
+                      {new Date(entry.timestamp).toLocaleString("da-DK", { dateStyle: "short", timeStyle: "medium" })}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </SectionBlock>
+
+          {/* Clear logs */}
+          {logs.length > 0 && (
+            <div className="mt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearLogs}
+                className="w-full text-red-500 border-red-200 hover:bg-red-50 hover:border-red-300"
+              >
+                <Trash2 className="w-3.5 h-3.5 mr-1.5" /> Ryd alle logs ({logs.length})
+              </Button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return null;
   };
 
   // ── Login screen ─────────────────────────────────────────────────────────
@@ -585,6 +772,7 @@ export default function Settings() {
 
   // ── Main admin UI ────────────────────────────────────────────────────────
   const roleColor = Object.values(ROLES).find((r) => r.label === role)?.color ?? "bg-gray-600";
+  const visibleTabs = TABS.filter((t) => t.id !== "advanced" || role === "Udvikler");
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
@@ -621,7 +809,7 @@ export default function Settings() {
 
       <div className="bg-white border-b border-gray-200 flex-shrink-0 overflow-x-auto">
         <div className="flex min-w-max">
-          {TABS.map((t) => (
+          {visibleTabs.map((t) => (
             <button
               key={t.id}
               onClick={() => handleTabChange(t.id)}
@@ -633,6 +821,11 @@ export default function Settings() {
             >
               <span>{t.icon}</span> {t.label}
               {t.id === "publish" && publishStatus === "idle" && <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />}
+              {t.id === "advanced" && logs.filter((l) => l.type === "error").length > 0 && (
+                <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-bold flex items-center justify-center">
+                  {logs.filter((l) => l.type === "error").length > 9 ? "9+" : logs.filter((l) => l.type === "error").length}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -645,7 +838,7 @@ export default function Settings() {
             {/* Called as a function — NOT as <Component /> — to prevent focus loss on re-render */}
             {renderForm()}
           </div>
-          {activeTab !== "publish" && (
+          {activeTab !== "publish" && activeTab !== "advanced" && (
             <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-2.5">
               <p className="text-[11px] text-gray-400 text-center">
                 Ændringer vises i preview → Gå til <strong>🚀 Udgiv</strong> for at gøre dem permanente
@@ -682,6 +875,14 @@ export default function Settings() {
           </div>
         )}
       </div>
+
+      {/* Toast notification — visible across all tabs */}
+      <Toast
+        show={toast.show}
+        type={toast.type}
+        message={toast.message}
+        onClose={() => setToast((prev) => ({ ...prev, show: false }))}
+      />
     </div>
   );
 }
