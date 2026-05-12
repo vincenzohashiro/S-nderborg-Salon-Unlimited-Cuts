@@ -317,9 +317,29 @@ export default function Settings() {
           <Field label="Overskrift — linje 1"><Input value={config.offer.heading1} onChange={(e) => upO("heading1", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Overskrift — linje 2 (guld, kursiv)"><Input value={config.offer.heading2} onChange={(e) => upO("heading2", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Undertekst"><Textarea value={config.offer.subtext} onChange={(e) => upO("subtext", e.target.value)} rows={2} className="text-sm" /></Field>
-          <Field label="Småt under knap" hint='Fx "Ingen oprettelsesgebyr · Opsig når som helst"'>
+          <Field label="Småt under knap">
             <Input value={config.offer.smallPrint} onChange={(e) => upO("smallPrint", e.target.value)} className="h-8 text-sm" />
           </Field>
+
+          <div className="border-t border-gray-100 pt-3 mt-2">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">Kort — indhold</p>
+            {config.memberships.map((m, idx) => (
+              <div key={m.id} className={`border rounded-lg p-3 mb-3 ${m.highlight ? "border-yellow-300 bg-yellow-50/30" : "border-gray-200 bg-gray-50"}`}>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  Kort {idx + 1}{m.highlight ? " · Mest populær" : ""}
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Field label="Navn"><Input value={m.name} onChange={(e) => upM(m.id, "name", e.target.value)} className="h-8 text-sm" /></Field>
+                  <Field label="Pris (kr)"><Input value={m.price} onChange={(e) => upM(m.id, "price", e.target.value)} className="h-8 text-sm" /></Field>
+                </div>
+                <Field label="Slogan"><Input value={m.tagline} onChange={(e) => upM(m.id, "tagline", e.target.value)} className="h-8 text-sm" /></Field>
+                <Field label="Knap-tekst"><Input value={m.cta} onChange={(e) => upM(m.id, "cta", e.target.value)} className="h-8 text-sm" /></Field>
+                <Field label="Fordele — én per linje">
+                  <Textarea value={m.perks.join("\n")} onChange={(e) => upPerks(m.id, e.target.value)} rows={m.perks.length + 1} className="text-sm font-mono" />
+                </Field>
+              </div>
+            ))}
+          </div>
         </SectionBlock>
 
         <SectionBlock title="Services — sektion på forsiden">
@@ -327,6 +347,21 @@ export default function Settings() {
           <Field label="Overskrift"><Input value={config.servicesSection.heading} onChange={(e) => upSS("heading", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Brødtekst"><Textarea value={config.servicesSection.body} onChange={(e) => upSS("body", e.target.value)} rows={3} className="text-sm" /></Field>
           <Field label="Knap-tekst"><Input value={config.servicesSection.cta} onChange={(e) => upSS("cta", e.target.value)} className="h-8 text-sm" /></Field>
+
+          <div className="border-t border-gray-100 pt-3 mt-2">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">De 4 kort vist på forsiden</p>
+            {config.services.slice(0, 4).map((s, idx) => (
+              <div key={s.id} className="border border-gray-200 rounded-lg p-3 mb-2 bg-gray-50">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Kort {idx + 1}</p>
+                <Field label="Navn"><Input value={s.title} onChange={(e) => upSvc(s.id, "title", e.target.value)} className="h-8 text-sm" /></Field>
+                <div className="grid grid-cols-2 gap-2">
+                  <Field label="Pris"><Input value={s.price} onChange={(e) => upSvc(s.id, "price", e.target.value)} className="h-8 text-sm" /></Field>
+                  <Field label="Tid"><Input value={s.time} onChange={(e) => upSvc(s.id, "time", e.target.value)} className="h-8 text-sm" /></Field>
+                </div>
+                <Field label="Beskrivelse"><Textarea value={s.desc} onChange={(e) => upSvc(s.id, "desc", e.target.value)} rows={2} className="text-sm" /></Field>
+              </div>
+            ))}
+          </div>
         </SectionBlock>
 
         <SectionBlock title="Galleri" defaultOpen={false}>
