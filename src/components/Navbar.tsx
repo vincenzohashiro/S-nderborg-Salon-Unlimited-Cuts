@@ -33,13 +33,11 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <div className="bg-white rounded-xl p-1 shadow-sm border border-gray-100">
-            <img
-              src={logoEmblem}
-              alt={general.businessName}
-              className="h-10 w-auto object-contain"
-            />
-          </div>
+          <img
+            src={logoEmblem}
+            alt={general.businessName}
+            className="h-12 w-auto object-contain drop-shadow-md"
+          />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           {links.map((l) => (
