@@ -36,7 +36,7 @@ const Navbar = () => {
           <img
             src={logoEmblem}
             alt={general.businessName}
-            className="h-16 w-auto object-contain drop-shadow-md"
+            className="h-24 w-auto object-contain drop-shadow-md"
           />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
