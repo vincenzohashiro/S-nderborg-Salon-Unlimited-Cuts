@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 
 interface Review {
@@ -61,6 +61,8 @@ const REVIEWS: Review[] = [
   },
 ];
 
+const SPEED = 0.6; // px per animation frame
+
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true">
     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -108,8 +110,88 @@ const ReviewCard = ({ review }: { review: Review }) => (
 );
 
 const Reviews = () => {
-  const [paused, setPaused] = useState(false);
-  // Duplicate for seamless infinite loop
+  const containerRef    = useRef<HTMLDivElement>(null);
+  const animFrameRef    = useRef<number>();
+  const isDragging      = useRef(false);
+  const mouseStartX     = useRef(0);
+  const mouseScrollBase = useRef(0);
+  const [grabbing, setGrabbing] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Seamless loop: when past halfway point, jump back silently
+    const loopCheck = () => {
+      const half = el.scrollWidth / 2;
+      if (el.scrollLeft >= half) el.scrollLeft -= half;
+      if (el.scrollLeft < 0)    el.scrollLeft += half;
+    };
+
+    // rAF auto-scroll — skipped while dragging
+    const tick = () => {
+      if (!isDragging.current) {
+        el.scrollLeft += SPEED;
+        loopCheck();
+      }
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    // Touch drag — non-passive so we can prevent page scroll on horizontal swipe
+    const onTouchStart = (e: TouchEvent) => {
+      isDragging.current = true;
+      mouseStartX.current     = e.touches[0].clientX;
+      mouseScrollBase.current = el.scrollLeft;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging.current) return;
+      const delta = mouseStartX.current - e.touches[0].clientX;
+      el.scrollLeft = mouseScrollBase.current + delta;
+      loopCheck();
+    };
+
+    const onTouchEnd = () => { isDragging.current = false; };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove",  onTouchMove,  { passive: false });
+    el.addEventListener("touchend",   onTouchEnd);
+
+    animFrameRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove",  onTouchMove);
+      el.removeEventListener("touchend",   onTouchEnd);
+    };
+  }, []);
+
+  // Mouse drag handlers
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    isDragging.current = true;
+    setGrabbing(true);
+    mouseStartX.current     = e.clientX;
+    mouseScrollBase.current = containerRef.current.scrollLeft;
+    e.preventDefault();
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !containerRef.current) return;
+    const el    = containerRef.current;
+    const delta = mouseStartX.current - e.clientX;
+    el.scrollLeft = mouseScrollBase.current + delta;
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    if (el.scrollLeft < 0)    el.scrollLeft += half;
+  };
+
+  const onMouseUp = () => {
+    isDragging.current = false;
+    setGrabbing(false);
+  };
+
   const track = [...REVIEWS, ...REVIEWS];
 
   return (
@@ -128,34 +210,26 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Full-width carousel track */}
+      {/* Full-width scrollable track */}
       <div className="relative">
-        {/* Edge fade — left */}
+        {/* Edge fades */}
         <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-secondary to-transparent z-10 pointer-events-none" />
-        {/* Edge fade — right */}
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-secondary to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex"
-          style={{
-            animation: "reviews-marquee 40s linear infinite",
-            animationPlayState: paused ? "paused" : "running",
-          }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          ref={containerRef}
+          className={`flex overflow-x-scroll select-none [&::-webkit-scrollbar]:hidden ${grabbing ? "cursor-grabbing" : "cursor-grab"}`}
+          style={{ scrollbarWidth: "none" }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
         >
           {track.map((review, i) => (
             <ReviewCard key={`${review.id}-${i}`} review={review} />
           ))}
         </div>
       </div>
-
-      <style>{`
-        @keyframes reviews-marquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </section>
   );
 };
