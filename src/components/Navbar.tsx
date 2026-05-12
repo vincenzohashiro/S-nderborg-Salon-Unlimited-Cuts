@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useSiteConfig } from "@/context/SiteConfigContext";
+import logoEmblem from "@/assets/logo-emblem.png";
 
 const links = [
   { href: "/", label: "Forside" },
@@ -31,9 +32,13 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3">
-          <div className={`font-serif text-xl md:text-2xl leading-tight tracking-tight ${transparent ? "text-background" : "text-foreground"}`}>
-            {general.businessName.split(" ")[0]} <span className="text-gold italic">{general.businessName.split(" ").slice(1).join(" ")}</span>
+        <Link to="/" className="flex items-center">
+          <div className="bg-gray-950 rounded-xl p-1.5 shadow-md">
+            <img
+              src={logoEmblem}
+              alt={general.businessName}
+              className="h-10 w-auto object-contain"
+            />
           </div>
         </Link>
         <nav className="hidden md:flex items-center gap-10">
