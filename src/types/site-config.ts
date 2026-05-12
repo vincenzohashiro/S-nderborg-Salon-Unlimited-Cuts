@@ -27,6 +27,15 @@ export interface SEOPage {
   description: string;
 }
 
+export interface Review {
+  id: string;
+  author: string;
+  initials: string;
+  rating: number;
+  text: string;
+  date: string;
+}
+
 export interface SiteConfig {
   general: {
     businessName: string;
@@ -105,6 +114,7 @@ export interface SiteConfig {
   };
   services: Service[];
   memberships: MembershipPlan[];
+  reviews: Review[];
   seo: {
     canonicalBase: string;
     ogImage: string;

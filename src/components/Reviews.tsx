@@ -1,67 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
+import { useSiteConfig } from "@/context/SiteConfigContext";
+import type { Review } from "@/types/site-config";
 
-interface Review {
-  id: number;
-  author: string;
-  initials: string;
-  rating: number;
-  text: string;
-  date: string;
-}
-
-const REVIEWS: Review[] = [
-  {
-    id: 1,
-    author: "Mikkel Hansen",
-    initials: "MH",
-    rating: 5,
-    text: "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",
-    date: "For 2 uger siden",
-  },
-  {
-    id: 2,
-    author: "Ahmed Al-Rashidi",
-    initials: "AA",
-    rating: 5,
-    text: "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",
-    date: "For 1 måned siden",
-  },
-  {
-    id: 3,
-    author: "Jonas Petersen",
-    initials: "JP",
-    rating: 5,
-    text: "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",
-    date: "For 3 uger siden",
-  },
-  {
-    id: 4,
-    author: "Christoffer Larsen",
-    initials: "CL",
-    rating: 5,
-    text: "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",
-    date: "For 2 måneder siden",
-  },
-  {
-    id: 5,
-    author: "Rasmus Nielsen",
-    initials: "RN",
-    rating: 5,
-    text: "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",
-    date: "For 1 uge siden",
-  },
-  {
-    id: 6,
-    author: "Omar Khalid",
-    initials: "OK",
-    rating: 5,
-    text: "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",
-    date: "For 3 måneder siden",
-  },
-];
-
-const SPEED = 0.6; // px per animation frame
+const SPEED = 0.6;
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true">
@@ -75,10 +17,7 @@ const GoogleIcon = () => (
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5">
     {Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 ${i < rating ? "fill-gold text-gold" : "fill-muted text-muted"}`}
-      />
+      <Star key={i} className={`w-4 h-4 ${i < rating ? "fill-gold text-gold" : "fill-muted text-muted"}`} />
     ))}
   </div>
 );
@@ -92,11 +31,9 @@ const ReviewCard = ({ review }: { review: Review }) => (
         <span className="text-[10px] font-medium tracking-wide">Google</span>
       </div>
     </div>
-
     <p className="text-sm text-foreground/80 leading-relaxed flex-1">
       &ldquo;{review.text}&rdquo;
     </p>
-
     <div className="flex items-center gap-3 pt-3 border-t border-border">
       <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center flex-shrink-0">
         <span className="text-xs font-semibold text-gold">{review.initials}</span>
@@ -110,6 +47,7 @@ const ReviewCard = ({ review }: { review: Review }) => (
 );
 
 const Reviews = () => {
+  const { reviews } = useSiteConfig();
   const containerRef    = useRef<HTMLDivElement>(null);
   const animFrameRef    = useRef<number>();
   const isDragging      = useRef(false);
@@ -121,14 +59,12 @@ const Reviews = () => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Seamless loop: when past halfway point, jump back silently
     const loopCheck = () => {
       const half = el.scrollWidth / 2;
       if (el.scrollLeft >= half) el.scrollLeft -= half;
       if (el.scrollLeft < 0)    el.scrollLeft += half;
     };
 
-    // rAF auto-scroll — skipped while dragging
     const tick = () => {
       if (!isDragging.current) {
         el.scrollLeft += SPEED;
@@ -137,26 +73,21 @@ const Reviews = () => {
       animFrameRef.current = requestAnimationFrame(tick);
     };
 
-    // Touch drag — non-passive so we can prevent page scroll on horizontal swipe
     const onTouchStart = (e: TouchEvent) => {
       isDragging.current = true;
       mouseStartX.current     = e.touches[0].clientX;
       mouseScrollBase.current = el.scrollLeft;
     };
-
     const onTouchMove = (e: TouchEvent) => {
       if (!isDragging.current) return;
-      const delta = mouseStartX.current - e.touches[0].clientX;
-      el.scrollLeft = mouseScrollBase.current + delta;
+      el.scrollLeft = mouseScrollBase.current + (mouseStartX.current - e.touches[0].clientX);
       loopCheck();
     };
-
     const onTouchEnd = () => { isDragging.current = false; };
 
     el.addEventListener("touchstart", onTouchStart, { passive: true });
     el.addEventListener("touchmove",  onTouchMove,  { passive: false });
     el.addEventListener("touchend",   onTouchEnd);
-
     animFrameRef.current = requestAnimationFrame(tick);
 
     return () => {
@@ -167,7 +98,6 @@ const Reviews = () => {
     };
   }, []);
 
-  // Mouse drag handlers
   const onMouseDown = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
     isDragging.current = true;
@@ -176,27 +106,20 @@ const Reviews = () => {
     mouseScrollBase.current = containerRef.current.scrollLeft;
     e.preventDefault();
   };
-
   const onMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current || !containerRef.current) return;
-    const el    = containerRef.current;
-    const delta = mouseStartX.current - e.clientX;
-    el.scrollLeft = mouseScrollBase.current + delta;
+    const el = containerRef.current;
+    el.scrollLeft = mouseScrollBase.current + (mouseStartX.current - e.clientX);
     const half = el.scrollWidth / 2;
     if (el.scrollLeft >= half) el.scrollLeft -= half;
     if (el.scrollLeft < 0)    el.scrollLeft += half;
   };
+  const onMouseUp = () => { isDragging.current = false; setGrabbing(false); };
 
-  const onMouseUp = () => {
-    isDragging.current = false;
-    setGrabbing(false);
-  };
-
-  const track = [...REVIEWS, ...REVIEWS];
+  const track = [...reviews, ...reviews];
 
   return (
     <section id="anmeldelser" className="py-24 md:py-32 bg-secondary overflow-hidden">
-      {/* Heading — inside container */}
       <div className="container mb-14">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs uppercase tracking-[0.3em] text-gold">Google Anmeldelser</span>
@@ -210,12 +133,9 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Full-width scrollable track */}
       <div className="relative">
-        {/* Edge fades */}
         <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-secondary to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-secondary to-transparent z-10 pointer-events-none" />
-
         <div
           ref={containerRef}
           className={`flex overflow-x-scroll select-none [&::-webkit-scrollbar]:hidden ${grabbing ? "cursor-grabbing" : "cursor-grab"}`}

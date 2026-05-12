@@ -33,7 +33,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <div className="bg-gray-950 rounded-xl p-1.5 shadow-md">
+          <div className="bg-white rounded-xl p-1 shadow-sm border border-gray-100">
             <img
               src={logoEmblem}
               alt={general.businessName}

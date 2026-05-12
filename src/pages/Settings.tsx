@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { defaultConfig } from "@/config/defaultConfig";
-import type { SiteConfig, Service, MembershipPlan, SEOPage } from "@/types/site-config";
+import type { SiteConfig, Service, MembershipPlan, SEOPage, Review } from "@/types/site-config";
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
   Loader2, Settings as SettingsIcon, LogOut, Monitor, Check,
@@ -334,6 +334,14 @@ export default function Settings() {
   const rmSvc  = (id: string) => setConfig((c) => ({ ...c, services: c.services.filter((s) => s.id !== id) }));
   const upM    = (id: string, f: keyof MembershipPlan, v: unknown)  => setConfig((c) => ({ ...c, memberships: c.memberships.map((m) => m.id === id ? { ...m, [f]: v } : m) }));
   const upPerks = (id: string, text: string) => upM(id, "perks", text.split("\n").filter(Boolean));
+  const upReview = (id: string, f: keyof Review, v: string | number) =>
+    setConfig((c) => ({ ...c, reviews: c.reviews.map((r) => r.id === id ? { ...r, [f]: v } : r) }));
+  const addReview = () => setConfig((c) => ({
+    ...c,
+    reviews: [...c.reviews, { id: crypto.randomUUID(), author: "Ny anmelder", initials: "NA", rating: 5, text: "", date: "For nylig" }],
+  }));
+  const rmReview = (id: string) => setConfig((c) => ({ ...c, reviews: c.reviews.filter((r) => r.id !== id) }));
+
   const upSEO  = (page: "home" | "services" | "booking", f: keyof SEOPage, v: string) =>
     setConfig((c) => ({ ...c, seo: { ...c.seo, [page]: { ...c.seo[page], [f]: v } } }));
   const upSEORoot = (k: "canonicalBase" | "ogImage", v: string) =>
@@ -454,6 +462,33 @@ export default function Settings() {
               </div>
             ))}
           </div>
+        </SectionBlock>
+
+        <SectionBlock title="Anmeldelser" defaultOpen={false}>
+          {config.reviews.map((r, idx) => (
+            <div key={r.id} className="border border-gray-200 rounded-lg p-3 mb-3 bg-gray-50 relative">
+              <button type="button" onClick={() => rmReview(r.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Anmeldelse {idx + 1}</p>
+              <div className="grid grid-cols-2 gap-2">
+                <Field label="Navn"><Input value={r.author} onChange={(e) => upReview(r.id, "author", e.target.value)} className="h-8 text-sm" /></Field>
+                <Field label="Initialer (fx MH)"><Input value={r.initials} onChange={(e) => upReview(r.id, "initials", e.target.value)} className="h-8 text-sm" maxLength={3} /></Field>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Field label="Stjerner (1–5)">
+                  <Input type="number" min={1} max={5} value={r.rating} onChange={(e) => upReview(r.id, "rating", Math.min(5, Math.max(1, Number(e.target.value))))} className="h-8 text-sm" />
+                </Field>
+                <Field label="Dato (fx 'For 2 uger siden')"><Input value={r.date} onChange={(e) => upReview(r.id, "date", e.target.value)} className="h-8 text-sm" /></Field>
+              </div>
+              <Field label="Anmeldelsestekst">
+                <Textarea value={r.text} onChange={(e) => upReview(r.id, "text", e.target.value)} rows={3} className="text-sm" />
+              </Field>
+            </div>
+          ))}
+          <Button variant="outline" size="sm" onClick={addReview} className="w-full mt-1">
+            <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj anmeldelse
+          </Button>
         </SectionBlock>
 
         <SectionBlock title="Galleri" defaultOpen={false}>
