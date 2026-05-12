@@ -16,6 +16,12 @@ const REPO_NAME = "S-nderborg-Salon-Unlimited-Cuts";
 const CONFIG_PATH = "public/site-config.json";
 const toBase64 = (s: string) => btoa(unescape(encodeURIComponent(s)));
 
+const ROLES: Record<string, { label: string; color: string }> = {
+  "Barber$SEO-2025":  { label: "SEO",       color: "bg-blue-500" },
+  "Wasim$Owner-2025": { label: "Ejer",       color: "bg-green-600" },
+  "Dev$Panel-2025":   { label: "Udvikler",   color: "bg-purple-600" },
+};
+
 type Tab = "general" | "hero" | "about" | "services" | "memberships" | "seo" | "publish";
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
@@ -46,6 +52,33 @@ const CharCount = ({ text, min, max }: { text: string; min: number; max: number 
     <div className={`flex items-center gap-1.5 mt-1 text-xs ${color}`}>
       <span className={`w-1.5 h-1.5 rounded-full inline-block ${color.replace("text-", "bg-")}`} />
       <span>{n} tegn · {label} ({min}–{max})</span>
+    </div>
+  );
+};
+
+// ── Token setup (developer only) ───────────────────────────────────────────
+
+const TokenSetup = () => {
+  const [t, setT] = useState(localStorage.getItem("ab_gh_token") || "");
+  const [vis, setVis] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const save = () => {
+    localStorage.setItem("ab_gh_token", t.trim());
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+  return (
+    <div className="space-y-2">
+      <p className="text-xs text-gray-500 mb-2">GitHub Personal Access Token — gemmes lokalt i browseren. Sæt én gang op, og alle tre roller kan udgive.</p>
+      <div className="relative">
+        <Input type={vis ? "text" : "password"} value={t} onChange={(e) => setT(e.target.value)} placeholder="github_pat_..." className="pr-10 font-mono text-xs" />
+        <button type="button" onClick={() => setVis(!vis)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+          {vis ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+        </button>
+      </div>
+      <Button variant="outline" size="sm" onClick={save} className="w-full">
+        {saved ? <><Check className="w-3.5 h-3.5 mr-1 text-green-600" /> Gemt!</> : "Gem token"}
+      </Button>
     </div>
   );
 };
@@ -257,22 +290,19 @@ const GeneralPreview = ({ config }: { config: SiteConfig }) => (
 
 export default function Settings() {
   const [authed, setAuthed] = useState(false);
+  const [role, setRole] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [config, setConfig] = useState<SiteConfig>(defaultConfig);
   const [activeTab, setActiveTab] = useState<Tab>("general");
   const [seoPage, setSeoPage] = useState<"home" | "services" | "booking">("home");
-  const [token, setToken] = useState("");
-  const [showToken, setShowToken] = useState(false);
   const [publishStatus, setPublishStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [publishMsg, setPublishMsg] = useState("");
-  const [newPw, setNewPw] = useState("");
   const [showPreview, setShowPreview] = useState(true);
 
   useEffect(() => {
-    if (sessionStorage.getItem("ab_admin") === "1") setAuthed(true);
-    const t = localStorage.getItem("ab_gh_token");
-    if (t) setToken(t);
+    const storedRole = sessionStorage.getItem("ab_admin_role");
+    if (storedRole) { setAuthed(true); setRole(storedRole); }
     fetch(`${import.meta.env.BASE_URL}site-config.json`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d: SiteConfig) => setConfig(d))
@@ -281,34 +311,42 @@ export default function Settings() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const saved = localStorage.getItem("ab_admin_pw") || "abbarber2";
-    if (pw === saved) {
-      sessionStorage.setItem("ab_admin", "1");
+    const matched = ROLES[pw];
+    if (matched) {
+      sessionStorage.setItem("ab_admin_role", matched.label);
       setAuthed(true);
+      setRole(matched.label);
     } else {
       setPw("");
-      alert("Forkert adgangskode.\n\nStandard: abbarber2");
+      alert("Forkert adgangskode.");
     }
   };
 
   const handlePublish = useCallback(async () => {
-    if (!token.trim()) { alert("Indtast dit GitHub Personal Access Token."); return; }
+    const token = localStorage.getItem("ab_gh_token") || "";
+    if (!token.trim()) {
+      alert("GitHub token er ikke sat op endnu.\n\nBed udvikleren om at konfigurere dette én gang via Udgiv-fanen.");
+      return;
+    }
     setPublishStatus("loading");
     setPublishMsg("");
-    localStorage.setItem("ab_gh_token", token);
     try {
       const getRes = await fetch(
         `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONFIG_PATH}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" } }
       );
-      if (!getRes.ok) throw new Error(`GitHub fejl ${getRes.status} — tjek dit token.`);
+      if (!getRes.ok) throw new Error(`GitHub fejl ${getRes.status}`);
       const getJson = await getRes.json();
       const putRes = await fetch(
         `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONFIG_PATH}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/vnd.github+json" },
-          body: JSON.stringify({ message: "Update site config via admin", content: toBase64(JSON.stringify(config, null, 2)), sha: getJson.sha }),
+          body: JSON.stringify({
+            message: `Update site config [${role}]`,
+            content: toBase64(JSON.stringify(config, null, 2)),
+            sha: getJson.sha,
+          }),
         }
       );
       if (!putRes.ok) {
@@ -316,12 +354,12 @@ export default function Settings() {
         throw new Error((e as { message?: string }).message || `HTTP ${putRes.status}`);
       }
       setPublishStatus("success");
-      setPublishMsg("Ændringer udgivet! Siden opdateres om ca. 2 minutter.");
+      setPublishMsg(`Udgivet af ${role} — siden opdateres om ca. 2 minutter.`);
     } catch (err) {
       setPublishStatus("error");
       setPublishMsg(err instanceof Error ? err.message : "Ukendt fejl.");
     }
-  }, [token, config]);
+  }, [role, config]);
 
   // Updaters
   const upG = (k: keyof SiteConfig["general"], v: string) => setConfig((c) => ({ ...c, general: { ...c.general, [k]: v } }));
@@ -364,6 +402,7 @@ export default function Settings() {
                   {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
+              <p className="text-xs text-gray-400 mt-1.5">Brug din tildelte adgangskode (SEO, Ejer eller Udvikler).</p>
             </div>
             <Button variant="gold" className="w-full" type="submit">Log ind</Button>
           </form>
@@ -617,27 +656,19 @@ export default function Settings() {
 
     return (
       <div>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-5 text-sm text-blue-800">
-          <p className="font-medium mb-1">Sådan fungerer udgivelse:</p>
-          <ol className="list-decimal list-inside space-y-1 text-blue-700 text-xs">
-            <li>Rediger indhold i fanerne til venstre</li>
-            <li>Bekræft ændringerne i preview-panelet</li>
-            <li>Klik "Udgiv ændringer" her</li>
-            <li>Siden genopbygges automatisk (~2 min)</li>
-          </ol>
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6 text-center">
+          <div className="text-4xl mb-3">🚀</div>
+          <h3 className="font-semibold text-gray-900 mb-1">Klar til at udgive?</h3>
+          <p className="text-sm text-gray-500 mb-1">
+            Indlogget som <span className={`font-medium px-1.5 py-0.5 rounded text-white text-xs ${Object.values(ROLES).find(r => r.label === role)?.color ?? "bg-gray-600"}`}>{role}</span>
+          </p>
+          <p className="text-xs text-gray-400 mt-2">Ændringen registreres med dit rollenavn i systemet.</p>
         </div>
 
-        <Field label="GitHub Personal Access Token" hint="Opret token på: github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens. Giv adgang til repository S-nderborg-Salon-Unlimited-Cuts med tilladelsen Contents: Read and write.">
-          <div className="relative">
-            <Input type={showToken ? "text" : "password"} value={token} onChange={(e) => setToken(e.target.value)} placeholder="github_pat_..." className="pr-10 font-mono text-sm" />
-            <button type="button" onClick={() => setShowToken(!showToken)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-              {showToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </button>
-          </div>
-        </Field>
-
-        <Button variant="gold" size="lg" onClick={handlePublish} disabled={publishStatus === "loading"} className="w-full">
-          {publishStatus === "loading" ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Udgiver...</> : "🚀 Udgiv ændringer"}
+        <Button variant="gold" size="lg" onClick={handlePublish} disabled={publishStatus === "loading"} className="w-full text-base py-6">
+          {publishStatus === "loading"
+            ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Udgiver som {role}…</>
+            : `Udgiv ændringer som ${role}`}
         </Button>
 
         {publishStatus === "success" && (
@@ -650,6 +681,13 @@ export default function Settings() {
           <div className="flex items-start gap-2 mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
             <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <div><p className="font-medium mb-0.5">Udgivelse fejlede</p><p className="text-xs">{publishMsg}</p></div>
+          </div>
+        )}
+
+        {role === "Udvikler" && (
+          <div className="mt-8 border-t border-gray-200 pt-6">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Udvikler: Token-opsætning</p>
+            <TokenSetup />
           </div>
         )}
       </div>
@@ -665,9 +703,13 @@ export default function Settings() {
           <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center">
             <SettingsIcon className="w-4 h-4 text-gray-900" />
           </div>
-          <div>
+          <div className="flex items-center gap-2">
             <span className="font-semibold text-sm">A&B Admin</span>
-            <span className="text-gray-400 text-xs ml-2 hidden sm:inline">Hjemmeside editor</span>
+            {role && (
+              <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full text-white ${Object.values(ROLES).find(r => r.label === role)?.color ?? "bg-gray-600"}`}>
+                {role}
+              </span>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -681,7 +723,7 @@ export default function Settings() {
           <Link to="/" className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
             <ArrowLeft className="w-3 h-3" /> <span className="hidden sm:inline">Se siden</span>
           </Link>
-          <button onClick={() => { sessionStorage.removeItem("ab_admin"); setAuthed(false); }} className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
+          <button onClick={() => { sessionStorage.removeItem("ab_admin_role"); setAuthed(false); setRole(""); }} className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
             <LogOut className="w-3 h-3" /> <span className="hidden sm:inline">Log ud</span>
           </button>
         </div>
