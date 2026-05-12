@@ -9,7 +9,7 @@ const isPreviewMode = () =>
 
 // Merge any external data (fetch / localStorage) with defaultConfig so that
 // missing fields from old cached data never crash the components.
-const mergeConfig = (data: unknown): SiteConfig => {
+export const mergeConfig = (data: unknown): SiteConfig => {
   const d = (data ?? {}) as Partial<SiteConfig>;
   return {
     ...defaultConfig,

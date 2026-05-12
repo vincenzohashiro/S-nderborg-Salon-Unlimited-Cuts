@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { defaultConfig } from "@/config/defaultConfig";
+import { mergeConfig } from "@/context/SiteConfigContext";
 import type { SiteConfig, Service, MembershipPlan, SEOPage, Review } from "@/types/site-config";
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
@@ -225,7 +226,7 @@ export default function Settings() {
     if (storedRole) { setAuthed(true); setRole(storedRole); }
     fetch(`${import.meta.env.BASE_URL}site-config.json`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: SiteConfig) => setConfig(d))
+      .then((d) => setConfig(mergeConfig(d)))
       .catch(() => setConfig(defaultConfig));
   }, []);
 
@@ -269,9 +270,11 @@ export default function Settings() {
   }, []);
 
   const handlePublish = useCallback(async () => {
-    const token = localStorage.getItem("ab_gh_token") || "";
+    // Build-time token (set as VITE_GH_TOKEN in GitHub Actions secrets) takes priority,
+    // with localStorage as a developer override fallback.
+    const token = (import.meta.env.VITE_GH_TOKEN as string | undefined) || localStorage.getItem("ab_gh_token") || "";
     if (!token.trim()) {
-      alert("GitHub token er ikke sat op.\n\nBed udvikleren om at konfigurere dette via Udgiv-fanen.");
+      alert("GitHub token mangler.\n\nKontakt udvikleren for at konfigurere VITE_GH_TOKEN i GitHub secrets.");
       return;
     }
     setPublishStatus("loading");
@@ -465,7 +468,7 @@ export default function Settings() {
         </SectionBlock>
 
         <SectionBlock title="Anmeldelser" defaultOpen={false}>
-          {config.reviews.map((r, idx) => (
+          {(config.reviews ?? []).map((r, idx) => (
             <div key={r.id} className="border border-gray-200 rounded-lg p-3 mb-3 bg-gray-50 relative">
               <button type="button" onClick={() => rmReview(r.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
                 <Trash2 className="w-3.5 h-3.5" />
