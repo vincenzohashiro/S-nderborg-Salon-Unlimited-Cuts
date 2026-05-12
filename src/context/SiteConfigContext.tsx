@@ -4,25 +4,31 @@ import { defaultConfig } from "@/config/defaultConfig";
 
 const SiteConfigContext = createContext<SiteConfig>(defaultConfig);
 
-const isPreviewMode = () => new URLSearchParams(window.location.search).has("preview");
+const isPreviewMode = () =>
+  typeof window !== "undefined" && new URLSearchParams(window.location.search).has("preview");
 
 export const SiteConfigProvider = ({ children }: { children: ReactNode }) => {
   const [config, setConfig] = useState<SiteConfig>(defaultConfig);
 
   useEffect(() => {
     if (isPreviewMode()) {
-      // In preview mode: receive config from Settings panel via postMessage
-      const handler = (e: MessageEvent) => {
-        if (e.data?.type === "ab-config-update" && e.data.config) {
-          setConfig(e.data.config);
+      // Preview mode: read from localStorage (written by Settings panel)
+      const stored = localStorage.getItem("ab_preview_config");
+      if (stored) {
+        try { setConfig(JSON.parse(stored) as SiteConfig); } catch {}
+      }
+
+      // Listen for real-time updates — storage event fires in iframe when
+      // the parent (Settings page) writes to localStorage
+      const handler = (e: StorageEvent) => {
+        if (e.key === "ab_preview_config" && e.newValue) {
+          try { setConfig(JSON.parse(e.newValue) as SiteConfig); } catch {}
         }
       };
-      window.addEventListener("message", handler);
-      // Signal to parent that this iframe is ready to receive config
-      window.parent.postMessage({ type: "ab-preview-ready" }, "*");
-      return () => window.removeEventListener("message", handler);
+      window.addEventListener("storage", handler);
+      return () => window.removeEventListener("storage", handler);
     } else {
-      // Normal mode: fetch from site-config.json
+      // Normal mode: fetch from published site-config.json
       fetch(`${import.meta.env.BASE_URL}site-config.json`)
         .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then((data: SiteConfig) => setConfig(data))

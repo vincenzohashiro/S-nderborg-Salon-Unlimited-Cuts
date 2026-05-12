@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,8 +153,6 @@ export default function Settings() {
   const [publishStatus, setPublishStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [publishMsg, setPublishMsg] = useState("");
   const [showPreview, setShowPreview] = useState(true);
-  const [iframeReady, setIframeReady] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     const storedRole = sessionStorage.getItem("ab_admin_role");
@@ -165,32 +163,16 @@ export default function Settings() {
       .catch(() => setConfig(defaultConfig));
   }, []);
 
-  // Listen for iframe ready signal
+  // Write config to localStorage on every change — the iframe's
+  // SiteConfigContext receives a storage event and updates instantly
   useEffect(() => {
-    const handler = (e: MessageEvent) => {
-      if (e.data?.type === "ab-preview-ready") {
-        setIframeReady(true);
-        iframeRef.current?.contentWindow?.postMessage({ type: "ab-config-update", config }, "*");
-      }
-    };
-    window.addEventListener("message", handler);
-    return () => window.removeEventListener("message", handler);
+    localStorage.setItem("ab_preview_config", JSON.stringify(config));
   }, [config]);
-
-  // Push config to iframe on every change
-  useEffect(() => {
-    if (iframeReady) {
-      iframeRef.current?.contentWindow?.postMessage({ type: "ab-config-update", config }, "*");
-    }
-  }, [config, iframeReady]);
 
   const activeTabDef = TABS.find((t) => t.id === activeTab)!;
   const previewUrl = `${import.meta.env.BASE_URL}`.replace(/\/$/, "") + activeTabDef.path + "?preview=1";
 
-  const handleTabChange = (tab: Tab) => {
-    setActiveTab(tab);
-    setIframeReady(false);
-  };
+  const handleTabChange = (tab: Tab) => setActiveTab(tab);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -653,17 +635,8 @@ export default function Settings() {
               <span className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">Live Preview</span>
             </div>
 
-            <div className="flex-1 overflow-hidden relative">
-              {!iframeReady && (
-                <div className="absolute inset-0 flex items-center justify-center bg-[#e8eaed] z-10">
-                  <div className="text-center text-gray-400">
-                    <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
-                    <p className="text-xs">Indlæser preview…</p>
-                  </div>
-                </div>
-              )}
+            <div className="flex-1 overflow-hidden">
               <iframe
-                ref={iframeRef}
                 key={activeTab}
                 src={previewUrl}
                 title="Preview"
