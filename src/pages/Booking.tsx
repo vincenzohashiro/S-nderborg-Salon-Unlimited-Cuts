@@ -2,15 +2,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Clock, ExternalLink } from "lucide-react";
-import { useEffect } from "react";
 import { useSiteConfig } from "@/context/SiteConfigContext";
+import { useSEO } from "@/hooks/useSEO";
 
 const Booking = () => {
-  const { general } = useSiteConfig();
-
-  useEffect(() => {
-    document.title = "Book tid — A&B Barber Lounge 2 Sønderborg";
-  }, []);
+  const { general, seo } = useSiteConfig();
+  useSEO(seo.booking.title, seo.booking.description, seo.ogImage);
 
   return (
     <main className="min-h-screen bg-background">

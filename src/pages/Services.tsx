@@ -3,17 +3,14 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import { useEffect } from "react";
 import shave from "@/assets/barber-shave.jpg";
 import { useSiteConfig } from "@/context/SiteConfigContext";
+import { useSEO } from "@/hooks/useSEO";
 import { getIcon } from "@/lib/icons";
 
 const ServicesPage = () => {
-  const { services, memberships } = useSiteConfig();
-
-  useEffect(() => {
-    document.title = "Services & Priser — A&B Barber Lounge 2 Sønderborg";
-  }, []);
+  const { services, memberships, seo } = useSiteConfig();
+  useSEO(seo.services.title, seo.services.description, seo.ogImage);
 
   return (
     <main className="min-h-screen bg-background">

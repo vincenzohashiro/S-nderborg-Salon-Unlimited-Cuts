@@ -74,4 +74,20 @@ export const defaultConfig: SiteConfig = {
       highlight: true,
     },
   ],
+  seo: {
+    canonicalBase: "https://ab-barberlounge2.dk",
+    ogImage: "https://ab-barberlounge2.dk/og-image.jpg",
+    home: {
+      title: "A&B Barber Lounge 2 Sønderborg — Ubegrænset klip 499 kr/md",
+      description: "A&B Barber Lounge 2 i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64. Ring 91 75 24 70.",
+    },
+    services: {
+      title: "Services & Priser — A&B Barber Lounge 2 Sønderborg",
+      description: "Se alle vores barbertjenester og priser. Herreklip fra 200 kr, skægtrimning, varm barbering og mere. Bliv medlem og få ubegrænset klip fra 499 kr/md.",
+    },
+    booking: {
+      title: "Book tid — A&B Barber Lounge 2 Sønderborg",
+      description: "Book din tid online hos A&B Barber Lounge 2 i Sønderborg. Hurtig og nem booking via Planway. Drop-in velkommen man–lør 09–18.",
+    },
+  },
 };

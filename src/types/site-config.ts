@@ -22,6 +22,11 @@ export interface MembershipPlan {
   highlight: boolean;
 }
 
+export interface SEOPage {
+  title: string;
+  description: string;
+}
+
 export interface SiteConfig {
   general: {
     businessName: string;
@@ -52,4 +57,11 @@ export interface SiteConfig {
   };
   services: Service[];
   memberships: MembershipPlan[];
+  seo: {
+    canonicalBase: string;
+    ogImage: string;
+    home: SEOPage;
+    services: SEOPage;
+    booking: SEOPage;
+  };
 }
