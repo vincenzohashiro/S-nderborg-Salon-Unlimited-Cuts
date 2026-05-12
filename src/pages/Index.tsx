@@ -4,6 +4,7 @@ import About from "@/components/About";
 import Offer from "@/components/Offer";
 import Services from "@/components/Services";
 import Gallery from "@/components/Gallery";
+import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useSiteConfig } from "@/context/SiteConfigContext";
@@ -21,6 +22,7 @@ const Index = () => {
       <Offer />
       <Services />
       <Gallery />
+      <Reviews />
       <Contact />
       <Footer />
     </main>
