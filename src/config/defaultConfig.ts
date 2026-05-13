@@ -82,9 +82,9 @@ export const defaultConfig: SiteConfig = {
   },
   services: [
     { id: "1", icon: "scissors", title: "Herreklip",      price: "200 kr",    time: "30 min", desc: "Klassisk eller moderne klipning, vask og styling inkluderet." },
-    { id: "2", icon: "user",     title: "Skægtrim",       price: "149 kr",    time: "20 min", desc: "Præcis trimning og formgivning af dit skæg." },
+    { id: "2", icon: "beard",    title: "Skægtrim",       price: "149 kr",    time: "20 min", desc: "Præcis trimning og formgivning af dit skæg." },
     { id: "3", icon: "flame",    title: "Varm Barbering", price: "199 kr",    time: "25 min", desc: "Klassisk barbering med varmt håndklæde og barberkniv." },
-    { id: "4", icon: "sparkles", title: "Klip + Skæg",   price: "349 kr",    time: "45 min", desc: "Den komplette pakke — klipning og fuld skægbehandling." },
+    { id: "4", icon: "scissors-beard", title: "Klip + Skæg",   price: "349 kr",    time: "45 min", desc: "Den komplette pakke — klipning og fuld skægbehandling." },
     { id: "5", icon: "crown",    title: "Den Royale",     price: "499 kr",    time: "60 min", desc: "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse." },
     { id: "6", icon: "baby",     title: "Børneklip (0–12)", price: "179 kr", time: "20 min", desc: "Tålmodig klipning for de små i en rolig stol." },
     { id: "7", icon: "droplet",  title: "Hårfarve",       price: "fra 299 kr", time: "30 min", desc: "Dækning af grå hår eller fuld farveændring." },

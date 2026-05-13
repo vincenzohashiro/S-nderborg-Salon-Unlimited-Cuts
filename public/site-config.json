@@ -98,7 +98,7 @@
     },
     {
       "id": "2",
-      "icon": "user",
+      "icon": "beard",
       "title": "Skægtrim",
       "price": "100 kr",
       "time": "20 min",
@@ -106,7 +106,7 @@
     },
     {
       "id": "4",
-      "icon": "sparkles",
+      "icon": "scissors-beard",
       "title": "Klip + Skæg",
       "price": "300 kr",
       "time": "40 min",
@@ -114,7 +114,7 @@
     },
     {
       "id": "5",
-      "icon": "crown",
+      "icon": "elderly",
       "title": "Pensionist klip",
       "price": "150 kr",
       "time": "30 min",
@@ -138,7 +138,7 @@
     },
     {
       "id": "1e0471c4-1606-4833-aba4-4705dcde943a",
-      "icon": "scissors",
+      "icon": "clipper",
       "title": "Maskineklip ",
       "price": "120 kr",
       "time": "15 min",
