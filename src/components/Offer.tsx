@@ -29,7 +29,7 @@ const Offer = () => {
           {memberships.map((p) => (
             <div
               key={p.id}
-              className={`relative bg-background/5 backdrop-blur-sm border rounded-sm p-8 md:p-10 shadow-elegant flex flex-col items-center md:items-start ${
+              className={`relative bg-background/10 border rounded-sm p-8 md:p-10 shadow-elegant flex flex-col items-center md:items-start ${
                 p.highlight ? "border-gold" : "border-gold/20"
               }`}
             >
