@@ -50,7 +50,7 @@ const ServicesPage = () => {
             })}
           </div>
 
-          <div className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-8">
+          <div className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-8 px-4 md:px-0">
             {memberships.map((m) => (
               <div
                 key={m.id}

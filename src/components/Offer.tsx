@@ -25,7 +25,7 @@ const Offer = () => {
           <p className="mt-6 text-background/70 font-light">{offer.subtext}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4 md:px-0">
           {memberships.map((p) => (
             <div
               key={p.id}
