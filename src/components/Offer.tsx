@@ -29,7 +29,7 @@ const Offer = () => {
           {memberships.map((p) => (
             <div
               key={p.id}
-              className={`relative bg-background/5 backdrop-blur-sm border rounded-sm p-8 md:p-10 shadow-elegant flex flex-col ${
+              className={`relative bg-background/5 backdrop-blur-sm border rounded-sm p-8 md:p-10 shadow-elegant flex flex-col items-center md:items-start ${
                 p.highlight ? "border-gold" : "border-gold/20"
               }`}
             >
@@ -38,20 +38,20 @@ const Offer = () => {
                   Mest populær
                 </span>
               )}
-              <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4 text-center md:text-left">{p.name}</div>
-              <div className="flex items-baseline gap-2 mb-3 justify-center md:justify-start">
+              <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4 text-center md:text-left w-full">{p.name}</div>
+              <div className="flex items-baseline gap-2 mb-3">
                 <span className="font-serif text-6xl md:text-7xl text-background">{p.price}</span>
                 <span className="text-background/60 text-lg">kr/md</span>
               </div>
-              <p className="text-background/70 font-light mb-8 text-center md:text-left">{p.tagline}</p>
+              <p className="text-background/70 font-light mb-8 text-center md:text-left w-full">{p.tagline}</p>
 
-              <ul className="space-y-3 mb-10">
+              <ul className="space-y-3 mb-10 w-full">
                 {p.perks.map((perk) => (
-                  <li key={perk} className="flex items-start gap-3 text-background/90">
+                  <li key={perk} className="flex items-start gap-3 text-background/90 justify-center md:justify-start">
                     <span className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-gold/20 flex items-center justify-center">
                       <Check className="w-3 h-3 text-gold" />
                     </span>
-                    <span className="font-light text-sm">{perk}</span>
+                    <span className="font-light text-sm text-left">{perk}</span>
                   </li>
                 ))}
               </ul>
@@ -59,7 +59,7 @@ const Offer = () => {
               <Button variant="gold" size="xl" className="w-full mt-auto" asChild>
                 <Link to="/booking">{p.cta}</Link>
               </Button>
-              <p className="text-xs text-background/50 mt-4 text-center">{offer.smallPrint}</p>
+              <p className="text-xs text-background/50 mt-4 text-center w-full">{offer.smallPrint}</p>
             </div>
           ))}
         </div>

@@ -32,11 +32,15 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+        <Link
+          to="/"
+          className="flex items-center"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <img
             src={logoEmblem}
             alt={general.businessName}
-            className="h-24 w-auto object-contain drop-shadow-md"
+            className="h-14 md:h-24 w-auto object-contain drop-shadow-md"
           />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
