@@ -50,20 +50,20 @@ const ServicesPage = () => {
             })}
           </div>
 
-          <div className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-8 px-4 md:px-0">
+          <div className="max-w-5xl mx-auto mt-20 grid md:grid-cols-2 gap-6 md:gap-8">
             {memberships.map((m) => (
               <div
                 key={m.id}
-                className={`p-10 bg-gradient-dark text-background rounded-sm text-center shadow-elegant relative ${m.highlight ? "border border-gold" : ""}`}
+                className={`relative bg-gradient-dark text-background rounded-sm p-6 md:p-10 flex flex-col md:shadow-elegant w-full min-w-0 text-center ${m.highlight ? "border border-gold" : ""}`}
               >
                 {m.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-primary text-[10px] uppercase tracking-[0.25em] px-3 py-1 rounded-sm">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-primary text-[10px] uppercase tracking-[0.25em] px-3 py-1 rounded-sm whitespace-nowrap">
                     Mest populær
                   </span>
                 )}
                 <span className="text-xs uppercase tracking-[0.3em] text-gold">Medlemskab</span>
-                <h2 className="font-serif text-3xl md:text-4xl mt-4 mb-2">{m.name}</h2>
-                <div className="font-serif text-5xl text-gold mb-4">{m.price} kr/md</div>
+                <h2 className="font-serif text-2xl md:text-4xl mt-4 mb-2">{m.name}</h2>
+                <div className="font-serif text-4xl md:text-5xl text-gold mb-4">{m.price} kr/md</div>
                 <p className="text-background/70 font-light mb-6 text-sm">{m.tagline}</p>
                 <ul className="text-left space-y-2 mb-8">
                   {m.perks.map((perk) => (
@@ -73,7 +73,7 @@ const ServicesPage = () => {
                     </li>
                   ))}
                 </ul>
-                <Button variant="gold" size="lg" className="w-full" asChild>
+                <Button variant="gold" size="lg" className="w-full mt-auto" asChild>
                   <Link to="/booking">{m.cta}</Link>
                 </Button>
               </div>
