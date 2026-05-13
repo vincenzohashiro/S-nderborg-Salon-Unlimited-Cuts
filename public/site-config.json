@@ -120,12 +120,12 @@
     }
   ],
   "reviews": [
-    { "id": "1", "author": "Mikkel Hansen",      "initials": "MH", "rating": 5, "text": "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",              "date": "For 2 uger siden"    },
-    { "id": "2", "author": "Ahmed Al-Rashidi",   "initials": "AA", "rating": 5, "text": "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",                              "date": "For 1 måned siden"   },
-    { "id": "3", "author": "Jonas Petersen",     "initials": "JP", "rating": 5, "text": "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",                                  "date": "For 3 uger siden"    },
-    { "id": "4", "author": "Christoffer Larsen", "initials": "CL", "rating": 5, "text": "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",                          "date": "For 2 måneder siden" },
-    { "id": "5", "author": "Rasmus Nielsen",     "initials": "RN", "rating": 5, "text": "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",                                      "date": "For 1 uge siden"     },
-    { "id": "6", "author": "Omar Khalid",        "initials": "OK", "rating": 5, "text": "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",                            "date": "For 3 måneder siden" }
+    { "id": "1", "author": "Manzar Malik",            "initials": "MM", "rating": 5, "text": "Had a really pleasant experience he did exactly same haircut what i asked and beard trimming was also nice.", "date": "For 18 timer siden" },
+    { "id": "2", "author": "Catalin Cercel",           "initials": "CC", "rating": 5, "text": "Professional haircut. 👌",                                                                                    "date": "For 5 dage siden"  },
+    { "id": "3", "author": "Aladdin Oudeh",            "initials": "AO", "rating": 5, "text": "We're good service and it's professional work Wasim done",                                                   "date": "For 1 uge siden"   },
+    { "id": "4", "author": "Sønderborg Pizza & Grill", "initials": "SP", "rating": 5, "text": "A beautiful haircut, I recommend it.",                                                                      "date": "For 1 måned siden" },
+    { "id": "5", "author": "Rizan Hannan",             "initials": "RH", "rating": 5, "text": "Good service, nice mood and skilled hairdresser",                                                             "date": "For 1 dag siden"   },
+    { "id": "6", "author": "Sedin",                    "initials": "SE", "rating": 5, "text": "Good haircut, good service and great mood. Definitely recommended 😊",                                       "date": "For 2 dage siden"  }
   ],
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
