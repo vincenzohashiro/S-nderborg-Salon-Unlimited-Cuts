@@ -260,17 +260,6 @@ export default function Settings() {
 
   const hasUnsaved = initialConfigRef.current !== null && JSON.stringify(config) !== initialConfigRef.current;
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-        e.preventDefault();
-        handlePublish();
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [handlePublish]);
-
   const activeTabDef = TABS.find((t) => t.id === activeTab)!;
   const previewUrl = `${import.meta.env.BASE_URL}`.replace(/\/$/, "") + activeTabDef.path + "?preview=1";
 
@@ -351,6 +340,17 @@ export default function Settings() {
       setToast({ show: true, type: "error", message: errMsg });
     }
   }, [role, config, appendLog]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        handlePublish();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [handlePublish]);
 
   const clearLogs = () => {
     setLogs([]);
