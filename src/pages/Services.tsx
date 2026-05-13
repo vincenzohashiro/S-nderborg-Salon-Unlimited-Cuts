@@ -42,7 +42,7 @@ const ServicesPage = () => {
                     <span className="text-gold uppercase tracking-widest text-sm">{s.price}</span>
                     <span className="text-muted-foreground text-xs">· {s.time}</span>
                   </div>
-                  <p className="font-light text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  <p className="font-light text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{s.desc}</p>
                 </div>
               );
             })}

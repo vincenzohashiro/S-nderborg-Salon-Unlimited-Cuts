@@ -47,7 +47,7 @@ const Services = () => {
                 <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
                 <h3 className="font-serif text-lg md:text-2xl mb-1 md:mb-2">{s.title}</h3>
                 <p className="text-xs md:text-sm text-gold mb-2 md:mb-4 uppercase tracking-widest">{s.price}</p>
-                <p className="font-light text-xs md:text-sm opacity-80 leading-relaxed hidden sm:block">{s.desc}</p>
+                <p className="font-light text-xs md:text-sm opacity-80 leading-relaxed hidden sm:block whitespace-pre-line">{s.desc}</p>
               </div>
             );
           })}
