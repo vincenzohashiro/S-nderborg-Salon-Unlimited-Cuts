@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { defaultConfig } from "@/config/defaultConfig";
 import { mergeConfig } from "@/context/SiteConfigContext";
+import { getIcon } from "@/lib/icons";
 import type { SiteConfig, Service, MembershipPlan, SEOPage, Review } from "@/types/site-config";
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
@@ -22,6 +23,18 @@ const ROLES: Record<string, { label: string; color: string }> = {
   "Wasim$Owner-2025": { label: "Ejer",     color: "bg-green-600"  },
   "Dev$Panel-2025":   { label: "Udvikler", color: "bg-purple-600" },
 };
+
+const ICON_OPTIONS: { key: string; label: string }[] = [
+  { key: "scissors",       label: "Klip"       },
+  { key: "beard",          label: "Skæg"       },
+  { key: "scissors-beard", label: "Klip+Skæg"  },
+  { key: "elderly",        label: "Pensionist" },
+  { key: "baby",           label: "Barn"       },
+  { key: "gift",           label: "Gave"       },
+  { key: "clipper",        label: "Maskine"    },
+  { key: "flame",          label: "Barbering"  },
+  { key: "droplet",        label: "Farve"      },
+];
 
 interface LogEntry {
   id: string;
@@ -540,6 +553,29 @@ export default function Settings() {
               <button type="button" onClick={() => rmSvc(s.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
+              <Field label="Ikon">
+                <div className="flex flex-wrap gap-1.5">
+                  {ICON_OPTIONS.map(({ key, label }) => {
+                    const Icon = getIcon(key);
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        title={label}
+                        onClick={() => upSvc(s.id, "icon", key)}
+                        className={`p-2 rounded border flex flex-col items-center gap-1 transition-colors ${
+                          s.icon === key
+                            ? "bg-yellow-50 border-yellow-400 text-yellow-700"
+                            : "bg-white border-gray-200 text-gray-500 hover:border-gray-400"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" strokeWidth={1.5} />
+                        <span className="text-[8px] leading-none">{label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Field>
               <Field label="Navn"><Input value={s.title} onChange={(e) => upSvc(s.id, "title", e.target.value)} className="h-8 text-sm" /></Field>
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Pris"><Input value={s.price} onChange={(e) => upSvc(s.id, "price", e.target.value)} className="h-8 text-sm" /></Field>
