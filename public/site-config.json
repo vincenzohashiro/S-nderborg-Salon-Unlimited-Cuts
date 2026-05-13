@@ -135,6 +135,14 @@
       "price": "valgfrit",
       "time": "—",
       "desc": "Den perfekte gave til ham. Fås i alle beløb."
+    },
+    {
+      "id": "e984400a-fb6b-4433-9c6f-ab5a357ed096",
+      "icon": "scissors",
+      "title": "Maskineklip",
+      "price": "120 kr",
+      "time": "15 min",
+      "desc": "Klassisk eller moderne klipning, kun med maskine"
     }
   ],
   "memberships": [
