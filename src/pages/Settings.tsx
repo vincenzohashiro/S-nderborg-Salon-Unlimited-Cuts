@@ -10,7 +10,8 @@ import type { SiteConfig, Service, MembershipPlan, SEOPage, Review } from "@/typ
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
   Loader2, Settings as SettingsIcon, LogOut, Monitor, Check,
-  Globe, Search, Facebook, Terminal,
+  Globe, Search, Facebook, Terminal, Smartphone, Tablet,
+  ChevronDown, Home, Scissors, CalendarDays, type LucideIcon,
 } from "lucide-react";
 
 const REPO_OWNER = "vincenzohashiro";
@@ -222,6 +223,7 @@ export default function Settings() {
   });
 
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const initialConfigRef = useRef<string | null>(null);
 
   // Auto-dismiss toast after 5 seconds
   useEffect(() => {
@@ -239,8 +241,15 @@ export default function Settings() {
     if (storedRole) { setAuthed(true); setRole(storedRole); }
     fetch(`${import.meta.env.BASE_URL}site-config.json`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => setConfig(mergeConfig(d)))
-      .catch(() => setConfig(defaultConfig));
+      .then((d) => {
+        const merged = mergeConfig(d);
+        setConfig(merged);
+        initialConfigRef.current = JSON.stringify(merged);
+      })
+      .catch(() => {
+        setConfig(defaultConfig);
+        initialConfigRef.current = JSON.stringify(defaultConfig);
+      });
   }, []);
 
   // Write config to localStorage on every change — the iframe's
@@ -248,6 +257,19 @@ export default function Settings() {
   useEffect(() => {
     localStorage.setItem("ab_preview_config", JSON.stringify(config));
   }, [config]);
+
+  const hasUnsaved = initialConfigRef.current !== null && JSON.stringify(config) !== initialConfigRef.current;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        handlePublish();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [handlePublish]);
 
   const activeTabDef = TABS.find((t) => t.id === activeTab)!;
   const previewUrl = `${import.meta.env.BASE_URL}`.replace(/\/$/, "") + activeTabDef.path + "?preview=1";
@@ -316,6 +338,7 @@ export default function Settings() {
         throw new Error((e as { message?: string }).message || `HTTP ${putRes.status}`);
       }
       const successMsg = `Udgivet af ${role} — live-siden opdateres om ca. 2 minutter.`;
+      initialConfigRef.current = JSON.stringify(config);
       setPublishStatus("success");
       setPublishMsg(successMsg);
       appendLog("success", successMsg, role);
@@ -864,7 +887,24 @@ export default function Settings() {
             {role && <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full text-white ${roleColor}`}>{role}</span>}
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            onClick={handlePublish}
+            disabled={publishStatus === "loading"}
+            title={hasUnsaved ? "Udgiv ændringer (Ctrl+S)" : "Ingen ændringer at udgive"}
+            className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md font-semibold transition-all duration-200 ${
+              publishStatus === "loading"
+                ? "bg-green-600 text-white opacity-80 cursor-wait"
+                : hasUnsaved
+                ? "bg-green-500 hover:bg-green-600 text-white shadow shadow-green-900/30"
+                : "bg-white/10 text-white/40 cursor-default"
+            }`}
+          >
+            {publishStatus === "loading"
+              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /><span className="hidden sm:inline ml-1">Udgiver…</span></>
+              : <><span className="hidden sm:inline">Udgiv</span><span className="sm:hidden">↑</span>{hasUnsaved && <span className="w-1.5 h-1.5 ml-1 rounded-full bg-yellow-300 inline-block" />}</>
+            }
+          </button>
           <button
             onClick={() => setShowPreview(!showPreview)}
             className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md transition-colors ${showPreview ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}
@@ -915,13 +955,6 @@ export default function Settings() {
             {/* Called as a function — NOT as <Component /> — to prevent focus loss on re-render */}
             {renderForm()}
           </div>
-          {activeTab !== "publish" && activeTab !== "advanced" && (
-            <div className="sticky bottom-0 bg-white border-t border-gray-100 px-4 py-2.5">
-              <p className="text-[11px] text-gray-400 text-center">
-                Ændringer vises i preview → Gå til <strong>🚀 Udgiv</strong> for at gøre dem permanente
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Real iframe preview */}
