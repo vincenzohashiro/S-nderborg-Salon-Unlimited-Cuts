@@ -9,7 +9,7 @@ import { getIcon } from "@/lib/icons";
 const Services = () => {
   const { services, servicesSection } = useSiteConfig();
   return (
-    <section id="services" className="py-24 md:py-32">
+    <section id="services" className="py-24 md:py-32 overflow-hidden">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
           <div className="relative">
