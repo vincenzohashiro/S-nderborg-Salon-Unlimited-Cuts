@@ -8,6 +8,8 @@ import { useSiteConfig } from "@/context/SiteConfigContext";
 import { useSEO } from "@/hooks/useSEO";
 import { getIcon } from "@/lib/icons";
 
+const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
+
 const ServicesPage = () => {
   const { services, memberships, seo, pages } = useSiteConfig();
   useSEO(seo.services.title, seo.services.description, seo.ogImage);
@@ -42,7 +44,7 @@ const ServicesPage = () => {
                     <span className="text-gold uppercase tracking-widest text-sm">{s.price}</span>
                     <span className="text-muted-foreground text-xs">· {s.time}</span>
                   </div>
-                  <p className="font-light text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{s.desc}</p>
+                  <p className="font-light text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{br(s.desc)}</p>
                 </div>
               );
             })}
