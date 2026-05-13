@@ -12,11 +12,11 @@
     "badge": "Nyåbnet · Sønderborg",
     "headline1": "Frisør i sønderborg ",
     "headline2": "A&B Barber Lounge 2",
-    "subtext": "Ubegrænset hårklip fra 499 kr/md eller hårklip & skæg triming for 599 kr/md. Drop-in eller book online.",
+    "subtext": "Ubegrænset hårklip for 449 kr/md eller hårklip & skægtrimning for 599 kr/md. Drop-in eller book online.",
     "ctaBook": "Book din tid",
     "stats": [
       {
-        "value": "499 kr",
+        "value": "449 kr",
         "label": "Ubægrænset Hårklip"
       },
       {
@@ -25,7 +25,7 @@
       },
       {
         "value": "599 kr",
-        "label": "Ubægrænset Hårklip & skæg trimning "
+        "label": "Ubægrænset hårklip & skægtrimning "
       }
     ]
   },
@@ -36,12 +36,12 @@
     "introPrefix": "Mit navn er",
     "ownerName": "Wasim",
     "intro": "og jeg er indehaver af A&B Barberlounge2 i Sønderborg.",
-    "bio1": "Jeg er uddannet frisør fra Damaskus og har over 10 års erfaring i branchen. Jeg har desuden et certificeret herrefrisørkursus fra Københavns Professionshøjskole, hvilket sikrer moderne teknikker og høj faglig kvalitet.",
+    "bio1": "Jeg er uddannet frisør og har over 10 års erfaring i branchen. Jeg har desuden et certificeret herrefrisørkursus fra Københavns Professionshøjskole, hvilket sikrer moderne teknikker og høj faglig kvalitet.",
     "bio2": "Hos os får du en skarp klipning og professionel skægtrimning i rolige omgivelser med fokus på kvalitet og detaljer.",
     "cert1Title": "Certificeret",
     "cert1Sub": "Københavns Professionshøjskole",
     "cert2Title": "Uddannet",
-    "cert2Sub": "Frisør fra Damaskus",
+    "cert2Sub": "Frisør ",
     "yearsExp": "10+",
     "yearsLabel": "års erfaring"
   },
@@ -55,7 +55,7 @@
   "servicesSection": {
     "badge": "Vores håndværk",
     "heading": "Hver klip er en kunstform.",
-    "body": "Hos A&B Barber Lounge 2 i Sønderborg kombinerer vi klassisk barberhåndværk med moderne teknikker. Vores barbere uddannes løbende — så du altid får det skarpeste resultat.",
+    "body": "Hos A&B Barber Lounge 2 i Sønderborg kombinerer vi klassisk barberhåndværk med moderne teknikker. Vores barbere uddannes løbende, så du altid får det skarpeste resultat.",
     "cta": "Se alle services"
   },
   "gallery": {
@@ -91,14 +91,14 @@
     {
       "id": "1",
       "icon": "scissors",
-      "title": "Herreklip",
+      "title": "Hårklip",
       "price": "200 kr",
       "time": "30 min",
       "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
     },
     {
       "id": "2",
-      "icon": "beard",
+      "icon": "user",
       "title": "Skægtrim",
       "price": "100 kr",
       "time": "20 min",
@@ -106,16 +106,16 @@
     },
     {
       "id": "4",
-      "icon": "scissors-beard",
-      "title": "Klip + Skæg",
+      "icon": "sparkles",
+      "title": "Hårklip + Skæg",
       "price": "300 kr",
       "time": "40 min",
       "desc": "Den komplette pakke — klipning og fuld skægbehandling."
     },
     {
       "id": "5",
-      "icon": "elderly",
-      "title": "Pensionist klip",
+      "icon": "crown",
+      "title": "Pensionist hårklip",
       "price": "150 kr",
       "time": "30 min",
       "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
@@ -138,7 +138,7 @@
     },
     {
       "id": "1e0471c4-1606-4833-aba4-4705dcde943a",
-      "icon": "clipper",
+      "icon": "scissors",
       "title": "Maskineklip ",
       "price": "120 kr",
       "time": "15 min",
@@ -149,7 +149,7 @@
     {
       "id": "1",
       "name": "Klip Medlemskab",
-      "price": "499",
+      "price": "449",
       "tagline": "Ubegrænset herreklip hver måned.",
       "perks": [
         "Ubegrænset antal klipninger",
@@ -177,12 +177,54 @@
     }
   ],
   "reviews": [
-    { "id": "1", "author": "Manzar Malik",            "initials": "MM", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLD8AoHZZD08HSr4Usc5w-LryQfIcYg7iuGjxh9FOXBAOTt3Q=w96-h96-p-rp-mo-ba4-br100", "rating": 5, "text": "Had a really pleasant experience he did exactly same haircut what i asked and beard trimming was also nice.", "date": "For 18 timer siden" },
-    { "id": "2", "author": "Catalin Cercel",           "initials": "CC", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJ3rSxGAsCbDQfKIh2HlPWNQMMgY554k0Sy6OvDGaJlIb09mA=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "Professional haircut. 👌",                                                                                    "date": "For 5 dage siden"  },
-    { "id": "3", "author": "Aladdin Oudeh",            "initials": "AO", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLoNmDmsQYe3g2dRqNrz6c75mWx8UdnO4JBGe9cnaqO2LgHww=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "We're good service and it's professional work Wasim done",                                                   "date": "For 1 uge siden"   },
-    { "id": "4", "author": "Sønderborg Pizza & Grill", "initials": "SP", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKo01t4FxUQbuxTGPB1ozjy12z4HtkQ8gTfFWAidjoTlpnvuQ=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "A beautiful haircut, I recommend it.",                                                                      "date": "For 1 måned siden" },
-    { "id": "5", "author": "Rizan Hannan",             "initials": "RH", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJFLqRBNhxbUdkjtcKVJBAXyPgHENeuvXllSBiNAfb8mP9UFQ=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "Good service, nice mood and skilled hairdresser",                                                             "date": "For 1 dag siden"   },
-    { "id": "6", "author": "Sedin",                    "initials": "SE", "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWMmsVVqJcu9YQtKyQi1qu6TmQl_Bu9NsCabkFpC2lwg1xo5GQ=w96-h96-p-rp-mo-br100",         "rating": 5, "text": "Good haircut, good service and great mood. Definitely recommended 😊",                                       "date": "For 2 dage siden"  }
+    {
+      "id": "1",
+      "author": "Mikkel Hansen",
+      "initials": "MH",
+      "rating": 5,
+      "text": "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",
+      "date": "For 2 uger siden"
+    },
+    {
+      "id": "2",
+      "author": "Ahmed Al-Rashidi",
+      "initials": "AA",
+      "rating": 5,
+      "text": "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",
+      "date": "For 1 måned siden"
+    },
+    {
+      "id": "3",
+      "author": "Jonas Petersen",
+      "initials": "JP",
+      "rating": 5,
+      "text": "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",
+      "date": "For 3 uger siden"
+    },
+    {
+      "id": "4",
+      "author": "Christoffer Larsen",
+      "initials": "CL",
+      "rating": 5,
+      "text": "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",
+      "date": "For 2 måneder siden"
+    },
+    {
+      "id": "5",
+      "author": "Rasmus Nielsen",
+      "initials": "RN",
+      "rating": 5,
+      "text": "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",
+      "date": "For 1 uge siden"
+    },
+    {
+      "id": "6",
+      "author": "Omar Khalid",
+      "initials": "OK",
+      "rating": 5,
+      "text": "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",
+      "date": "For 3 måneder siden"
+    }
   ],
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
