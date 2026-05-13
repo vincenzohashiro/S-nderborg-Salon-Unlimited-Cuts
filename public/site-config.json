@@ -15,9 +15,18 @@
     "subtext": "Ubegrænset klip fra 499 kr/md — eller klip & skæg for 599 kr/md. Drop-in eller book online.",
     "ctaBook": "Book din tid",
     "stats": [
-      { "value": "499", "label": "kr/md klip" },
-      { "value": "599", "label": "kr/md klip & skæg" },
-      { "value": "10+", "label": "års erfaring" }
+      {
+        "value": "499",
+        "label": "kr/md klip"
+      },
+      {
+        "value": "599",
+        "label": "kr/md klip & skæg"
+      },
+      {
+        "value": "10+",
+        "label": "års erfaring"
+      }
     ]
   },
   "about": {
@@ -79,14 +88,70 @@
     }
   },
   "services": [
-    { "id": "1", "icon": "scissors", "title": "Herreklip",       "price": "200 kr",     "time": "30 min", "desc": "Klassisk eller moderne klipning, vask og styling inkluderet." },
-    { "id": "2", "icon": "user",     "title": "Skægtrim",        "price": "149 kr",     "time": "20 min", "desc": "Præcis trimning og formgivning af dit skæg." },
-    { "id": "3", "icon": "flame",    "title": "Varm Barbering",  "price": "199 kr",     "time": "25 min", "desc": "Klassisk barbering med varmt håndklæde og barberkniv." },
-    { "id": "4", "icon": "sparkles", "title": "Klip + Skæg",    "price": "349 kr",     "time": "45 min", "desc": "Den komplette pakke — klipning og fuld skægbehandling." },
-    { "id": "5", "icon": "crown",    "title": "Den Royale",      "price": "499 kr",     "time": "60 min", "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse." },
-    { "id": "6", "icon": "baby",     "title": "Børneklip (0–12)","price": "179 kr",     "time": "20 min", "desc": "Tålmodig klipning for de små i en rolig stol." },
-    { "id": "7", "icon": "droplet",  "title": "Hårfarve",        "price": "fra 299 kr", "time": "30 min", "desc": "Dækning af grå hår eller fuld farveændring." },
-    { "id": "8", "icon": "gift",     "title": "Gavekort",        "price": "valgfrit",   "time": "—",     "desc": "Den perfekte gave til ham. Fås i alle beløb." }
+    {
+      "id": "1",
+      "icon": "scissors",
+      "title": "Herreklip",
+      "price": "200 kr",
+      "time": "30 min",
+      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
+    },
+    {
+      "id": "2",
+      "icon": "user",
+      "title": "Skægtrim",
+      "price": "100 kr",
+      "time": "20 min",
+      "desc": "Præcis trimning og formgivning af dit skæg."
+    },
+    {
+      "id": "3",
+      "icon": "flame",
+      "title": "Varm Barbering",
+      "price": "199 kr",
+      "time": "25 min",
+      "desc": "Klassisk barbering med varmt håndklæde og barberkniv."
+    },
+    {
+      "id": "4",
+      "icon": "sparkles",
+      "title": "Klip + Skæg",
+      "price": "349 kr",
+      "time": "45 min",
+      "desc": "Den komplette pakke — klipning og fuld skægbehandling."
+    },
+    {
+      "id": "5",
+      "icon": "crown",
+      "title": "Den Royale",
+      "price": "499 kr",
+      "time": "60 min",
+      "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse."
+    },
+    {
+      "id": "6",
+      "icon": "baby",
+      "title": "Børneklip (0–12)",
+      "price": "179 kr",
+      "time": "20 min",
+      "desc": "Tålmodig klipning for de små i en rolig stol."
+    },
+    {
+      "id": "7",
+      "icon": "droplet",
+      "title": "Hårfarve",
+      "price": "fra 299 kr",
+      "time": "30 min",
+      "desc": "Dækning af grå hår eller fuld farveændring."
+    },
+    {
+      "id": "8",
+      "icon": "gift",
+      "title": "Gavekort",
+      "price": "valgfrit",
+      "time": "—",
+      "desc": "Den perfekte gave til ham. Fås i alle beløb."
+    }
   ],
   "memberships": [
     {
@@ -120,19 +185,61 @@
     }
   ],
   "reviews": [
-    { "id": "1", "author": "Mikkel Hansen",      "initials": "MH", "rating": 5, "text": "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",              "date": "For 2 uger siden"    },
-    { "id": "2", "author": "Ahmed Al-Rashidi",   "initials": "AA", "rating": 5, "text": "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",                              "date": "For 1 måned siden"   },
-    { "id": "3", "author": "Jonas Petersen",     "initials": "JP", "rating": 5, "text": "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",                                  "date": "For 3 uger siden"    },
-    { "id": "4", "author": "Christoffer Larsen", "initials": "CL", "rating": 5, "text": "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",                          "date": "For 2 måneder siden" },
-    { "id": "5", "author": "Rasmus Nielsen",     "initials": "RN", "rating": 5, "text": "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",                                      "date": "For 1 uge siden"     },
-    { "id": "6", "author": "Omar Khalid",        "initials": "OK", "rating": 5, "text": "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",                            "date": "For 3 måneder siden" }
+    {
+      "id": "1",
+      "author": "Mikkel Hansen",
+      "initials": "MH",
+      "rating": 5,
+      "text": "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",
+      "date": "For 2 uger siden"
+    },
+    {
+      "id": "2",
+      "author": "Ahmed Al-Rashidi",
+      "initials": "AA",
+      "rating": 5,
+      "text": "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",
+      "date": "For 1 måned siden"
+    },
+    {
+      "id": "3",
+      "author": "Jonas Petersen",
+      "initials": "JP",
+      "rating": 5,
+      "text": "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",
+      "date": "For 3 uger siden"
+    },
+    {
+      "id": "4",
+      "author": "Christoffer Larsen",
+      "initials": "CL",
+      "rating": 5,
+      "text": "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",
+      "date": "For 2 måneder siden"
+    },
+    {
+      "id": "5",
+      "author": "Rasmus Nielsen",
+      "initials": "RN",
+      "rating": 5,
+      "text": "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",
+      "date": "For 1 uge siden"
+    },
+    {
+      "id": "6",
+      "author": "Omar Khalid",
+      "initials": "OK",
+      "rating": 5,
+      "text": "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",
+      "date": "For 3 måneder siden"
+    }
   ],
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
     "ogImage": "https://ab-barberlounge2.dk/og-image.jpg",
     "home": {
       "title": "A&B Barber Lounge 2 Sønderborg — Ubegrænset klip 499 kr/md",
-      "description": "A&B Barber Lounge 2 i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64. Ring 91 75 24 70."
+      "description": "Frisør i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64"
     },
     "services": {
       "title": "Services & Priser — A&B Barber Lounge 2 Sønderborg",
