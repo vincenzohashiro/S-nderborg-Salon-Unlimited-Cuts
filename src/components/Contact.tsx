@@ -13,7 +13,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="kontakt" className="py-24 md:py-32 bg-gradient-dark text-background">
+    <section id="kontakt" className="py-24 md:py-32 bg-gradient-dark text-background overflow-hidden">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>

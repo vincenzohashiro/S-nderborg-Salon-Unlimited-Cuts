@@ -31,7 +31,7 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      <section className="py-24">
+      <section className="py-24 overflow-hidden">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {services.map((s) => {

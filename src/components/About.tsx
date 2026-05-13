@@ -6,7 +6,7 @@ const About = () => {
   const { about } = useSiteConfig();
 
   return (
-    <section id="om" className="py-24 md:py-32 bg-background">
+    <section id="om" className="py-24 md:py-32 bg-background overflow-hidden">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
           <div className="relative">
