@@ -16,16 +16,16 @@
     "ctaBook": "Book din tid",
     "stats": [
       {
-        "value": "499",
-        "label": "kr/md klip"
-      },
-      {
-        "value": "599",
-        "label": "kr/md klip & skæg"
+        "value": "499 kr",
+        "label": "Ubægrænset klip"
       },
       {
         "value": "10+",
-        "label": "års erfaring"
+        "label": "Års erfaring"
+      },
+      {
+        "value": "599 kr",
+        "label": "Ubægrænset klip & skæg"
       }
     ]
   },
@@ -105,44 +105,28 @@
       "desc": "Præcis trimning og formgivning af dit skæg."
     },
     {
-      "id": "3",
-      "icon": "flame",
-      "title": "Varm Barbering",
-      "price": "199 kr",
-      "time": "25 min",
-      "desc": "Klassisk barbering med varmt håndklæde og barberkniv."
-    },
-    {
       "id": "4",
       "icon": "sparkles",
       "title": "Klip + Skæg",
-      "price": "349 kr",
-      "time": "45 min",
+      "price": "300 kr",
+      "time": "40 min",
       "desc": "Den komplette pakke — klipning og fuld skægbehandling."
     },
     {
       "id": "5",
       "icon": "crown",
-      "title": "Den Royale",
-      "price": "499 kr",
-      "time": "60 min",
-      "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse."
+      "title": "Pensionist klip",
+      "price": "150 kr",
+      "time": "30 min",
+      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
     },
     {
       "id": "6",
       "icon": "baby",
       "title": "Børneklip (0–12)",
-      "price": "179 kr",
-      "time": "20 min",
-      "desc": "Tålmodig klipning for de små i en rolig stol."
-    },
-    {
-      "id": "7",
-      "icon": "droplet",
-      "title": "Hårfarve",
-      "price": "fra 299 kr",
+      "price": "150 kr",
       "time": "30 min",
-      "desc": "Dækning af grå hår eller fuld farveændring."
+      "desc": "Tålmodig klipning for de små i en rolig stol."
     },
     {
       "id": "8",
