@@ -148,11 +148,11 @@
   "memberships": [
     {
       "id": "1",
-      "name": "Klip Medlemskab",
+      "name": "Hårklip Medlemskab",
       "price": "449",
-      "tagline": "Ubegrænset herreklip hver måned.",
+      "tagline": "Ubegrænset hårklip hver måned.",
       "perks": [
-        "Ubegrænset antal klipninger",
+        "Ubegrænset antal hårklipninger",
         "Drop-in eller online booking",
         "Også samme dag",
         "Ingen binding — opsig når du vil"
@@ -162,12 +162,12 @@
     },
     {
       "id": "2",
-      "name": "Klip & Skæg Medlemskab",
+      "name": "hårklip & Skægtrimning Medlemskab",
       "price": "599",
-      "tagline": "Klip + skæg og skægtrimning ubegrænset.",
+      "tagline": "Ubegrænset hårklip + skægtrimning.",
       "perks": [
-        "Ubegrænset herreklip",
-        "Ubegrænset skæg & skægtrim",
+        "Ubegrænset antal hårklipninger",
+        "Ubegrænset skægtrimninger ",
         "Drop-in eller online booking",
         "10% rabat på produkter",
         "Ingen binding — opsig når du vil"
