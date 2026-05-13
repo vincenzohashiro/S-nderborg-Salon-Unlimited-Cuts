@@ -177,12 +177,12 @@
     }
   ],
   "reviews": [
-    { "id": "1", "author": "Manzar Malik",            "initials": "MM", "rating": 5, "text": "Had a really pleasant experience he did exactly same haircut what i asked and beard trimming was also nice.", "date": "For 18 timer siden" },
-    { "id": "2", "author": "Catalin Cercel",           "initials": "CC", "rating": 5, "text": "Professional haircut. 👌",                                                                                    "date": "For 5 dage siden"  },
-    { "id": "3", "author": "Aladdin Oudeh",            "initials": "AO", "rating": 5, "text": "We're good service and it's professional work Wasim done",                                                   "date": "For 1 uge siden"   },
-    { "id": "4", "author": "Sønderborg Pizza & Grill", "initials": "SP", "rating": 5, "text": "A beautiful haircut, I recommend it.",                                                                      "date": "For 1 måned siden" },
-    { "id": "5", "author": "Rizan Hannan",             "initials": "RH", "rating": 5, "text": "Good service, nice mood and skilled hairdresser",                                                             "date": "For 1 dag siden"   },
-    { "id": "6", "author": "Sedin",                    "initials": "SE", "rating": 5, "text": "Good haircut, good service and great mood. Definitely recommended 😊",                                       "date": "For 2 dage siden"  }
+    { "id": "1", "author": "Manzar Malik",            "initials": "MM", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLD8AoHZZD08HSr4Usc5w-LryQfIcYg7iuGjxh9FOXBAOTt3Q=w96-h96-p-rp-mo-ba4-br100", "rating": 5, "text": "Had a really pleasant experience he did exactly same haircut what i asked and beard trimming was also nice.", "date": "For 18 timer siden" },
+    { "id": "2", "author": "Catalin Cercel",           "initials": "CC", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJ3rSxGAsCbDQfKIh2HlPWNQMMgY554k0Sy6OvDGaJlIb09mA=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "Professional haircut. 👌",                                                                                    "date": "For 5 dage siden"  },
+    { "id": "3", "author": "Aladdin Oudeh",            "initials": "AO", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLoNmDmsQYe3g2dRqNrz6c75mWx8UdnO4JBGe9cnaqO2LgHww=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "We're good service and it's professional work Wasim done",                                                   "date": "For 1 uge siden"   },
+    { "id": "4", "author": "Sønderborg Pizza & Grill", "initials": "SP", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKo01t4FxUQbuxTGPB1ozjy12z4HtkQ8gTfFWAidjoTlpnvuQ=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "A beautiful haircut, I recommend it.",                                                                      "date": "For 1 måned siden" },
+    { "id": "5", "author": "Rizan Hannan",             "initials": "RH", "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJFLqRBNhxbUdkjtcKVJBAXyPgHENeuvXllSBiNAfb8mP9UFQ=w96-h96-p-rp-mo-br100",          "rating": 5, "text": "Good service, nice mood and skilled hairdresser",                                                             "date": "For 1 dag siden"   },
+    { "id": "6", "author": "Sedin",                    "initials": "SE", "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWMmsVVqJcu9YQtKyQi1qu6TmQl_Bu9NsCabkFpC2lwg1xo5GQ=w96-h96-p-rp-mo-br100",         "rating": 5, "text": "Good haircut, good service and great mood. Definitely recommended 😊",                                       "date": "For 2 dage siden"  }
   ],
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
