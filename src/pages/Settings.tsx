@@ -478,6 +478,9 @@ export default function Settings() {
                 <Field label="Navn"><Input value={r.author} onChange={(e) => upReview(r.id, "author", e.target.value)} className="h-8 text-sm" /></Field>
                 <Field label="Initialer (fx MH)"><Input value={r.initials} onChange={(e) => upReview(r.id, "initials", e.target.value)} className="h-8 text-sm" maxLength={3} /></Field>
               </div>
+              <Field label="Profilbillede URL (valgfri)" hint="Højreklik på profilbillede i Google Maps → Kopiér billedadresse">
+                <Input value={r.avatarUrl ?? ""} onChange={(e) => upReview(r.id, "avatarUrl", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://lh3.googleusercontent.com/..." />
+              </Field>
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Stjerner (1–5)">
                   <Input type="number" min={1} max={5} value={r.rating} onChange={(e) => upReview(r.id, "rating", Math.min(5, Math.max(1, Number(e.target.value))))} className="h-8 text-sm" />

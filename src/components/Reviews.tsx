@@ -35,9 +35,18 @@ const ReviewCard = ({ review }: { review: Review }) => (
       &ldquo;{review.text}&rdquo;
     </p>
     <div className="flex items-center gap-3 pt-3 border-t border-border">
-      <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center flex-shrink-0">
-        <span className="text-xs font-semibold text-gold">{review.initials}</span>
-      </div>
+      {review.avatarUrl ? (
+        <img
+          src={review.avatarUrl}
+          alt={review.author}
+          className="w-9 h-9 rounded-full object-cover flex-shrink-0 border border-border"
+          referrerPolicy="no-referrer"
+        />
+      ) : (
+        <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center flex-shrink-0">
+          <span className="text-xs font-semibold text-gold">{review.initials}</span>
+        </div>
+      )}
       <div>
         <div className="text-sm font-semibold text-foreground">{review.author}</div>
         <div className="text-[11px] text-muted-foreground">{review.date}</div>
