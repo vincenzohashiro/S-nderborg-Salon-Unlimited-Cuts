@@ -8,6 +8,7 @@ import ServicesPage from "./pages/Services.tsx";
 import Booking from "./pages/Booking.tsx";
 import Settings from "./pages/Settings.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.tsx";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ScrollToTopButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

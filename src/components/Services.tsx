@@ -6,8 +6,6 @@ import { getIcon } from "@/lib/icons";
 
 const Services = () => {
   const { services, servicesSection } = useSiteConfig();
-  const preview = services.slice(0, 4);
-
   return (
     <section id="services" className="py-24 md:py-32">
       <div className="container">
@@ -38,18 +36,18 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {preview.map((s) => {
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {services.map((s) => {
             const Icon = getIcon(s.icon);
             return (
               <div
                 key={s.id}
-                className="group p-8 bg-secondary border border-border rounded-sm hover:bg-primary hover:text-background transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
+                className="group p-5 md:p-8 bg-secondary border border-border rounded-sm hover:bg-primary hover:text-background transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
               >
-                <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
-                <h3 className="font-serif text-2xl mb-2">{s.title}</h3>
-                <p className="text-sm text-gold mb-4 uppercase tracking-widest">{s.price}</p>
-                <p className="font-light text-sm opacity-80 leading-relaxed">{s.desc}</p>
+                <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
+                <h3 className="font-serif text-lg md:text-2xl mb-1 md:mb-2">{s.title}</h3>
+                <p className="text-xs md:text-sm text-gold mb-2 md:mb-4 uppercase tracking-widest">{s.price}</p>
+                <p className="font-light text-xs md:text-sm opacity-80 leading-relaxed hidden sm:block">{s.desc}</p>
               </div>
             );
           })}

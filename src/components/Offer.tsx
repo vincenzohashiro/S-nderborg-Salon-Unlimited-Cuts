@@ -38,12 +38,12 @@ const Offer = () => {
                   Mest populær
                 </span>
               )}
-              <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4">{p.name}</div>
-              <div className="flex items-baseline gap-2 mb-3">
+              <div className="text-xs uppercase tracking-[0.3em] text-gold mb-4 text-center md:text-left">{p.name}</div>
+              <div className="flex items-baseline gap-2 mb-3 justify-center md:justify-start">
                 <span className="font-serif text-6xl md:text-7xl text-background">{p.price}</span>
                 <span className="text-background/60 text-lg">kr/md</span>
               </div>
-              <p className="text-background/70 font-light mb-8">{p.tagline}</p>
+              <p className="text-background/70 font-light mb-8 text-center md:text-left">{p.tagline}</p>
 
               <ul className="space-y-3 mb-10">
                 {p.perks.map((perk) => (
