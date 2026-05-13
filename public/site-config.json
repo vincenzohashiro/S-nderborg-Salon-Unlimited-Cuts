@@ -10,14 +10,23 @@
   },
   "hero": {
     "badge": "Nyåbnet · Sønderborg",
-    "headline1": "A&B Barber Lounge 2",
-    "headline2": "Klip uden grænser.",
-    "subtext": "Ubegrænset klip fra 499 kr/md — eller klip & skæg for 599 kr/md. Drop-in eller book online.",
+    "headline1": "Frisør i sønderborg ",
+    "headline2": "A&B Barber Lounge 2",
+    "subtext": "Ubegrænset hårklip fra 499 kr/md eller hårklip & skæg triming for 599 kr/md. Drop-in eller book online.",
     "ctaBook": "Book din tid",
     "stats": [
-      { "value": "499", "label": "kr/md klip" },
-      { "value": "599", "label": "kr/md klip & skæg" },
-      { "value": "10+", "label": "års erfaring" }
+      {
+        "value": "499 kr",
+        "label": "Ubægrænset Hårklip"
+      },
+      {
+        "value": "10+",
+        "label": "Års erfaring"
+      },
+      {
+        "value": "599 kr",
+        "label": "Ubægrænset Hårklip & skæg trimning "
+      }
     ]
   },
   "about": {
@@ -79,14 +88,62 @@
     }
   },
   "services": [
-    { "id": "1", "icon": "scissors", "title": "Herreklip",       "price": "200 kr",     "time": "30 min", "desc": "Klassisk eller moderne klipning, vask og styling inkluderet." },
-    { "id": "2", "icon": "user",     "title": "Skægtrim",        "price": "149 kr",     "time": "20 min", "desc": "Præcis trimning og formgivning af dit skæg." },
-    { "id": "3", "icon": "flame",    "title": "Varm Barbering",  "price": "199 kr",     "time": "25 min", "desc": "Klassisk barbering med varmt håndklæde og barberkniv." },
-    { "id": "4", "icon": "sparkles", "title": "Klip + Skæg",    "price": "349 kr",     "time": "45 min", "desc": "Den komplette pakke — klipning og fuld skægbehandling." },
-    { "id": "5", "icon": "crown",    "title": "Den Royale",      "price": "499 kr",     "time": "60 min", "desc": "Klip, skæg, ansigtsmaske og massage. Vores signaturoplevelse." },
-    { "id": "6", "icon": "baby",     "title": "Børneklip (0–12)","price": "179 kr",     "time": "20 min", "desc": "Tålmodig klipning for de små i en rolig stol." },
-    { "id": "7", "icon": "droplet",  "title": "Hårfarve",        "price": "fra 299 kr", "time": "30 min", "desc": "Dækning af grå hår eller fuld farveændring." },
-    { "id": "8", "icon": "gift",     "title": "Gavekort",        "price": "valgfrit",   "time": "—",     "desc": "Den perfekte gave til ham. Fås i alle beløb." }
+    {
+      "id": "1",
+      "icon": "scissors",
+      "title": "Herreklip",
+      "price": "200 kr",
+      "time": "30 min",
+      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
+    },
+    {
+      "id": "2",
+      "icon": "user",
+      "title": "Skægtrim",
+      "price": "100 kr",
+      "time": "20 min",
+      "desc": "Præcis trimning og formgivning af dit skæg."
+    },
+    {
+      "id": "4",
+      "icon": "sparkles",
+      "title": "Klip + Skæg",
+      "price": "300 kr",
+      "time": "40 min",
+      "desc": "Den komplette pakke — klipning og fuld skægbehandling."
+    },
+    {
+      "id": "5",
+      "icon": "crown",
+      "title": "Pensionist klip",
+      "price": "150 kr",
+      "time": "30 min",
+      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
+    },
+    {
+      "id": "6",
+      "icon": "baby",
+      "title": "Børneklip (0–12)",
+      "price": "150 kr",
+      "time": "30 min",
+      "desc": "Tålmodig klipning for de små i en rolig stol."
+    },
+    {
+      "id": "8",
+      "icon": "gift",
+      "title": "Gavekort",
+      "price": "valgfrit",
+      "time": "—",
+      "desc": "Den perfekte gave til ham. Fås i alle beløb."
+    },
+    {
+      "id": "1e0471c4-1606-4833-aba4-4705dcde943a",
+      "icon": "scissors",
+      "title": "Maskineklip ",
+      "price": "120 kr",
+      "time": "15 min",
+      "desc": "Klassisk eller moderne klipning, kun med maskine."
+    }
   ],
   "memberships": [
     {
@@ -131,8 +188,8 @@
     "canonicalBase": "https://ab-barberlounge2.dk",
     "ogImage": "https://ab-barberlounge2.dk/og-image.jpg",
     "home": {
-      "title": "A&B Barber Lounge 2 Sønderborg — Ubegrænset klip 499 kr/md",
-      "description": "A&B Barber Lounge 2 i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64. Ring 91 75 24 70."
+      "title": "Frisør i Sønderborg | Ubegrænset klip fra 499 kr/md",
+      "description": "Frisør i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64"
     },
     "services": {
       "title": "Services & Priser — A&B Barber Lounge 2 Sønderborg",
