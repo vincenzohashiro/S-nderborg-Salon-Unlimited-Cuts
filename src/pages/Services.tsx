@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,8 @@ const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
 const ServicesPage = () => {
   const { services, memberships, seo, pages } = useSiteConfig();
   useSEO(seo.services.title, seo.services.description, seo.ogImage);
+  const [flipped, setFlipped] = useState<Record<string, boolean>>({});
+  const toggle = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
 
   return (
     <main className="min-h-screen bg-background">
@@ -36,15 +39,50 @@ const ServicesPage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {services.map((s) => {
               const Icon = getIcon(s.icon);
+              const isFlipped = !!flipped[s.id];
               return (
-                <div key={s.id} className="p-8 bg-secondary border border-border rounded-sm hover:shadow-elegant hover:-translate-y-1 transition-all duration-500">
-                  <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
-                  <h3 className="font-serif text-2xl mb-1">{s.title}</h3>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-gold uppercase tracking-widest text-sm">{s.price}</span>
-                    <span className="text-muted-foreground text-xs">· {s.time}</span>
+                <div
+                  key={s.id}
+                  className="cursor-pointer"
+                  style={{ perspective: "1000px" }}
+                  onClick={() => toggle(s.id)}
+                >
+                  <div
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transition: "transform 0.55s cubic-bezier(0.4,0,0.2,1)",
+                      transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                      position: "relative",
+                    }}
+                  >
+                    {/* FRONT */}
+                    <div
+                      style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                      className="p-8 bg-secondary border border-border rounded-sm min-h-[200px] flex flex-col"
+                    >
+                      <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
+                      <h3 className="font-serif text-2xl mb-1">{s.title}</h3>
+                      <p className="text-gold uppercase tracking-widest text-sm">{s.price}</p>
+                      <p className="text-[11px] text-muted-foreground mt-auto pt-4 opacity-60">Tryk for detaljer →</p>
+                    </div>
+
+                    {/* BACK */}
+                    <div
+                      style={{
+                        backfaceVisibility: "hidden",
+                        WebkitBackfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)",
+                      }}
+                      className="absolute inset-0 p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col overflow-hidden"
+                    >
+                      <h3 className="font-serif text-xl mb-1">{s.title}</h3>
+                      <p className="text-[11px] text-gold uppercase tracking-widest mb-4">{s.price} · {s.time}</p>
+                      <p className="font-light text-sm leading-relaxed whitespace-pre-line opacity-80 flex-1 overflow-auto">
+                        {br(s.desc)}
+                      </p>
+                      <p className="text-[10px] text-background/40 mt-3">← Tryk for at lukke</p>
+                    </div>
                   </div>
-                  <p className="font-light text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{br(s.desc)}</p>
                 </div>
               );
             })}
