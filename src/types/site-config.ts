@@ -87,6 +87,7 @@ export interface SiteConfig {
   gallery: {
     badge: string;
     heading: string;
+    images: { id: string; url: string; alt: string }[];
   };
   contact: {
     badge: string;

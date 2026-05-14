@@ -1,13 +1,17 @@
+import { useState } from "react";
 import shaveImg from "@/assets/barber-shave.jpg";
-
-const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 import { getIcon } from "@/lib/icons";
 
+const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
+
 const Services = () => {
   const { services, servicesSection } = useSiteConfig();
+  const [flipped, setFlipped] = useState<Record<string, boolean>>({});
+  const toggle = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
+
   return (
     <section id="services" className="py-24 md:py-32 overflow-hidden">
       <div className="container">
@@ -41,15 +45,50 @@ const Services = () => {
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {services.map((s) => {
             const Icon = getIcon(s.icon);
+            const isFlipped = !!flipped[s.id];
             return (
               <div
                 key={s.id}
-                className="group p-5 md:p-8 bg-secondary border border-border rounded-sm hover:bg-primary hover:text-background transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
+                className="cursor-pointer"
+                style={{ perspective: "1000px" }}
+                onClick={() => toggle(s.id)}
               >
-                <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
-                <h3 className="font-serif text-lg md:text-2xl mb-1 md:mb-2">{s.title}</h3>
-                <p className="text-xs md:text-sm text-gold mb-2 md:mb-4 uppercase tracking-widest">{s.price}</p>
-                <p className="font-light text-xs md:text-sm opacity-80 leading-relaxed hidden sm:block whitespace-pre-line">{br(s.desc)}</p>
+                <div
+                  style={{
+                    transformStyle: "preserve-3d",
+                    transition: "transform 0.55s cubic-bezier(0.4,0,0.2,1)",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                    position: "relative",
+                  }}
+                >
+                  {/* FRONT */}
+                  <div
+                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                    className="p-5 md:p-8 bg-secondary border border-border rounded-sm min-h-[180px] md:min-h-[220px] flex flex-col"
+                  >
+                    <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
+                    <h3 className="font-serif text-lg md:text-2xl mb-1 md:mb-2">{s.title}</h3>
+                    <p className="text-xs md:text-sm text-gold uppercase tracking-widest">{s.price}</p>
+                    <p className="text-[10px] text-muted-foreground mt-auto pt-3 opacity-60">Tryk for detaljer →</p>
+                  </div>
+
+                  {/* BACK */}
+                  <div
+                    style={{
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                    className="absolute inset-0 p-5 md:p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col overflow-hidden"
+                  >
+                    <h3 className="font-serif text-base md:text-xl mb-1">{s.title}</h3>
+                    <p className="text-[10px] md:text-xs text-gold uppercase tracking-widest mb-3">{s.price} · {s.time}</p>
+                    <p className="font-light text-xs md:text-sm leading-relaxed whitespace-pre-line opacity-80 flex-1 overflow-auto">
+                      {br(s.desc)}
+                    </p>
+                    <p className="text-[10px] text-background/40 mt-3">← Tryk for at lukke</p>
+                  </div>
+                </div>
               </div>
             );
           })}

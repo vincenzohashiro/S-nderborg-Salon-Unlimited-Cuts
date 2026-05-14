@@ -536,6 +536,28 @@ export default function Settings() {
         <SectionBlock title="Galleri" defaultOpen={false}>
           <Field label="Badge-tekst"><Input value={config.gallery.badge} onChange={(e) => upGal("badge", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Overskrift"><Input value={config.gallery.heading} onChange={(e) => upGal("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <div className="border-t border-gray-100 pt-3 mt-2">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">Billeder — indsæt URL eller relativ sti</p>
+            {(config.gallery.images ?? []).map((img, idx) => (
+              <div key={img.id} className="border border-gray-200 rounded-lg p-3 mb-2 bg-gray-50 relative">
+                <button type="button" onClick={() => setConfig((c) => ({ ...c, gallery: { ...c.gallery, images: c.gallery.images.filter((_, i) => i !== idx) } }))} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <Field label={`Billede ${idx + 1} — URL`} hint="Paste en ekstern URL (https://...) eller brug gallery/filnavn.jpg">
+                  <Input value={img.url} onChange={(e) => setConfig((c) => ({ ...c, gallery: { ...c.gallery, images: c.gallery.images.map((im, i) => i === idx ? { ...im, url: e.target.value } : im) } }))} className="h-8 text-sm font-mono" placeholder="https://... eller gallery/foto.jpg" />
+                </Field>
+                <Field label="Billedtekst (alt)">
+                  <Input value={img.alt} onChange={(e) => setConfig((c) => ({ ...c, gallery: { ...c.gallery, images: c.gallery.images.map((im, i) => i === idx ? { ...im, alt: e.target.value } : im) } }))} className="h-8 text-sm" />
+                </Field>
+                {img.url && (
+                  <img src={img.url.startsWith("http") ? img.url : `/${img.url}`} alt={img.alt} className="mt-2 w-full h-24 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                )}
+              </div>
+            ))}
+            <Button variant="outline" size="sm" onClick={() => setConfig((c) => ({ ...c, gallery: { ...c.gallery, images: [...(c.gallery.images ?? []), { id: crypto.randomUUID(), url: "", alt: "" }] } }))} className="w-full mt-1">
+              <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj billede
+            </Button>
+          </div>
         </SectionBlock>
 
         <SectionBlock title="Kontakt" defaultOpen={false}>

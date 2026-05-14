@@ -54,6 +54,12 @@ export const defaultConfig: SiteConfig = {
   gallery: {
     badge: "Galleri",
     heading: "Et kig indenfor.",
+    images: [
+      { id: "1", url: "gallery/chairs.jpg",     alt: "Sorte og guld barberstole" },
+      { id: "2", url: "gallery/shave.jpg",       alt: "Barbering med varm håndklædebehandling" },
+      { id: "3", url: "gallery/storefront.jpg",  alt: "Facaden af A&B Barber Lounge 2" },
+      { id: "4", url: "gallery/salon.jpg",       alt: "Salon interiør" },
+    ],
   },
   contact: {
     badge: "Besøg os",
