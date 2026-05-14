@@ -44,10 +44,10 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4 mt-10">
-              <a href={general.instagram} aria-label="Instagram" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+              <a href={general.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href={general.facebook} aria-label="Facebook" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+              <a href={general.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Facebook className="w-4 h-4" />
               </a>
             </div>
