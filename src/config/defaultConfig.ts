@@ -7,8 +7,8 @@ export const defaultConfig: SiteConfig = {
     address: "Perlegade 64, Sønderborg",
     hours: "Man–Lør: 09–18 · Søn: lukket",
     planwayUrl: "https://ab-barberlounge2.planway.com",
-    instagram: "https://instagram.com/ab_barberlounge2",
-    facebook: "https://facebook.com/ab_barberlounge2",
+    instagram: "https://www.instagram.com/abbarberlounge/reels/",
+    facebook: "https://www.facebook.com/Perlegade64/",
   },
   hero: {
     badge: "Nyåbnet · Sønderborg",
