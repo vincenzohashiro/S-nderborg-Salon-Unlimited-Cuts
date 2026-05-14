@@ -86,6 +86,10 @@ export const defaultConfig: SiteConfig = {
       iframeCta: "Åbn i nyt vindue",
     },
   },
+  faqSection: {
+    badge: "FAQ",
+    heading: "Ofte stillede spørgsmål",
+  },
   services: [
     { id: "1", icon: "scissors", title: "Herreklip",      price: "200 kr",    time: "30 min", desc: "Klassisk eller moderne klipning, vask og styling inkluderet." },
     { id: "2", icon: "beard",    title: "Skægtrim",       price: "149 kr",    time: "20 min", desc: "Præcis trimning og formgivning af dit skæg." },
@@ -125,6 +129,38 @@ export const defaultConfig: SiteConfig = {
       ],
       cta: "Vælg Klip & Skæg 599",
       highlight: true,
+    },
+  ],
+  faq: [
+    {
+      id: "1",
+      question: "Hvad koster et herreklip i Sønderborg?",
+      answer: "Prisen på et herreklip afhænger af behandling, erfaring og salonens koncept. Hos A&B Barber Lounge 2 i Sønderborg tilbyder vi både almindelige klipninger og unlimited abonnementer fra 499 kr/md til kunder, der ønsker faste klipninger hver måned.",
+    },
+    {
+      id: "2",
+      question: "Kan man få drop-in hos en barber i Sønderborg?",
+      answer: "Ja, mange barberer tilbyder drop-in, men der kan være ventetid i travle perioder. Hos A&B Barber Lounge 2 har du mulighed for både drop-in og online booking, så du nemt kan vælge den løsning, der passer bedst til din hverdag.",
+    },
+    {
+      id: "3",
+      question: "Hvor ofte bør man blive klippet?",
+      answer: "De fleste vælger at blive klippet hver 2–3 uge for at holde frisuren skarp. Kortere fades og præcise overgange kræver ofte hyppigere vedligeholdelse, mens længere frisurer typisk kan holde formen i længere tid.",
+    },
+    {
+      id: "4",
+      question: "Hvad er forskellen på barber og frisør?",
+      answer: "En barber arbejder primært med herreklip, fades og skægtrimning, mens en frisør ofte dækker bredere behandlinger til både mænd og kvinder. Hos A&B Barber Lounge 2 kombinerer vi klassisk barberhåndværk med moderne herreklip og styling.",
+    },
+    {
+      id: "5",
+      question: "Er unlimited klip abonnement det værd?",
+      answer: "Unlimited klip abonnement kan være en fordel for dig, der ønsker at holde frisuren skarp hele måneden uden at betale for hver enkelt klipning. Mange vælger abonnementsløsningen for nemheds skyld og for at kunne blive klippet oftere.",
+    },
+    {
+      id: "6",
+      question: "Hvor lang tid tager en herreklipning?",
+      answer: "En herreklipning tager som regel mellem 20 og 40 minutter afhængigt af frisure, længde og behandling. Hvis der også skal trimmes eller styles skæg, kan behandlingen tage lidt længere tid.",
     },
   ],
   reviews: [

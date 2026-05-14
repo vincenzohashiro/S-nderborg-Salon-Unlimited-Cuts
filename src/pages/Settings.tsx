@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { defaultConfig } from "@/config/defaultConfig";
 import { mergeConfig } from "@/context/SiteConfigContext";
 import { getIcon } from "@/lib/icons";
-import type { SiteConfig, Service, MembershipPlan, SEOPage, Review } from "@/types/site-config";
+import type { SiteConfig, Service, MembershipPlan, SEOPage, Review, FaqItem } from "@/types/site-config";
 import {
   ArrowLeft, Plus, Trash2, Eye, EyeOff, CheckCircle, XCircle, X,
   Loader2, Settings as SettingsIcon, LogOut, Monitor, Check,
@@ -381,6 +381,16 @@ export default function Settings() {
   }));
   const rmReview = (id: string) => setConfig((c) => ({ ...c, reviews: c.reviews.filter((r) => r.id !== id) }));
 
+  const upFaqSection = (k: keyof SiteConfig["faqSection"], v: string) =>
+    setConfig((c) => ({ ...c, faqSection: { ...c.faqSection, [k]: v } }));
+  const upFaq = (id: string, f: keyof FaqItem, v: string) =>
+    setConfig((c) => ({ ...c, faq: (c.faq ?? []).map((q) => q.id === id ? { ...q, [f]: v } : q) }));
+  const addFaq = () => setConfig((c) => ({
+    ...c,
+    faq: [...(c.faq ?? []), { id: crypto.randomUUID(), question: "Nyt spørgsmål", answer: "" }],
+  }));
+  const rmFaq = (id: string) => setConfig((c) => ({ ...c, faq: (c.faq ?? []).filter((q) => q.id !== id) }));
+
   const upSEO  = (page: "home" | "services" | "booking", f: keyof SEOPage, v: string) =>
     setConfig((c) => ({ ...c, seo: { ...c.seo, [page]: { ...c.seo[page], [f]: v } } }));
   const upSEORoot = (k: "canonicalBase" | "ogImage", v: string) =>
@@ -574,6 +584,31 @@ export default function Settings() {
             <Field label="Åbningstider"><Input value={config.general.hours} onChange={(e) => upG("hours", e.target.value)} className="h-8 text-sm" /></Field>
             <Field label="Instagram URL"><Input value={config.general.instagram} onChange={(e) => upG("instagram", e.target.value)} className="h-8 text-sm" /></Field>
             <Field label="Facebook URL"><Input value={config.general.facebook} onChange={(e) => upG("facebook", e.target.value)} className="h-8 text-sm" /></Field>
+          </div>
+        </SectionBlock>
+
+        <SectionBlock title="FAQ" defaultOpen={false}>
+          <Field label="Badge-tekst"><Input value={config.faqSection.badge} onChange={(e) => upFaqSection("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift"><Input value={config.faqSection.heading} onChange={(e) => upFaqSection("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <div className="border-t border-gray-100 pt-3 mt-2">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">Spørgsmål & svar</p>
+            {(config.faq ?? []).map((q, idx) => (
+              <div key={q.id} className="border border-gray-200 rounded-lg p-3 mb-2 bg-gray-50 relative">
+                <button type="button" onClick={() => rmFaq(q.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Spørgsmål {idx + 1}</p>
+                <Field label="Spørgsmål">
+                  <Input value={q.question} onChange={(e) => upFaq(q.id, "question", e.target.value)} className="h-8 text-sm" />
+                </Field>
+                <Field label="Svar">
+                  <Textarea value={q.answer} onChange={(e) => upFaq(q.id, "answer", e.target.value)} rows={3} className="text-sm" />
+                </Field>
+              </div>
+            ))}
+            <Button variant="outline" size="sm" onClick={addFaq} className="w-full mt-1">
+              <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj spørgsmål
+            </Button>
           </div>
         </SectionBlock>
 

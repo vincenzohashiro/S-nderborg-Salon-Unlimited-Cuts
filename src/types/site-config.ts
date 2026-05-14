@@ -37,6 +37,12 @@ export interface Review {
   date: string;
 }
 
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
 export interface SiteConfig {
   general: {
     businessName: string;
@@ -114,9 +120,14 @@ export interface SiteConfig {
       iframeCta: string;
     };
   };
+  faqSection: {
+    badge: string;
+    heading: string;
+  };
   services: Service[];
   memberships: MembershipPlan[];
   reviews: Review[];
+  faq: FaqItem[];
   seo: {
     canonicalBase: string;
     ogImage: string;

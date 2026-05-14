@@ -32,9 +32,11 @@ export const mergeConfig = (data: unknown): SiteConfig => {
       services: { ...defaultConfig.seo.services, ...(d.seo?.services ?? {}) },
       booking:  { ...defaultConfig.seo.booking,  ...(d.seo?.booking  ?? {}) },
     },
+    faqSection:  { ...defaultConfig.faqSection, ...(d.faqSection ?? {}) },
     services:    d.services    ?? defaultConfig.services,
     memberships: d.memberships ?? defaultConfig.memberships,
     reviews:     d.reviews     ?? defaultConfig.reviews,
+    faq:         d.faq         ?? defaultConfig.faq,
   };
 };
 
