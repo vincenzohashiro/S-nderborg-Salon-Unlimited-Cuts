@@ -6,7 +6,14 @@
     "hours": "Man–Lør: 09–18 · Søn: lukket",
     "planwayUrl": "https://ab-barberlounge2.planway.com",
     "instagram": "https://www.instagram.com/abbarberlounge/reels/",
-    "facebook": "https://www.facebook.com/Perlegade64/"
+    "facebook": "https://www.facebook.com/Perlegade64/",
+    "tiktok": "https://www.tiktok.com/@abbarberlounge"
+  },
+  "images": {
+    "logo": "",
+    "hero": "",
+    "about": "",
+    "services": ""
   },
   "hero": {
     "badge": "Nyåbnet · Sønderborg",
@@ -49,7 +56,7 @@
     "badge": "Vores medlemskaber",
     "heading1": "To medlemskaber.",
     "heading2": "Ubegrænset velpleje.",
-    "subtext": "Vælg det medlemskab der passer dig — kun klip, eller klip kombineret med skæg.",
+    "subtext": "Vælg det medlemskab der passer dig — kun hårklip, eller hårklip kombineret med skægtrimning.",
     "smallPrint": "Ingen oprettelsesgebyr · Opsig når som helst"
   },
   "servicesSection": {
@@ -112,6 +119,40 @@
   "faqSection": {
     "badge": "FAQ",
     "heading": "Ofte stillede spørgsmål"
+  },
+  "socialSection": {
+    "badge": "Følg os",
+    "heading": "Se os på Instagram",
+    "profileImage": "",
+    "instagramHandle": "@abbarberlounge",
+    "followers": "286",
+    "posts": "91",
+    "items": [
+      {
+        "id": "1",
+        "url": "gallery/chairs.jpg",
+        "alt": "Sorte og guld barberstole",
+        "date": "Maj 2025"
+      },
+      {
+        "id": "2",
+        "url": "gallery/shave.jpg",
+        "alt": "Barbering med varm håndklædebehandling",
+        "date": "Apr 2025"
+      },
+      {
+        "id": "3",
+        "url": "gallery/storefront.jpg",
+        "alt": "Facaden af A&B Barber Lounge 2",
+        "date": "Mar 2025"
+      },
+      {
+        "id": "4",
+        "url": "gallery/salon.jpg",
+        "alt": "Salon interiør",
+        "date": "Feb 2025"
+      }
+    ]
   },
   "services": [
     {
