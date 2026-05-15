@@ -412,6 +412,10 @@ export default function Settings() {
     if (activeTab === "forside") return (
       <div>
         <SectionBlock title="Billeder — sektioner">
+          <Field label="Logo (navbar)" hint="Paste en ekstern URL eller lad feltet stå tomt for standardlogoet">
+            <Input value={config.images?.logo ?? ""} onChange={(e) => upImg("logo", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standardlogo)" />
+            {config.images?.logo && <img src={config.images.logo} alt="" className="mt-2 h-16 object-contain rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+          </Field>
           <Field label="Hero-billede (baggrund)" hint="Paste en ekstern URL eller lad feltet stå tomt for standardbilledet">
             <Input value={config.images?.hero ?? ""} onChange={(e) => upImg("hero", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standardbillede)" />
             {config.images?.hero && <img src={config.images.hero} alt="" className="mt-2 w-full h-24 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}

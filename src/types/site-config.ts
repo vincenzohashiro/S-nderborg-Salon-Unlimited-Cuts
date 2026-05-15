@@ -62,6 +62,7 @@ export interface SiteConfig {
     tiktok: string;
   };
   images: {
+    logo: string;
     hero: string;
     about: string;
     services: string;

@@ -12,6 +12,7 @@ export const defaultConfig: SiteConfig = {
     tiktok: "https://www.tiktok.com/@abbarberlounge",
   },
   images: {
+    logo: "",
     hero: "",
     about: "",
     services: "",

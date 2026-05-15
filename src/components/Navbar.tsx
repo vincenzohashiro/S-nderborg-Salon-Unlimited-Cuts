@@ -15,7 +15,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const { general } = useSiteConfig();
+  const { general, images } = useSiteConfig();
+  const logo = images?.logo || logoEmblem;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -38,7 +39,7 @@ const Navbar = () => {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <img
-            src={logoEmblem}
+            src={logo}
             alt={general.businessName}
             className="h-14 md:h-24 w-auto object-contain drop-shadow-md"
           />
