@@ -43,7 +43,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-start">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {services.map((s) => {
             const Icon = getIcon(s.icon);
             const isFlipped = !!flipped[s.id];
@@ -74,12 +74,12 @@ const Services = () => {
                   {/* FRONT */}
                   <div
                     style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-                    className="absolute inset-0 p-5 md:p-8 bg-secondary border border-border rounded-sm flex flex-col"
+                    className="absolute inset-0 p-5 md:p-8 bg-secondary border border-border rounded-sm flex flex-col justify-center"
                   >
                     <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
                     <h3 className="font-serif text-lg md:text-2xl mb-1 md:mb-2">{s.title}</h3>
-                    <p className="text-xs md:text-sm text-gold uppercase tracking-widest">{s.price}</p>
-                    <p className="text-[10px] text-muted-foreground mt-auto pt-3 opacity-60">Tryk for detaljer →</p>
+                    <p className="text-xs md:text-sm text-gold uppercase tracking-widest mb-3">{s.price}</p>
+                    <p className="text-[10px] text-muted-foreground opacity-60">Tryk for detaljer →</p>
                   </div>
 
                   {/* BACK */}

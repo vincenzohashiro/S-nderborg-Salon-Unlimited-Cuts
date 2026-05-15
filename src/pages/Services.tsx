@@ -37,7 +37,7 @@ const ServicesPage = () => {
 
       <section className="py-24 overflow-hidden">
         <div className="container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {services.map((s) => {
               const Icon = getIcon(s.icon);
               const isFlipped = !!flipped[s.id];
@@ -68,12 +68,12 @@ const ServicesPage = () => {
                     {/* FRONT */}
                     <div
                       style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-                      className="absolute inset-0 p-8 bg-secondary border border-border rounded-sm flex flex-col"
+                      className="absolute inset-0 p-8 bg-secondary border border-border rounded-sm flex flex-col justify-center"
                     >
                       <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
                       <h3 className="font-serif text-2xl mb-1">{s.title}</h3>
-                      <p className="text-gold uppercase tracking-widest text-sm">{s.price}</p>
-                      <p className="text-[11px] text-muted-foreground mt-auto pt-4 opacity-60">Tryk for detaljer →</p>
+                      <p className="text-gold uppercase tracking-widest text-sm mb-4">{s.price}</p>
+                      <p className="text-[11px] text-muted-foreground opacity-60">Tryk for detaljer →</p>
                     </div>
 
                     {/* BACK */}
