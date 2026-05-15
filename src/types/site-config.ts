@@ -141,6 +141,7 @@ export interface SiteConfig {
   socialSection: {
     badge: string;
     heading: string;
+    profileImage: string;
     instagramHandle: string;
     followers: string;
     posts: string;

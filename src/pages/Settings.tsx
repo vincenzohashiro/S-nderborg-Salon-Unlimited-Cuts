@@ -553,6 +553,9 @@ export default function Settings() {
               </div>
               <Field label="Profilbillede URL (valgfri)" hint="Højreklik på profilbillede i Google Maps → Kopiér billedadresse">
                 <Input value={r.avatarUrl ?? ""} onChange={(e) => upReview(r.id, "avatarUrl", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://lh3.googleusercontent.com/..." />
+                {r.avatarUrl && (
+                  <img src={r.avatarUrl} alt={r.author} className="mt-2 w-10 h-10 rounded-full object-cover border border-gray-200" referrerPolicy="no-referrer" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                )}
               </Field>
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Stjerner (1–5)">
@@ -643,6 +646,12 @@ export default function Settings() {
         <SectionBlock title="Sociale medier — sektion" defaultOpen={false}>
           <Field label="Badge-tekst"><Input value={config.socialSection.badge} onChange={(e) => upSocSec("badge", e.target.value)} className="h-8 text-sm" /></Field>
           <Field label="Overskrift"><Input value={config.socialSection.heading} onChange={(e) => upSocSec("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Profilbillede URL" hint="Profilbilledet der vises i toppen af sektionen — tomt = standard guldcirkel">
+            <Input value={config.socialSection.profileImage ?? ""} onChange={(e) => upSocSec("profileImage", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standard)" />
+            {config.socialSection.profileImage && (
+              <img src={config.socialSection.profileImage} alt="" className="mt-2 w-16 h-16 rounded-full object-cover border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            )}
+          </Field>
           <div className="grid grid-cols-3 gap-2 mt-1">
             <Field label="Instagram-handle"><Input value={config.socialSection.instagramHandle} onChange={(e) => upSocSec("instagramHandle", e.target.value)} className="h-8 text-sm" placeholder="@handle" /></Field>
             <Field label="Opslag"><Input value={config.socialSection.posts} onChange={(e) => upSocSec("posts", e.target.value)} className="h-8 text-sm" placeholder="91" /></Field>

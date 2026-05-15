@@ -74,9 +74,18 @@ const Socials = () => {
         {/* Profile header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-10">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg">
-              <span className="font-serif text-2xl md:text-3xl text-primary font-bold">A</span>
-            </div>
+            {socialSection.profileImage ? (
+              <img
+                src={socialSection.profileImage}
+                alt={general.businessName}
+                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                <span className="font-serif text-2xl md:text-3xl text-primary font-bold">A</span>
+              </div>
+            )}
             <div>
               <p className="font-semibold text-base md:text-lg leading-tight">{general.businessName}</p>
               <p className="text-sm text-muted-foreground mt-0.5">{socialSection.instagramHandle}</p>

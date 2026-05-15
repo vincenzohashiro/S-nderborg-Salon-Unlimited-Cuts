@@ -100,6 +100,7 @@ export const defaultConfig: SiteConfig = {
   socialSection: {
     badge: "Følg os",
     heading: "Se os på Instagram",
+    profileImage: "",
     instagramHandle: "@abbarberlounge",
     followers: "286",
     posts: "91",
