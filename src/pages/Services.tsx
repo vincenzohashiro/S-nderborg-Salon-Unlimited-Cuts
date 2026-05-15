@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import shave from "@/assets/barber-shave.jpg";
+import shaveFallback from "@/assets/barber-shave.jpg";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 import { useSEO } from "@/hooks/useSEO";
 import { getIcon } from "@/lib/icons";
@@ -12,8 +12,9 @@ import { getIcon } from "@/lib/icons";
 const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
 
 const ServicesPage = () => {
-  const { services, memberships, seo, pages } = useSiteConfig();
+  const { services, memberships, seo, pages, images } = useSiteConfig();
   useSEO(seo.services.title, seo.services.description, seo.ogImage);
+  const shave = images?.services || shaveFallback;
   const [flipped, setFlipped] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
 

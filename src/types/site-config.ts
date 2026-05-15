@@ -59,6 +59,12 @@ export interface SiteConfig {
     planwayUrl: string;
     instagram: string;
     facebook: string;
+    tiktok: string;
+  };
+  images: {
+    hero: string;
+    about: string;
+    services: string;
   };
   hero: {
     badge: string;

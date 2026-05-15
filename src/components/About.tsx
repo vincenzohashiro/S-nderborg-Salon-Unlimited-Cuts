@@ -1,9 +1,10 @@
-import salonImg from "@/assets/salon-wide.jpg";
+import salonImgFallback from "@/assets/salon-wide.jpg";
 import { Award, Scissors } from "lucide-react";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const About = () => {
-  const { about } = useSiteConfig();
+  const { about, images } = useSiteConfig();
+  const salonImg = images?.about || salonImgFallback;
 
   return (
     <section id="om" className="py-24 md:py-32 bg-background overflow-hidden">

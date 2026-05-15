@@ -1,11 +1,12 @@
-import heroImg from "@/assets/hero-beard.jpg";
+import heroImgFallback from "@/assets/hero-beard.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Hero = () => {
-  const { hero, general } = useSiteConfig();
+  const { hero, general, images } = useSiteConfig();
+  const heroImg = images?.hero || heroImgFallback;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">

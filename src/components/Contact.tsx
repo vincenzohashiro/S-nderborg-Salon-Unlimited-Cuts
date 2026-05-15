@@ -2,6 +2,7 @@ import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
+import TikTokIcon from "@/components/ui/TikTokIcon";
 
 const Contact = () => {
   const { general, contact } = useSiteConfig();
@@ -50,6 +51,11 @@ const Contact = () => {
               <a href={general.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
                 <Facebook className="w-4 h-4" />
               </a>
+              {general.tiktok && (
+                <a href={general.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center hover:border-gold hover:text-gold transition">
+                  <TikTokIcon className="w-4 h-4" />
+                </a>
+              )}
             </div>
           </div>
 

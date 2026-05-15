@@ -359,6 +359,7 @@ export default function Settings() {
 
   // ── Updaters ─────────────────────────────────────────────────────────────
   const upG   = (k: keyof SiteConfig["general"], v: string)        => setConfig((c) => ({ ...c, general: { ...c.general, [k]: v } }));
+  const upImg = (k: keyof SiteConfig["images"],  v: string)        => setConfig((c) => ({ ...c, images:  { ...c.images,  [k]: v } }));
   const upH   = (k: keyof SiteConfig["hero"], v: string)           => setConfig((c) => ({ ...c, hero:    { ...c.hero,    [k]: v } }));
   const upStat = (i: number, f: "value" | "label", v: string)      => setConfig((c) => ({ ...c, hero: { ...c.hero, stats: c.hero.stats.map((s, idx) => idx === i ? { ...s, [f]: v } : s) } }));
   const upA   = (k: keyof SiteConfig["about"], v: string)          => setConfig((c) => ({ ...c, about:  { ...c.about,  [k]: v } }));
@@ -410,6 +411,21 @@ export default function Settings() {
   const renderForm = () => {
     if (activeTab === "forside") return (
       <div>
+        <SectionBlock title="Billeder — sektioner">
+          <Field label="Hero-billede (baggrund)" hint="Paste en ekstern URL eller lad feltet stå tomt for standardbilledet">
+            <Input value={config.images?.hero ?? ""} onChange={(e) => upImg("hero", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standardbillede)" />
+            {config.images?.hero && <img src={config.images.hero} alt="" className="mt-2 w-full h-24 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+          </Field>
+          <Field label="Om os-billede">
+            <Input value={config.images?.about ?? ""} onChange={(e) => upImg("about", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standardbillede)" />
+            {config.images?.about && <img src={config.images.about} alt="" className="mt-2 w-full h-24 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+          </Field>
+          <Field label="Services-billede (forsiden + services-side header)">
+            <Input value={config.images?.services ?? ""} onChange={(e) => upImg("services", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... (tomt = standardbillede)" />
+            {config.images?.services && <img src={config.images.services} alt="" className="mt-2 w-full h-24 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+          </Field>
+        </SectionBlock>
+
         <SectionBlock title="Hero — øverste sektion">
           <Field label="Badge-tekst">
             <Input value={config.hero.badge} onChange={(e) => upH("badge", e.target.value)} className="h-8 text-sm" />
@@ -591,6 +607,7 @@ export default function Settings() {
             <Field label="Åbningstider"><Input value={config.general.hours} onChange={(e) => upG("hours", e.target.value)} className="h-8 text-sm" /></Field>
             <Field label="Instagram URL"><Input value={config.general.instagram} onChange={(e) => upG("instagram", e.target.value)} className="h-8 text-sm" /></Field>
             <Field label="Facebook URL"><Input value={config.general.facebook} onChange={(e) => upG("facebook", e.target.value)} className="h-8 text-sm" /></Field>
+            <Field label="TikTok URL"><Input value={config.general.tiktok ?? ""} onChange={(e) => upG("tiktok", e.target.value)} className="h-8 text-sm" /></Field>
           </div>
         </SectionBlock>
 

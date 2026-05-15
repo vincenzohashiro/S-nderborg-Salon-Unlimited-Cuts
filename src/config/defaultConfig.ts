@@ -9,6 +9,12 @@ export const defaultConfig: SiteConfig = {
     planwayUrl: "https://ab-barberlounge2.planway.com",
     instagram: "https://www.instagram.com/abbarberlounge/reels/",
     facebook: "https://www.facebook.com/Perlegade64/",
+    tiktok: "https://www.tiktok.com/@abbarberlounge",
+  },
+  images: {
+    hero: "",
+    about: "",
+    services: "",
   },
   hero: {
     badge: "Nyåbnet · Sønderborg",

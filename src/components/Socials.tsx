@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { Instagram, ChevronLeft, ChevronRight } from "lucide-react";
+import { Instagram, Facebook, ChevronLeft, ChevronRight } from "lucide-react";
+import TikTokIcon from "@/components/ui/TikTokIcon";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
 const Socials = () => {
@@ -51,14 +52,36 @@ const Socials = () => {
               </p>
             </div>
           </div>
-          <a
-            href={general.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#0095f6] hover:bg-[#1877f2] text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
-          >
-            <Instagram className="w-4 h-4" /> Følg
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href={general.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 bg-[#0095f6] hover:bg-[#0077d6] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
+              <Instagram className="w-4 h-4" /> Følg
+            </a>
+            {general.tiktok && (
+              <a
+                href={general.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 bg-black hover:bg-gray-900 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                <TikTokIcon className="w-4 h-4" /> TikTok
+              </a>
+            )}
+            {general.facebook && (
+              <a
+                href={general.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 bg-[#1877f2] hover:bg-[#0f5dd4] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+            )}
+          </div>
         </div>
 
         {/* Feed carousel */}

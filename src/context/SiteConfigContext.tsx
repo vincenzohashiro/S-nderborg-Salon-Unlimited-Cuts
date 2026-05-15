@@ -15,6 +15,7 @@ export const mergeConfig = (data: unknown): SiteConfig => {
     ...defaultConfig,
     ...d,
     general:        { ...defaultConfig.general,        ...(d.general        ?? {}) },
+    images:         { ...defaultConfig.images,         ...(d.images         ?? {}) },
     hero:           { ...defaultConfig.hero,           ...(d.hero           ?? {}) },
     about:          { ...defaultConfig.about,          ...(d.about          ?? {}) },
     offer:          { ...defaultConfig.offer,          ...(d.offer          ?? {}) },

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import shaveImg from "@/assets/barber-shave.jpg";
+import shaveImgFallback from "@/assets/barber-shave.jpg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useSiteConfig } from "@/context/SiteConfigContext";
@@ -8,7 +8,8 @@ import { getIcon } from "@/lib/icons";
 const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
 
 const Services = () => {
-  const { services, servicesSection } = useSiteConfig();
+  const { services, servicesSection, images } = useSiteConfig();
+  const shaveImg = images?.services || shaveImgFallback;
   const [flipped, setFlipped] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
 
