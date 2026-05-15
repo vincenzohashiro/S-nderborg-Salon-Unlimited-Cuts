@@ -56,7 +56,7 @@
     "badge": "Vores medlemskaber",
     "heading1": "To medlemskaber.",
     "heading2": "Ubegrænset velpleje.",
-    "subtext": "Vælg det medlemskab der passer dig — kun hårklip, eller hårklip kombineret med skægtrimning.",
+    "subtext": "Vælg det medlemskab der passer dig — kun klip, eller klip kombineret med skæg.",
     "smallPrint": "Ingen oprettelsesgebyr · Opsig når som helst"
   },
   "servicesSection": {
@@ -88,6 +88,11 @@
         "id": "4",
         "url": "gallery/salon.jpg",
         "alt": "Salon interiør"
+      },
+      {
+        "id": "1f4b87dd-66d7-40fd-89d7-c482f2f50de0",
+        "url": "https://ibb.co/mr8MbLXW",
+        "alt": ""
       }
     ]
   },
