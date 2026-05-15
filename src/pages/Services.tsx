@@ -44,22 +44,31 @@ const ServicesPage = () => {
               return (
                 <div
                   key={s.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer relative"
                   style={{ perspective: "1000px" }}
                   onClick={() => toggle(s.id)}
                 >
+                  {/* Ghost — invisible, sets card height from back content */}
+                  <div className="invisible p-8 flex flex-col" aria-hidden="true">
+                    <h3 className="font-serif text-xl mb-1">{s.title}</h3>
+                    <p className="text-[11px] uppercase tracking-widest mb-4">{s.price} · {s.time}</p>
+                    <p className="text-sm leading-relaxed whitespace-pre-line">{br(s.desc)}</p>
+                    <p className="text-[10px] mt-3">‹</p>
+                  </div>
+
+                  {/* Flip wrapper — covers the ghost */}
                   <div
+                    className="absolute inset-0"
                     style={{
                       transformStyle: "preserve-3d",
                       transition: "transform 0.55s cubic-bezier(0.4,0,0.2,1)",
                       transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-                      position: "relative",
                     }}
                   >
                     {/* FRONT */}
                     <div
                       style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-                      className="p-8 bg-secondary border border-border rounded-sm min-h-[200px] flex flex-col"
+                      className="absolute inset-0 p-8 bg-secondary border border-border rounded-sm flex flex-col"
                     >
                       <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
                       <h3 className="font-serif text-2xl mb-1">{s.title}</h3>
@@ -74,11 +83,11 @@ const ServicesPage = () => {
                         WebkitBackfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
                       }}
-                      className="absolute inset-0 p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col overflow-hidden"
+                      className="absolute inset-0 p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col"
                     >
                       <h3 className="font-serif text-xl mb-1">{s.title}</h3>
                       <p className="text-[11px] text-gold uppercase tracking-widest mb-4">{s.price} · {s.time}</p>
-                      <p className="font-light text-sm leading-relaxed whitespace-pre-line opacity-80 flex-1 overflow-auto">
+                      <p className="font-light text-sm leading-relaxed whitespace-pre-line opacity-80">
                         {br(s.desc)}
                       </p>
                       <p className="text-[10px] text-background/40 mt-3">← Tryk for at lukke</p>
