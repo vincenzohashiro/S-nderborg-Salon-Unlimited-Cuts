@@ -120,7 +120,7 @@
       "title": "Hårklip",
       "price": "200 kr",
       "time": "30 min",
-      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
+      "desc": "• Personlig konsulation\n• Klipning med fokus på detaljer\n• Vask & styling\n• Aftershave\n• Valgfri drikkevarer og snacks"
     },
     {
       "id": "2",
@@ -128,7 +128,7 @@
       "title": "Skægtrim",
       "price": "100 kr",
       "time": "20 min",
-      "desc": "Præcis trimning og formgivning af dit skæg."
+      "desc": "• Personlig konsulation\n• Skægtrimning\n• Præcisionsarbejde med ragekniv\n• Hårfjernning med varm wax eller tråd (ansigt, øre, næse)\n• Dampet håndklæde\n• Skægpleje med kvalitetsprodukter\n• Valgfri drikkevarer og snacks"
     },
     {
       "id": "4",
@@ -136,7 +136,7 @@
       "title": "Hårklip + Skæg",
       "price": "300 kr",
       "time": "40 min",
-      "desc": "Den komplette pakke — klipning og fuld skægbehandling."
+      "desc": "• Personlig konsulation\n• Klipning med fokus på detaljer\n• Vask & styling\n• Aftershave\n\n• Skægtrimning\n• Præcisionsarbejde med ragekniv\n• Hårfjernning med varm wax eller tråd (ansigt, øre, næse)\n• Dampet håndklæde\n• Skægpleje med kvalitetsprodukter\n• Valgfri drikkevarer og snacks"
     },
     {
       "id": "5",
@@ -144,7 +144,7 @@
       "title": "Pensionist hårklip",
       "price": "150 kr",
       "time": "30 min",
-      "desc": "Klassisk eller moderne klipning, vask og styling inkluderet."
+      "desc": "• Personlig konsulation\n• Klipning med fokus på detaljer\n• Vask & styling\n• Aftershave\n• Valgfri drikkevarer og snacks"
     },
     {
       "id": "6",
@@ -152,7 +152,7 @@
       "title": "Børneklip (0–12)",
       "price": "150 kr",
       "time": "30 min",
-      "desc": "Tålmodig klipning for de små i en rolig stol."
+      "desc": "<12\n• Personlig konsulation\n• Klipning tilpasset barnets stil og ønsker\n• Hårvask og styling"
     },
     {
       "id": "8",
@@ -168,7 +168,7 @@
       "title": "Maskineklip ",
       "price": "120 kr",
       "time": "15 min",
-      "desc": "Klassisk eller moderne klipning, kun med maskine."
+      "desc": "• Personlig konsulation\n• Hårklip kun med maskine\n• Valgfri drikkevarer og snacks"
     }
   ],
   "memberships": [
