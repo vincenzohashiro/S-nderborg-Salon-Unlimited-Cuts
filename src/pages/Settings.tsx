@@ -391,6 +391,13 @@ export default function Settings() {
   }));
   const rmFaq = (id: string) => setConfig((c) => ({ ...c, faq: (c.faq ?? []).filter((q) => q.id !== id) }));
 
+  const upSocSec = (k: keyof SiteConfig["socialSection"], v: string) =>
+    setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, [k]: v } }));
+  const upSocItem = (id: string, f: "url" | "alt" | "date", v: string) =>
+    setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: c.socialSection.items.map((p) => p.id === id ? { ...p, [f]: v } : p) } }));
+  const addSocItem = () => setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: [...c.socialSection.items, { id: crypto.randomUUID(), url: "", alt: "", date: "" }] } }));
+  const rmSocItem = (id: string) => setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: c.socialSection.items.filter((p) => p.id !== id) } }));
+
   const upSEO  = (page: "home" | "services" | "booking", f: keyof SEOPage, v: string) =>
     setConfig((c) => ({ ...c, seo: { ...c.seo, [page]: { ...c.seo[page], [f]: v } } }));
   const upSEORoot = (k: "canonicalBase" | "ogImage", v: string) =>
@@ -608,6 +615,40 @@ export default function Settings() {
             ))}
             <Button variant="outline" size="sm" onClick={addFaq} className="w-full mt-1">
               <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj spørgsmål
+            </Button>
+          </div>
+        </SectionBlock>
+
+        <SectionBlock title="Sociale medier — sektion" defaultOpen={false}>
+          <Field label="Badge-tekst"><Input value={config.socialSection.badge} onChange={(e) => upSocSec("badge", e.target.value)} className="h-8 text-sm" /></Field>
+          <Field label="Overskrift"><Input value={config.socialSection.heading} onChange={(e) => upSocSec("heading", e.target.value)} className="h-8 text-sm" /></Field>
+          <div className="grid grid-cols-3 gap-2 mt-1">
+            <Field label="Instagram-handle"><Input value={config.socialSection.instagramHandle} onChange={(e) => upSocSec("instagramHandle", e.target.value)} className="h-8 text-sm" placeholder="@handle" /></Field>
+            <Field label="Opslag"><Input value={config.socialSection.posts} onChange={(e) => upSocSec("posts", e.target.value)} className="h-8 text-sm" placeholder="91" /></Field>
+            <Field label="Følgere"><Input value={config.socialSection.followers} onChange={(e) => upSocSec("followers", e.target.value)} className="h-8 text-sm" placeholder="286" /></Field>
+          </div>
+          <div className="border-t border-gray-100 pt-3 mt-2">
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">Billeder i feed</p>
+            {config.socialSection.items.map((item, idx) => (
+              <div key={item.id} className="border border-gray-200 rounded-lg p-3 mb-2 bg-gray-50 relative">
+                <button type="button" onClick={() => rmSocItem(item.id)} className="absolute top-2 right-2 text-gray-300 hover:text-red-400">
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Billede {idx + 1}</p>
+                <Field label="URL" hint="Ekstern URL (https://...) eller gallery/filnavn.jpg">
+                  <Input value={item.url} onChange={(e) => upSocItem(item.id, "url", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... eller gallery/foto.jpg" />
+                </Field>
+                <div className="grid grid-cols-2 gap-2">
+                  <Field label="Billedtekst (alt)"><Input value={item.alt} onChange={(e) => upSocItem(item.id, "alt", e.target.value)} className="h-8 text-sm" /></Field>
+                  <Field label="Dato (fx 'Maj 2025')"><Input value={item.date} onChange={(e) => upSocItem(item.id, "date", e.target.value)} className="h-8 text-sm" /></Field>
+                </div>
+                {item.url && (
+                  <img src={item.url.startsWith("http") ? item.url : `/${item.url}`} alt={item.alt} className="mt-2 w-full h-20 object-cover rounded border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                )}
+              </div>
+            ))}
+            <Button variant="outline" size="sm" onClick={addSocItem} className="w-full mt-1">
+              <Plus className="w-3.5 h-3.5 mr-1" /> Tilføj billede
             </Button>
           </div>
         </SectionBlock>

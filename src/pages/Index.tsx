@@ -6,6 +6,7 @@ import Services from "@/components/Services";
 import Gallery from "@/components/Gallery";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
+import Socials from "@/components/Socials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useSiteConfig } from "@/context/SiteConfigContext";
@@ -25,6 +26,7 @@ const Index = () => {
       <Gallery />
       <Reviews />
       <FAQ />
+      <Socials />
       <Contact />
       <Footer />
     </main>

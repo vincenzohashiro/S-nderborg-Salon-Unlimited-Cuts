@@ -90,6 +90,19 @@ export const defaultConfig: SiteConfig = {
     badge: "FAQ",
     heading: "Ofte stillede spørgsmål",
   },
+  socialSection: {
+    badge: "Følg os",
+    heading: "Se os på Instagram",
+    instagramHandle: "@abbarberlounge",
+    followers: "286",
+    posts: "91",
+    items: [
+      { id: "1", url: "gallery/chairs.jpg",     alt: "Sorte og guld barberstole",              date: "Maj 2025" },
+      { id: "2", url: "gallery/shave.jpg",       alt: "Barbering med varm håndklædebehandling", date: "Apr 2025" },
+      { id: "3", url: "gallery/storefront.jpg",  alt: "Facaden af A&B Barber Lounge 2",         date: "Mar 2025" },
+      { id: "4", url: "gallery/salon.jpg",       alt: "Salon interiør",                         date: "Feb 2025" },
+    ],
+  },
   services: [
     { id: "1", icon: "scissors", title: "Herreklip",      price: "200 kr",    time: "30 min", desc: "Klassisk eller moderne klipning, vask og styling inkluderet." },
     { id: "2", icon: "beard",    title: "Skægtrim",       price: "149 kr",    time: "20 min", desc: "Præcis trimning og formgivning af dit skæg." },

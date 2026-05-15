@@ -43,6 +43,13 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface SocialPost {
+  id: string;
+  url: string;
+  alt: string;
+  date: string;
+}
+
 export interface SiteConfig {
   general: {
     businessName: string;
@@ -123,6 +130,14 @@ export interface SiteConfig {
   faqSection: {
     badge: string;
     heading: string;
+  };
+  socialSection: {
+    badge: string;
+    heading: string;
+    instagramHandle: string;
+    followers: string;
+    posts: string;
+    items: SocialPost[];
   };
   services: Service[];
   memberships: MembershipPlan[];
