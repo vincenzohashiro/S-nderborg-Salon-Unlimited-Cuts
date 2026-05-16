@@ -3,7 +3,7 @@
     "businessName": "A&B Barber Lounge 2",
     "phone": "+45 91 75 24 70",
     "address": "Perlegade 64, Sønderborg",
-    "hours": "Man–Lør: 09–18 · Søn: lukket",
+    "hours": "Man–Fre: 10–18 · Lør: 10–16 · Søn: lukket",
     "planwayUrl": "https://ab-barberlounge2.planway.com",
     "instagram": "https://www.instagram.com/abbarberlounge/reels/",
     "facebook": "https://www.facebook.com/Perlegade64/",
@@ -12,8 +12,8 @@
   "images": {
     "logo": "",
     "hero": "",
-    "about": "",
-    "services": "gallery/FB_IMG_1778659209030.jpg"
+    "about": "gallery/FB_IMG_1778659209030.jpg",
+    "services": "gallery/shave.jpg"
   },
   "hero": {
     "badge": "Nyåbnet · Sønderborg",
@@ -133,9 +133,12 @@
   "socialSection": {
     "badge": "Følg os",
     "heading": "Se os på Instagram",
-    "profileImage": "",
-    "instagramHandle": "@abbarberlounge",
+    "profileImage": "gallery/social-logo.jpg",
+    "displayName": "abbarberlounge",
+    "instagramHandle": "A&B Barberlounge 1&2 | Frisør Sønderborg & Helsingborg",
+    "bio": "Moderne barber & frisør\nFade • Herreklip • Skægtrimning\nSønderborg DK | Helsingborg SE",
     "followers": "286",
+    "following": "5",
     "posts": "91",
     "items": [
       {
@@ -143,7 +146,7 @@
         "url": "gallery/chairs.jpg",
         "alt": "Sorte og guld barberstole",
         "date": "Maj 2025",
-        "postUrl": ""
+        "postUrl": "https://www.instagram.com/p/DXkF70xDdFr/"
       },
       {
         "id": "2",
