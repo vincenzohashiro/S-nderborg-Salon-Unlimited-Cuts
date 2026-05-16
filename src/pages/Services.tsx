@@ -41,7 +41,7 @@ const ServicesPage = () => {
 
       <section className="py-24 overflow-hidden">
         <div className="container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
             {services.map((s) => {
               const Icon = getIcon(s.icon);
               const isFlipped = !!flipped[s.id];
@@ -53,10 +53,10 @@ const ServicesPage = () => {
                   onClick={() => toggle(s.id)}
                 >
                   {/* Ghost — invisible, sets card height from back content */}
-                  <div className="invisible p-8 flex flex-col" aria-hidden="true">
-                    <h3 className="font-serif text-xl mb-1">{s.title}</h3>
-                    <p className="text-[11px] uppercase tracking-widest mb-4">{s.price} · {s.time}</p>
-                    <p className="text-sm leading-relaxed whitespace-pre-line">{br(s.desc)}</p>
+                  <div className="invisible p-5 sm:p-6 md:p-8 flex flex-col" aria-hidden="true">
+                    <h3 className="font-serif text-base sm:text-lg md:text-xl mb-1">{s.title}</h3>
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-widest mb-3">{s.price} · {s.time}</p>
+                    <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-line">{br(s.desc)}</p>
                     <p className="text-[10px] mt-3">‹</p>
                   </div>
 
@@ -72,12 +72,12 @@ const ServicesPage = () => {
                     {/* FRONT */}
                     <div
                       style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-                      className="absolute inset-0 p-8 bg-secondary border border-border rounded-sm flex flex-col justify-center"
+                      className="absolute inset-0 p-5 sm:p-6 md:p-8 bg-secondary border border-border rounded-sm flex flex-col justify-center"
                     >
-                      <Icon className="w-8 h-8 text-gold mb-6" strokeWidth={1.5} />
-                      <h3 className="font-serif text-2xl mb-1">{s.title}</h3>
-                      <p className="text-gold uppercase tracking-widest text-sm mb-4">{s.price}</p>
-                      <p className="text-[11px] text-muted-foreground opacity-60">Tryk for detaljer →</p>
+                      <Icon className="w-7 h-7 md:w-8 md:h-8 text-gold mb-4 md:mb-6" strokeWidth={1.5} />
+                      <h3 className="font-serif text-lg sm:text-xl md:text-2xl mb-1">{s.title}</h3>
+                      <p className="text-xs sm:text-sm text-gold uppercase tracking-widest mb-3">{s.price}</p>
+                      <p className="text-[10px] text-muted-foreground opacity-60">Tryk for detaljer →</p>
                     </div>
 
                     {/* BACK */}
@@ -87,11 +87,11 @@ const ServicesPage = () => {
                         WebkitBackfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
                       }}
-                      className="absolute inset-0 p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col"
+                      className="absolute inset-0 p-5 sm:p-6 md:p-8 bg-primary text-background border border-gold/30 rounded-sm flex flex-col"
                     >
-                      <h3 className="font-serif text-xl mb-1">{s.title}</h3>
-                      <p className="text-[11px] text-gold uppercase tracking-widest mb-4">{s.price} · {s.time}</p>
-                      <p className="font-light text-sm leading-relaxed whitespace-pre-line opacity-80">
+                      <h3 className="font-serif text-base sm:text-lg md:text-xl mb-1">{s.title}</h3>
+                      <p className="text-[10px] sm:text-[11px] text-gold uppercase tracking-widest mb-3">{s.price} · {s.time}</p>
+                      <p className="font-light text-xs sm:text-sm leading-relaxed whitespace-pre-line opacity-80">
                         {br(s.desc)}
                       </p>
                       <p className="text-[10px] text-background/40 mt-3">← Tryk for at lukke</p>
