@@ -71,21 +71,21 @@ const Socials = () => {
   };
 
   const socialButtons = (
-    <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
+    <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start mt-3">
       <a href={general.instagram} target="_blank" rel="noopener noreferrer"
-        className="flex items-center gap-1.5 bg-[#0095f6] hover:bg-[#0077d6] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
-        <Instagram className="w-4 h-4" /> Følg
+        className="flex items-center gap-1.5 bg-[#0095f6] hover:bg-[#0077d6] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+        <Instagram className="w-4 h-4" /> Instagram
       </a>
       {general.tiktok && (
         <a href={general.tiktok} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-black hover:bg-gray-900 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
+          className="flex items-center gap-1.5 bg-black hover:bg-gray-900 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
           <TikTokIcon className="w-4 h-4" /> TikTok
         </a>
       )}
       {general.facebook && (
         <a href={general.facebook} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-[#1877f2] hover:bg-[#0f5dd4] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
-          <Facebook className="w-4 h-4" />
+          className="flex items-center gap-1.5 bg-[#1877f2] hover:bg-[#0f5dd4] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+          <Facebook className="w-4 h-4" /> Facebook
         </a>
       )}
     </div>
@@ -108,20 +108,18 @@ const Socials = () => {
         <div className="md:hidden flex flex-col items-center gap-6">
 
           {/* Profile header — Instagram style */}
-          <div className="flex flex-col items-center gap-3 text-center w-full">
+          <div className="flex flex-col items-center gap-2 text-center w-full">
             {avatar("xl")}
-            <div className="w-full">
-              <p className="font-semibold text-base leading-tight">{ss.displayName ?? general.businessName}</p>
-              <div className="flex justify-center gap-5 my-2 text-sm">
-                <span><strong>{socialSection.posts}</strong> opslag</span>
-                <span><strong>{socialSection.followers}</strong> følgere</span>
-                <span><strong>{ss.following ?? "0"}</strong> følger</span>
-              </div>
-              {ss.bio && <p className="text-xs text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
-              {socialSection.instagramHandle && (
-                <p className="text-xs text-muted-foreground mt-1">{socialSection.instagramHandle}</p>
-              )}
+            <p className="font-semibold text-base leading-tight mt-1">{ss.displayName ?? general.businessName}</p>
+            <div className="flex justify-center gap-5 text-sm">
+              <span><strong>{socialSection.posts}</strong> opslag</span>
+              <span><strong>{socialSection.followers}</strong> følgere</span>
+              <span><strong>{ss.following ?? "0"}</strong> følger</span>
             </div>
+            {ss.bio && <p className="text-xs text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
+            {socialSection.instagramHandle && (
+              <p className="text-xs font-medium">{socialSection.instagramHandle}</p>
+            )}
             {socialButtons}
           </div>
 
@@ -202,19 +200,17 @@ const Socials = () => {
           <div className="flex items-start gap-8 mb-10">
             {avatar("xl")}
             <div className="flex-1">
-              <div className="flex items-center gap-4 mb-3">
-                <p className="font-semibold text-lg">{ss.displayName ?? general.businessName}</p>
-                {socialButtons}
-              </div>
+              <p className="font-semibold text-lg mb-3">{ss.displayName ?? general.businessName}</p>
               <div className="flex gap-6 text-sm mb-3">
                 <span><strong className="font-semibold">{socialSection.posts}</strong> opslag</span>
                 <span><strong className="font-semibold">{socialSection.followers}</strong> følgere</span>
                 <span><strong className="font-semibold">{ss.following ?? "0"}</strong> følger</span>
               </div>
-              {ss.bio && <p className="text-sm text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
+              {ss.bio && <p className="text-sm text-muted-foreground whitespace-pre-line leading-snug mb-1">{ss.bio}</p>}
               {socialSection.instagramHandle && (
-                <p className="text-sm font-medium mt-1">{socialSection.instagramHandle}</p>
+                <p className="text-sm font-medium mb-0">{socialSection.instagramHandle}</p>
               )}
+              {socialButtons}
             </div>
           </div>
 
