@@ -1,7 +1,16 @@
 import { useRef, useState } from "react";
-import { Instagram, Facebook, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { Instagram, Facebook, ChevronLeft, ChevronRight } from "lucide-react";
 import TikTokIcon from "@/components/ui/TikTokIcon";
 import { useSiteConfig } from "@/context/SiteConfigContext";
+
+const getEmbedUrl = (postUrl?: string): string | null => {
+  if (!postUrl) return null;
+  const ig = postUrl.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+  if (ig) return `https://www.instagram.com/p/${ig[1]}/embed/captioned/`;
+  const tt = postUrl.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+  if (tt) return `https://www.tiktok.com/embed/v2/${tt[1]}`;
+  return null;
+};
 
 const Socials = () => {
   const { general, socialSection } = useSiteConfig();
@@ -83,6 +92,7 @@ const Socials = () => {
   );
 
   const currentItem = items[mobileIdx];
+  const currentEmbed = getEmbedUrl(currentItem?.postUrl);
 
   return (
     <section className="py-24 md:py-32 bg-secondary overflow-hidden">
@@ -132,35 +142,30 @@ const Socials = () => {
               </button>
             )}
 
-            <div className="w-full max-w-[320px] bg-white rounded-2xl shadow-xl overflow-hidden">
-              {/* Media */}
-              <a href={currentItem.postUrl ?? general.instagram} target="_blank" rel="noopener noreferrer"
-                className="relative block w-full aspect-[4/5] overflow-hidden">
-                <img
-                  src={resolveUrl(currentItem.url)}
-                  alt={currentItem.alt}
-                  className="w-full h-full object-cover"
-                />
-                {currentItem.postUrl && (
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                      <Play className="w-6 h-6 text-white fill-white ml-0.5" />
-                    </div>
-                  </div>
-                )}
-              </a>
-
-              {/* Card footer */}
-              <div className="flex items-center justify-between px-3 py-3 border-t border-gray-100">
-                <div className="flex items-center gap-2">
-                  {avatar("sm")}
-                  <div>
-                    <p className="text-xs font-semibold leading-tight">{general.businessName}</p>
-                    <p className="text-[10px] text-muted-foreground">{currentItem.date}</p>
-                  </div>
+            <div className="w-full max-w-[320px] bg-black rounded-2xl shadow-xl overflow-hidden">
+              {/* Media — iframe clipped to hide Instagram header/footer */}
+              {currentEmbed ? (
+                <div style={{ height: 500, overflow: "hidden" }}>
+                  <iframe
+                    src={currentEmbed}
+                    className="w-full"
+                    style={{ height: 614, marginTop: -62, display: "block" }}
+                    frameBorder="0"
+                    scrolling="no"
+                    allowTransparency
+                    allowFullScreen
+                    title={currentItem.alt}
+                  />
                 </div>
-                <Instagram className="w-4 h-4 text-[#E1306C]" />
-              </div>
+              ) : (
+                <a href={general.instagram} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={resolveUrl(currentItem.url)}
+                    alt={currentItem.alt}
+                    className="w-full aspect-[4/5] object-cover"
+                  />
+                </a>
+              )}
             </div>
           </div>
 
@@ -216,31 +221,43 @@ const Socials = () => {
             <div className="overflow-hidden rounded-xl">
               <div className="flex gap-4 transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(calc(-${desktopOff} * (25% + 1rem)))` }}>
-                {items.map((item) => (
-                  <a key={item.id} href={item.postUrl ?? general.instagram} target="_blank" rel="noopener noreferrer"
-                    className="relative flex-shrink-0 w-[calc(25%-0.75rem)] aspect-square rounded-xl overflow-hidden group">
-                    <img src={resolveUrl(item.url)} alt={item.alt} loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                      {item.postUrl && (
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="w-14 h-14 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                            <Play className="w-6 h-6 text-white fill-white ml-0.5" />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-white text-xs font-semibold leading-tight">{general.businessName}</p>
-                          <p className="text-white/70 text-[10px]">{item.date}</p>
-                        </div>
-                        <Instagram className="w-4 h-4 text-white/80" />
+                {items.map((item) => {
+                  const embed = getEmbedUrl(item.postUrl);
+                  return embed ? (
+                    <div key={item.id} className="flex-shrink-0 w-[calc(25%-0.75rem)] rounded-xl overflow-hidden bg-black shadow-sm">
+                      {/* Clip Instagram header (~62px) and footer (~48px) */}
+                      <div style={{ height: 430, overflow: "hidden" }}>
+                        <iframe
+                          src={embed}
+                          className="w-full"
+                          style={{ height: 540, marginTop: -62, display: "block" }}
+                          frameBorder="0"
+                          scrolling="no"
+                          allowTransparency
+                          allowFullScreen
+                          title={item.alt}
+                        />
                       </div>
                     </div>
-                  </a>
-                ))}
+                  ) : (
+                    <a key={item.id} href={general.instagram} target="_blank" rel="noopener noreferrer"
+                      className="relative flex-shrink-0 w-[calc(25%-0.75rem)] rounded-xl overflow-hidden group bg-black shadow-sm"
+                      style={{ height: 430 }}>
+                      <img src={resolveUrl(item.url)} alt={item.alt} loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-white text-xs font-semibold leading-tight">{general.businessName}</p>
+                            <p className="text-white/70 text-[10px]">{item.date}</p>
+                          </div>
+                          <Instagram className="w-4 h-4 text-white/80" />
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
