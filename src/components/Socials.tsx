@@ -145,11 +145,11 @@ const Socials = () => {
             <div className="w-full max-w-[320px] bg-black rounded-2xl shadow-xl overflow-hidden">
               {/* Media — iframe clipped to hide Instagram header/footer */}
               {currentEmbed ? (
-                <div style={{ height: 480, overflow: "hidden" }}>
+                <div style={{ height: 520, overflow: "hidden" }}>
                   <iframe
                     src={currentEmbed}
                     className="w-full"
-                    style={{ height: 760, marginTop: -62, display: "block" }}
+                    style={{ height: 1100, marginTop: -62, display: "block" }}
                     frameBorder="0"
                     scrolling="no"
                     allowTransparency
@@ -225,12 +225,12 @@ const Socials = () => {
                   const embed = getEmbedUrl(item.postUrl);
                   return embed ? (
                     <div key={item.id} className="flex-shrink-0 w-[calc(25%-0.75rem)] rounded-xl overflow-hidden bg-black shadow-sm">
-                      {/* Tall iframe renders all content naturally; container clips header & footer */}
-                      <div style={{ height: 400, overflow: "hidden" }}>
+                      {/* Very tall iframe forces video to fill height naturally, footer stays below clip */}
+                      <div style={{ height: 440, overflow: "hidden" }}>
                         <iframe
                           src={embed}
                           className="w-full"
-                          style={{ height: 680, marginTop: -62, display: "block" }}
+                          style={{ height: 1100, marginTop: -62, display: "block" }}
                           frameBorder="0"
                           scrolling="no"
                           allowTransparency
