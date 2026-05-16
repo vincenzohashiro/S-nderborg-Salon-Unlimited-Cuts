@@ -2,9 +2,13 @@ import salonImgFallback from "@/assets/salon-wide.jpg";
 import { Award, Scissors } from "lucide-react";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const resolveImg = (url: string) =>
+  url.startsWith("http") ? url : `${base}/${url.replace(/^\//, "")}`;
+
 const About = () => {
   const { about, images } = useSiteConfig();
-  const salonImg = images?.about || salonImgFallback;
+  const salonImg = images?.about ? resolveImg(images.about) : salonImgFallback;
 
   return (
     <section id="om" className="py-24 md:py-32 bg-background overflow-hidden">
