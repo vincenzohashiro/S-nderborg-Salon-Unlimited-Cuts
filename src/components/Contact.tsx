@@ -8,7 +8,7 @@ const Contact = () => {
   const { general, contact } = useSiteConfig();
 
   const items = [
-    { icon: MapPin, label: "Adresse",      value: general.address },
+    { icon: MapPin, label: "Adresse",      value: general.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(general.address)}` },
     { icon: Phone,  label: "Telefon",      value: general.phone, href: `tel:${general.phone.replace(/\s/g, "")}` },
     { icon: Clock,  label: "Åbningstider", value: general.hours },
   ];
@@ -35,7 +35,7 @@ const Contact = () => {
                   <div>
                     <div className="text-xs uppercase tracking-widest text-background/50 mb-1">{c.label}</div>
                     {c.href ? (
-                      <a href={c.href} className="text-background hover:text-gold">{c.value}</a>
+                      <a href={c.href} {...(!c.href.startsWith("tel:") && { target: "_blank", rel: "noopener noreferrer" })} className="text-background hover:text-gold">{c.value}</a>
                     ) : (
                       <div className="text-background">{c.value}</div>
                     )}
