@@ -149,19 +149,22 @@
         "id": "2",
         "url": "gallery/shave.jpg",
         "alt": "Barbering med varm håndklædebehandling",
-        "date": "Apr 2025"
+        "date": "Apr 2025",
+        "postUrl": "https://www.instagram.com/p/DYGL-kJqMOQ/"
       },
       {
         "id": "3",
         "url": "gallery/storefront.jpg",
         "alt": "Facaden af A&B Barber Lounge 2",
-        "date": "Mar 2025"
+        "date": "Mar 2025",
+        "postUrl": "https://www.instagram.com/p/DXtsCTADaBh/"
       },
       {
         "id": "4",
         "url": "gallery/salon.jpg",
         "alt": "Salon interiør",
-        "date": "Feb 2025"
+        "date": "Feb 2025",
+        "postUrl": "https://www.instagram.com/p/DYUjYSXjUWW/"
       }
     ]
   },
