@@ -265,7 +265,7 @@
     {
       "id": "1",
       "question": "Hvad koster et herreklip i Sønderborg?",
-      "answer": "Prisen på et herreklip afhænger af behandling, erfaring og salonens koncept. Hos A&B Barber Lounge 2 i Sønderborg tilbyder vi både almindelige klipninger og unlimited abonnementer fra 449 kr/md til kunder, der ønsker faste klipninger hver måned."
+      "answer": "Prisen på et herreklip afhænger af behandling, erfaring og salonens koncept. Hos A&B Barber Lounge 2 i Sønderborg tilbyder vi både almindelige klipninger og unlimited abonnementer fra 499 kr/md til kunder, der ønsker faste klipninger hver måned."
     },
     {
       "id": "2",
@@ -321,7 +321,7 @@
       "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLoNmDmsQYe3g2dRqNrz6c75mWx8UdnO4JBGe9cnaqO2LgHww=w45-h45-p-rp-mo-br100",
       "reviewUrl": "https://maps.app.goo.gl/uJ5jPiexBkqDkxWt8",
       "rating": 5,
-      "text": "Godt klip, god service og super stemning. Helt sikkert anbefalet 😊😊",
+      "text": "God klipning, god service og fantastisk humør. Kan klart anbefales 😊😊 …",
       "date": "For 4 dage siden"
     },
     {
@@ -353,14 +353,41 @@
       "rating": 5,
       "text": "Wasim er en utrolig dygtig frisør, og alt er i topkvalitet. Salonen er virkelig smukt indrettet, og stemningen er fantastisk! 💜",
       "date": "For 1 måned siden"
+    },
+    {
+      "id": "9b9274e5-3eaa-4af1-8ec8-45c8a164a6a9",
+      "author": "Ahmad dababech",
+      "initials": "AD",
+      "rating": 5,
+      "text": "Wasim er virkelig dygtig og detaljeorienteret. Jeg fik lavet fade og skægtrimning, og resultatet blev præcis som jeg ønskede. God service, professionel behandling og en fed atmosfære i salonen. Klart en barber jeg kan anbefale, hvis man leder efter en skarp herrefrisør i Sønderborg.",
+      "date": "2 dage siden",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKrkouzIKGYVcxRTpEKtn3cfyoXtVVwPgJsBAL7kP_dcqpF0w=w72-h72-p-rp-mo-br100"
+    },
+    {
+      "id": "67e0e985-d61c-4750-9672-802b07c82d10",
+      "author": "Mathias Sørensen",
+      "initials": "MS",
+      "rating": 5,
+      "text": "Super venlig og rigtig dygtig! Går virkelig ned  i detaljerne. Han er min fast frisør nu. Vil helt klart anbefale ham til andre. 😁👍🏽 …",
+      "date": "en uge siden",
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWMmsVVqJcu9YQtKyQi1qu6TmQl_Bu9NsCabkFpC2lwg1xo5GQ=w72-h72-p-rp-mo-br100"
+    },
+    {
+      "id": "3f239d83-3d8a-498c-8ba1-3603f9181764",
+      "author": "Josef Khalil",
+      "initials": "JK",
+      "rating": 5,
+      "text": "Wasim er en virkelig dygtig frisør som virkelig gør et sindsygt flot arbejde. Kvaliteten er top, hans salon er flot og der er virkelig styr på hygiejnen. Jeg ihvertfald fast kunde fra nu.",
+      "date": "En uge siden",
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWlOx7yP1GBw6J9ZShE7sYMaazLbWsmcQseuOxMVt0vs5CZeEKL=w72-h72-p-rp-mo-br100"
     }
   ],
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
     "ogImage": "https://ab-barberlounge2.dk/og-image.jpg",
     "home": {
-      "title": "Frisør i Sønderborg | Ubegrænset hårklip for 449 kr/md",
-      "description": "Frisør i Sønderborg. Ubegrænset hårklip for 449 kr/md eller hårklip & skægtrimning for 599 kr/md. Drop-in eller online booking. Perlegade 64"
+      "title": "Frisør i Sønderborg | Ubegrænset klip fra 499 kr/md",
+      "description": "Frisør i Sønderborg. Ubegrænset herreklip fra 499 kr/md eller klip & skæg for 599 kr/md. Drop-in eller online booking. Perlegade 64"
     },
     "services": {
       "title": "Services & Priser — A&B Barber Lounge 2 Sønderborg",
