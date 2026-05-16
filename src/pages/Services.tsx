@@ -11,10 +11,14 @@ import { getIcon } from "@/lib/icons";
 
 const br = (text: string) => text.replace(/<br\s*\/?>/gi, "\n");
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const resolveImg = (url: string) =>
+  url.startsWith("http") ? url : `${base}/${url.replace(/^\//, "")}`;
+
 const ServicesPage = () => {
   const { services, memberships, seo, pages, images } = useSiteConfig();
   useSEO(seo.services.title, seo.services.description, seo.ogImage);
-  const shave = images?.services || shaveFallback;
+  const shave = images?.services ? resolveImg(images.services) : shaveFallback;
   const [flipped, setFlipped] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setFlipped((p) => ({ ...p, [id]: !p[id] }));
 
