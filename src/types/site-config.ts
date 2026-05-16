@@ -143,8 +143,11 @@ export interface SiteConfig {
     badge: string;
     heading: string;
     profileImage: string;
+    displayName: string;
     instagramHandle: string;
+    bio: string;
     followers: string;
+    following: string;
     posts: string;
     items: SocialPost[];
   };

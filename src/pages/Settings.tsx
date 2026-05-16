@@ -652,10 +652,13 @@ export default function Settings() {
               <img src={config.socialSection.profileImage} alt="" className="mt-2 w-16 h-16 rounded-full object-cover border border-gray-200" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             )}
           </Field>
+          <Field label="Brugernavn (displayName)"><Input value={(config.socialSection as { displayName?: string }).displayName ?? ""} onChange={(e) => upSocSec("displayName" as keyof typeof config.socialSection, e.target.value)} className="h-8 text-sm" placeholder="abbarberlounge" /></Field>
+          <Field label="Virksomhedsnavn / beskrivelse (under brugernavn)"><Input value={config.socialSection.instagramHandle} onChange={(e) => upSocSec("instagramHandle", e.target.value)} className="h-8 text-sm" placeholder="A&B Barberlounge 1&2 | Frisør..." /></Field>
+          <Field label="Bio (linjeskift med Enter)"><textarea value={(config.socialSection as { bio?: string }).bio ?? ""} onChange={(e) => upSocSec("bio" as keyof typeof config.socialSection, e.target.value)} rows={3} className="w-full text-sm border border-input rounded-md px-3 py-2 resize-none" placeholder="Moderne barber & frisør..." /></Field>
           <div className="grid grid-cols-3 gap-2 mt-1">
-            <Field label="Instagram-handle"><Input value={config.socialSection.instagramHandle} onChange={(e) => upSocSec("instagramHandle", e.target.value)} className="h-8 text-sm" placeholder="@handle" /></Field>
-            <Field label="Opslag"><Input value={config.socialSection.posts} onChange={(e) => upSocSec("posts", e.target.value)} className="h-8 text-sm" placeholder="91" /></Field>
-            <Field label="Følgere"><Input value={config.socialSection.followers} onChange={(e) => upSocSec("followers", e.target.value)} className="h-8 text-sm" placeholder="286" /></Field>
+            <Field label="Opslag"><Input value={config.socialSection.posts} onChange={(e) => upSocSec("posts", e.target.value)} className="h-8 text-sm" placeholder="77" /></Field>
+            <Field label="Følgere"><Input value={config.socialSection.followers} onChange={(e) => upSocSec("followers", e.target.value)} className="h-8 text-sm" placeholder="276" /></Field>
+            <Field label="Følger"><Input value={(config.socialSection as { following?: string }).following ?? ""} onChange={(e) => upSocSec("following" as keyof typeof config.socialSection, e.target.value)} className="h-8 text-sm" placeholder="5" /></Field>
           </div>
           <div className="border-t border-gray-100 pt-3 mt-2">
             <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-3">Billeder i feed</p>

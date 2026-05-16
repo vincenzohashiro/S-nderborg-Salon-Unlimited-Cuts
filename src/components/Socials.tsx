@@ -47,18 +47,25 @@ const Socials = () => {
     desktopTouchX.current = null;
   };
 
-  const avatar = (size: "sm" | "lg") => {
-    const cls = size === "lg"
-      ? "w-16 h-16 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40"
-      : "w-9 h-9 rounded-full object-cover flex-shrink-0";
-    const ring = size === "lg"
-      ? "w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg"
-      : "w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0";
+  const ss = socialSection as typeof socialSection & { displayName?: string; bio?: string; following?: string };
+
+  const avatar = (size: "sm" | "lg" | "xl") => {
+    const cls = {
+      xl: "w-20 h-20 md:w-24 md:h-24 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40",
+      lg: "w-16 h-16 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40",
+      sm: "w-9 h-9 rounded-full object-cover flex-shrink-0",
+    }[size];
+    const ring = {
+      xl: "w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg",
+      lg: "w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg",
+      sm: "w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0",
+    }[size];
+    const textSize = size === "sm" ? "text-sm" : "text-2xl";
     return socialSection.profileImage ? (
-      <img src={socialSection.profileImage} alt={general.businessName} className={cls} referrerPolicy="no-referrer" />
+      <img src={resolveUrl(socialSection.profileImage)} alt={general.businessName} className={cls} referrerPolicy="no-referrer" />
     ) : (
       <div className={ring}>
-        <span className={`font-serif font-bold text-primary ${size === "lg" ? "text-2xl" : "text-sm"}`}>A</span>
+        <span className={`font-serif font-bold text-primary ${textSize}`}>A</span>
       </div>
     );
   };
@@ -100,17 +107,20 @@ const Socials = () => {
         {/* ── Mobile: story-style single card carousel ── */}
         <div className="md:hidden flex flex-col items-center gap-6">
 
-          {/* Profile header */}
+          {/* Profile header — Instagram style */}
           <div className="flex flex-col items-center gap-3 text-center w-full">
-            {avatar("lg")}
-            <div>
-              <p className="font-semibold text-base leading-tight">{general.businessName}</p>
-              <p className="text-sm text-muted-foreground">{socialSection.instagramHandle}</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                <span className="font-semibold text-foreground">{socialSection.posts}</span> opslag
-                &nbsp;·&nbsp;
-                <span className="font-semibold text-foreground">{socialSection.followers}</span> følgere
-              </p>
+            {avatar("xl")}
+            <div className="w-full">
+              <p className="font-semibold text-base leading-tight">{ss.displayName ?? general.businessName}</p>
+              <div className="flex justify-center gap-5 my-2 text-sm">
+                <span><strong>{socialSection.posts}</strong> opslag</span>
+                <span><strong>{socialSection.followers}</strong> følgere</span>
+                <span><strong>{ss.following ?? "0"}</strong> følger</span>
+              </div>
+              {ss.bio && <p className="text-xs text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
+              {socialSection.instagramHandle && (
+                <p className="text-xs text-muted-foreground mt-1">{socialSection.instagramHandle}</p>
+              )}
             </div>
             {socialButtons}
           </div>
@@ -188,21 +198,24 @@ const Socials = () => {
 
         {/* ── Desktop: 4-column carousel ── */}
         <div className="hidden md:block">
-          {/* Profile header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-10">
-            <div className="flex items-center gap-5">
-              {avatar("lg")}
-              <div>
-                <p className="font-semibold text-base md:text-lg leading-tight">{general.businessName}</p>
-                <p className="text-sm text-muted-foreground mt-0.5">{socialSection.instagramHandle}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  <span className="font-semibold text-foreground">{socialSection.posts}</span> opslag
-                  &nbsp;·&nbsp;
-                  <span className="font-semibold text-foreground">{socialSection.followers}</span> følgere
-                </p>
+          {/* Profile header — Instagram style */}
+          <div className="flex items-start gap-8 mb-10">
+            {avatar("xl")}
+            <div className="flex-1">
+              <div className="flex items-center gap-4 mb-3">
+                <p className="font-semibold text-lg">{ss.displayName ?? general.businessName}</p>
+                {socialButtons}
               </div>
+              <div className="flex gap-6 text-sm mb-3">
+                <span><strong className="font-semibold">{socialSection.posts}</strong> opslag</span>
+                <span><strong className="font-semibold">{socialSection.followers}</strong> følgere</span>
+                <span><strong className="font-semibold">{ss.following ?? "0"}</strong> følger</span>
+              </div>
+              {ss.bio && <p className="text-sm text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
+              {socialSection.instagramHandle && (
+                <p className="text-sm font-medium mt-1">{socialSection.instagramHandle}</p>
+              )}
             </div>
-            {socialButtons}
           </div>
 
           {/* Carousel */}

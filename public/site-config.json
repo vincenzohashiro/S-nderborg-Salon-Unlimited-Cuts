@@ -133,10 +133,13 @@
   "socialSection": {
     "badge": "Følg os",
     "heading": "Se os på Instagram",
-    "profileImage": "",
-    "instagramHandle": "@abbarberlounge",
-    "followers": "286",
-    "posts": "91",
+    "profileImage": "gallery/social-logo.jpg",
+    "displayName": "abbarberlounge",
+    "instagramHandle": "A&B Barberlounge 1&2 | Frisør Sønderborg & Helsingborg",
+    "bio": "Moderne barber & frisør\nFade • Herreklip • Skægtrimning\nSønderborg DK | Helsingborg SE",
+    "followers": "276",
+    "following": "5",
+    "posts": "77",
     "items": [
       {
         "id": "1",
