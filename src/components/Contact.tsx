@@ -8,7 +8,7 @@ const Contact = () => {
   const { general, contact } = useSiteConfig();
 
   const items = [
-    { icon: MapPin, label: "Adresse",      value: general.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(general.address)}` },
+    { icon: MapPin, label: "Adresse",      value: general.address, href: general.mapsUrl },
     { icon: Phone,  label: "Telefon",      value: general.phone, href: `tel:${general.phone.replace(/\s/g, "")}` },
     { icon: Clock,  label: "Åbningstider", value: general.hours },
   ];

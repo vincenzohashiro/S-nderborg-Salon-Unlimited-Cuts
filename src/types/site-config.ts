@@ -57,6 +57,7 @@ export interface SiteConfig {
     businessName: string;
     phone: string;
     address: string;
+    mapsUrl: string;
     hours: string;
     planwayUrl: string;
     instagram: string;

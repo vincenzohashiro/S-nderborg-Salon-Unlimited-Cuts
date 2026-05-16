@@ -29,7 +29,7 @@ const Booking = () => {
         <div className="container max-w-5xl">
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
             <InfoCard icon={Phone} label="Ring"    value={general.phone}   href={`tel:${general.phone.replace(/\s/g, "")}`} />
-            <InfoCard icon={MapPin} label="Adresse" value={general.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(general.address)}`} />
+            <InfoCard icon={MapPin} label="Adresse" value={general.address} href={general.mapsUrl} />
             <InfoCard icon={Clock}  label="Åbent"   value={general.hours}   />
           </div>
 

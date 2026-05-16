@@ -19,7 +19,7 @@ const Footer = () => {
             <Link to="/booking" className="hover:text-gold">Book tid</Link>
           </div>
           <p className="text-xs uppercase tracking-widest">
-            © {new Date().getFullYear()} {general.businessName} · <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(general.address)}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">{general.address}</a>
+            © {new Date().getFullYear()} {general.businessName} · <a href={general.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">{general.address}</a>
           </p>
         </div>
       </div>

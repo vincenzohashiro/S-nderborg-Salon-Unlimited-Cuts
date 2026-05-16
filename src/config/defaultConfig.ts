@@ -5,6 +5,7 @@ export const defaultConfig: SiteConfig = {
     businessName: "A&B Barber Lounge 2",
     phone: "+45 91 75 24 70",
     address: "Perlegade 64, Sønderborg",
+    mapsUrl: "https://maps.app.goo.gl/5Gm1pHDhpx3pFEn88",
     hours: "Man–Lør: 09–18 · Søn: lukket",
     planwayUrl: "https://ab-barberlounge2.planway.com",
     instagram: "https://www.instagram.com/abbarberlounge/reels/",
