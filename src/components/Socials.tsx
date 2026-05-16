@@ -3,11 +3,22 @@ import { Instagram, Facebook, ChevronLeft, ChevronRight } from "lucide-react";
 import TikTokIcon from "@/components/ui/TikTokIcon";
 import { useSiteConfig } from "@/context/SiteConfigContext";
 
+const getEmbedUrl = (postUrl?: string): string | null => {
+  if (!postUrl) return null;
+  const ig = postUrl.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/);
+  if (ig) return `https://www.instagram.com/p/${ig[1]}/embed/captioned/`;
+  const tt = postUrl.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+  if (tt) return `https://www.tiktok.com/embed/v2/${tt[1]}`;
+  return null;
+};
+
 const Socials = () => {
   const { general, socialSection } = useSiteConfig();
   const items = socialSection?.items ?? [];
-  const [current, setCurrent] = useState(0);
-  const touchStartX = useRef<number | null>(null);
+  const [mobileIdx, setMobileIdx] = useState(0);
+  const [desktopOff, setDesktopOff] = useState(0);
+  const mobileTouchX = useRef<number | null>(null);
+  const desktopTouchX = useRef<number | null>(null);
 
   if (items.length === 0) return null;
 
@@ -15,51 +26,66 @@ const Socials = () => {
   const resolveUrl = (url: string) =>
     url.startsWith("http") ? url : `${base}/${url.replace(/^\//, "")}`;
 
-  const visibleCount = 4;
-  const maxIndex = Math.max(0, items.length - visibleCount);
-  const prev = () => setCurrent((i) => Math.max(0, i - 1));
-  const next = () => setCurrent((i) => Math.min(maxIndex, i + 1));
+  const desktopMax = Math.max(0, items.length - 4);
+  const mobilePrev = () => setMobileIdx((i) => Math.max(0, i - 1));
+  const mobileNext = () => setMobileIdx((i) => Math.min(items.length - 1, i + 1));
+  const desktopPrev = () => setDesktopOff((i) => Math.max(0, i - 1));
+  const desktopNext = () => setDesktopOff((i) => Math.min(desktopMax, i + 1));
 
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
-    touchStartX.current = null;
+  const onMobileTouchStart = (e: React.TouchEvent) => { mobileTouchX.current = e.touches[0].clientX; };
+  const onMobileTouchEnd = (e: React.TouchEvent) => {
+    if (mobileTouchX.current === null) return;
+    const diff = mobileTouchX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? mobileNext() : mobilePrev();
+    mobileTouchX.current = null;
+  };
+  const onDesktopTouchStart = (e: React.TouchEvent) => { desktopTouchX.current = e.touches[0].clientX; };
+  const onDesktopTouchEnd = (e: React.TouchEvent) => {
+    if (desktopTouchX.current === null) return;
+    const diff = desktopTouchX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? desktopNext() : desktopPrev();
+    desktopTouchX.current = null;
   };
 
-  const SocialButtons = () => (
-    <div className="flex items-center gap-2 flex-wrap">
-      <a
-        href={general.instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-1.5 bg-[#0095f6] hover:bg-[#0077d6] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-      >
+  const avatar = (size: "sm" | "lg") => {
+    const cls = size === "lg"
+      ? "w-16 h-16 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40"
+      : "w-9 h-9 rounded-full object-cover flex-shrink-0";
+    const ring = size === "lg"
+      ? "w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg"
+      : "w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0";
+    return socialSection.profileImage ? (
+      <img src={socialSection.profileImage} alt={general.businessName} className={cls} referrerPolicy="no-referrer" />
+    ) : (
+      <div className={ring}>
+        <span className={`font-serif font-bold text-primary ${size === "lg" ? "text-2xl" : "text-sm"}`}>A</span>
+      </div>
+    );
+  };
+
+  const socialButtons = (
+    <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
+      <a href={general.instagram} target="_blank" rel="noopener noreferrer"
+        className="flex items-center gap-1.5 bg-[#0095f6] hover:bg-[#0077d6] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
         <Instagram className="w-4 h-4" /> Følg
       </a>
       {general.tiktok && (
-        <a
-          href={general.tiktok}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-black hover:bg-gray-900 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-        >
+        <a href={general.tiktok} target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-black hover:bg-gray-900 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
           <TikTokIcon className="w-4 h-4" /> TikTok
         </a>
       )}
       {general.facebook && (
-        <a
-          href={general.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-[#1877f2] hover:bg-[#0f5dd4] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
-        >
+        <a href={general.facebook} target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-[#1877f2] hover:bg-[#0f5dd4] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors">
           <Facebook className="w-4 h-4" />
         </a>
       )}
     </div>
   );
+
+  const currentItem = items[mobileIdx];
+  const currentEmbed = getEmbedUrl(currentItem?.postUrl);
 
   return (
     <section className="py-24 md:py-32 bg-secondary overflow-hidden">
@@ -71,120 +97,165 @@ const Socials = () => {
           <h2 className="font-serif text-4xl md:text-5xl mt-4 text-balance">{socialSection.heading}</h2>
         </div>
 
-        {/* Profile header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-10">
-          <div className="flex items-center gap-5">
-            {socialSection.profileImage ? (
-              <img
-                src={socialSection.profileImage}
-                alt={general.businessName}
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover flex-shrink-0 shadow-lg border-2 border-gold/40"
-                referrerPolicy="no-referrer"
-              />
-            ) : (
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-yellow-400 via-gold to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg">
-                <span className="font-serif text-2xl md:text-3xl text-primary font-bold">A</span>
-              </div>
-            )}
+        {/* ── Mobile: story-style single card carousel ── */}
+        <div className="md:hidden flex flex-col items-center gap-6">
+
+          {/* Profile header */}
+          <div className="flex flex-col items-center gap-3 text-center w-full">
+            {avatar("lg")}
             <div>
-              <p className="font-semibold text-base md:text-lg leading-tight">{general.businessName}</p>
-              <p className="text-sm text-muted-foreground mt-0.5">{socialSection.instagramHandle}</p>
+              <p className="font-semibold text-base leading-tight">{general.businessName}</p>
+              <p className="text-sm text-muted-foreground">{socialSection.instagramHandle}</p>
               <p className="text-sm text-muted-foreground mt-1">
                 <span className="font-semibold text-foreground">{socialSection.posts}</span> opslag
                 &nbsp;·&nbsp;
                 <span className="font-semibold text-foreground">{socialSection.followers}</span> følgere
               </p>
             </div>
+            {socialButtons}
           </div>
-          <SocialButtons />
-        </div>
 
-        {/* ── Mobile: 2-column grid ── */}
-        <div className="grid grid-cols-2 gap-3 md:hidden">
-          {items.map((item) => (
-            <a
-              key={item.id}
-              href={general.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative aspect-square rounded-xl overflow-hidden group"
-            >
-              <img
-                src={resolveUrl(item.url)}
-                alt={item.alt}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-                <div className="flex items-center justify-between">
+          {/* Card + arrows */}
+          <div
+            className="relative flex items-center justify-center w-full"
+            onTouchStart={onMobileTouchStart}
+            onTouchEnd={onMobileTouchEnd}
+          >
+            {mobileIdx > 0 && (
+              <button onClick={mobilePrev} aria-label="Forrige"
+                className="absolute left-0 z-10 w-10 h-10 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center -translate-x-1">
+                <ChevronLeft className="w-5 h-5 text-gray-700" />
+              </button>
+            )}
+            {mobileIdx < items.length - 1 && (
+              <button onClick={mobileNext} aria-label="Næste"
+                className="absolute right-0 z-10 w-10 h-10 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center translate-x-1">
+                <ChevronRight className="w-5 h-5 text-gray-700" />
+              </button>
+            )}
+
+            <div className="w-full max-w-[320px] bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Media */}
+              {currentEmbed ? (
+                <iframe
+                  src={currentEmbed}
+                  className="w-full"
+                  height="500"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowTransparency
+                  allowFullScreen
+                  title={currentItem.alt}
+                />
+              ) : (
+                <a href={general.instagram} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={resolveUrl(currentItem.url)}
+                    alt={currentItem.alt}
+                    className="w-full aspect-[4/5] object-cover"
+                  />
+                </a>
+              )}
+
+              {/* Card footer */}
+              <div className="flex items-center justify-between px-3 py-3 border-t border-gray-100">
+                <div className="flex items-center gap-2">
+                  {avatar("sm")}
                   <div>
-                    <p className="text-white text-xs font-semibold leading-tight">{general.businessName}</p>
-                    <p className="text-white/70 text-[10px]">{item.date}</p>
+                    <p className="text-xs font-semibold leading-tight">{general.businessName}</p>
+                    <p className="text-[10px] text-muted-foreground">{currentItem.date}</p>
                   </div>
-                  <Instagram className="w-4 h-4 text-white/80" />
                 </div>
+                <Instagram className="w-4 h-4 text-[#E1306C]" />
               </div>
-            </a>
-          ))}
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          {items.length > 1 && (
+            <div className="flex justify-center gap-1.5">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setMobileIdx(i)}
+                  aria-label={`Gå til billede ${i + 1}`}
+                  className={`w-1.5 h-1.5 rounded-full transition-colors ${i === mobileIdx ? "bg-gold" : "bg-border"}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Desktop: 4-column carousel ── */}
-        <div
-          className="hidden md:block relative"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {current > 0 && (
-            <button
-              onClick={prev}
-              aria-label="Forrige"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-700" />
-            </button>
-          )}
-          {current < maxIndex && (
-            <button
-              onClick={next}
-              aria-label="Næste"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
-            >
-              <ChevronRight className="w-6 h-6 text-gray-700" />
-            </button>
-          )}
+        <div className="hidden md:block">
+          {/* Profile header */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-10">
+            <div className="flex items-center gap-5">
+              {avatar("lg")}
+              <div>
+                <p className="font-semibold text-base md:text-lg leading-tight">{general.businessName}</p>
+                <p className="text-sm text-muted-foreground mt-0.5">{socialSection.instagramHandle}</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  <span className="font-semibold text-foreground">{socialSection.posts}</span> opslag
+                  &nbsp;·&nbsp;
+                  <span className="font-semibold text-foreground">{socialSection.followers}</span> følgere
+                </p>
+              </div>
+            </div>
+            {socialButtons}
+          </div>
 
-          <div className="overflow-hidden rounded-xl">
-            <div
-              className="flex gap-4 transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(calc(-${current} * (25% + 1rem)))` }}
-            >
-              {items.map((item) => (
-                <a
-                  key={item.id}
-                  href={general.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative flex-shrink-0 w-[calc(25%-0.75rem)] aspect-square rounded-xl overflow-hidden group"
-                >
-                  <img
-                    src={resolveUrl(item.url)}
-                    alt={item.alt}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-white text-xs font-semibold leading-tight">{general.businessName}</p>
-                        <p className="text-white/70 text-[10px]">{item.date}</p>
-                      </div>
-                      <Instagram className="w-4 h-4 text-white/80" />
+          {/* Carousel */}
+          <div className="relative" onTouchStart={onDesktopTouchStart} onTouchEnd={onDesktopTouchEnd}>
+            {desktopOff > 0 && (
+              <button onClick={desktopPrev} aria-label="Forrige"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                <ChevronLeft className="w-6 h-6 text-gray-700" />
+              </button>
+            )}
+            {desktopOff < desktopMax && (
+              <button onClick={desktopNext} aria-label="Næste"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                <ChevronRight className="w-6 h-6 text-gray-700" />
+              </button>
+            )}
+            <div className="overflow-hidden rounded-xl">
+              <div className="flex gap-4 transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(calc(-${desktopOff} * (25% + 1rem)))` }}>
+                {items.map((item) => {
+                  const embed = getEmbedUrl(item.postUrl);
+                  return embed ? (
+                    <div key={item.id} className="relative flex-shrink-0 w-[calc(25%-0.75rem)] rounded-xl overflow-hidden bg-white shadow-sm">
+                      <iframe
+                        src={embed}
+                        className="w-full"
+                        height="400"
+                        frameBorder="0"
+                        scrolling="no"
+                        allowTransparency
+                        allowFullScreen
+                        title={item.alt}
+                      />
                     </div>
-                  </div>
-                </a>
-              ))}
+                  ) : (
+                    <a key={item.id} href={general.instagram} target="_blank" rel="noopener noreferrer"
+                      className="relative flex-shrink-0 w-[calc(25%-0.75rem)] aspect-square rounded-xl overflow-hidden group">
+                      <img src={resolveUrl(item.url)} alt={item.alt} loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-white text-xs font-semibold leading-tight">{general.businessName}</p>
+                            <p className="text-white/70 text-[10px]">{item.date}</p>
+                          </div>
+                          <Instagram className="w-4 h-4 text-white/80" />
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

@@ -48,6 +48,7 @@ export interface SocialPost {
   url: string;
   alt: string;
   date: string;
+  postUrl?: string;
 }
 
 export interface SiteConfig {

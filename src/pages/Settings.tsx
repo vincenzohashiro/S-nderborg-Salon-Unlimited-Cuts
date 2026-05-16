@@ -394,7 +394,7 @@ export default function Settings() {
 
   const upSocSec = (k: keyof SiteConfig["socialSection"], v: string) =>
     setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, [k]: v } }));
-  const upSocItem = (id: string, f: "url" | "alt" | "date", v: string) =>
+  const upSocItem = (id: string, f: "url" | "alt" | "date" | "postUrl", v: string) =>
     setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: c.socialSection.items.map((p) => p.id === id ? { ...p, [f]: v } : p) } }));
   const addSocItem = () => setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: [...c.socialSection.items, { id: crypto.randomUUID(), url: "", alt: "", date: "" }] } }));
   const rmSocItem = (id: string) => setConfig((c) => ({ ...c, socialSection: { ...c.socialSection, items: c.socialSection.items.filter((p) => p.id !== id) } }));
@@ -665,7 +665,10 @@ export default function Settings() {
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
                 <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Billede {idx + 1}</p>
-                <Field label="URL" hint="Ekstern URL (https://...) eller gallery/filnavn.jpg">
+                <Field label="Post URL (Instagram/TikTok)" hint="Indsæt direkte link til reel/post — det vises som live embed">
+                  <Input value={item.postUrl ?? ""} onChange={(e) => upSocItem(item.id, "postUrl", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://www.instagram.com/reel/..." />
+                </Field>
+                <Field label="Fallback-billede URL" hint="Vises hvis ingen post URL er sat — gallery/filnavn.jpg eller ekstern URL">
                   <Input value={item.url} onChange={(e) => upSocItem(item.id, "url", e.target.value)} className="h-8 text-sm font-mono" placeholder="https://... eller gallery/foto.jpg" />
                 </Field>
                 <div className="grid grid-cols-2 gap-2">
