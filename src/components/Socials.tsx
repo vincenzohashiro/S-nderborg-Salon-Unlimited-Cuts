@@ -14,6 +14,7 @@ const getEmbedUrl = (postUrl?: string): string | null => {
 
 const Socials = () => {
   const { general, socialSection } = useSiteConfig();
+  const mapsUrl = (general as typeof general & { mapsUrl?: string }).mapsUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(general.address)}`;
   const items = socialSection?.items ?? [];
   const [mobileIdx, setMobileIdx] = useState(0);
   const [desktopOff, setDesktopOff] = useState(0);
@@ -118,7 +119,8 @@ const Socials = () => {
             </div>
             {ss.bio && <p className="text-xs text-muted-foreground whitespace-pre-line leading-snug">{ss.bio}</p>}
             {socialSection.instagramHandle && (
-              <p className="text-xs font-medium">{socialSection.instagramHandle}</p>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
+                className="text-xs font-medium hover:text-gold transition-colors">{socialSection.instagramHandle}</a>
             )}
             {socialButtons}
           </div>
@@ -198,7 +200,8 @@ const Socials = () => {
               </div>
               {ss.bio && <p className="text-sm text-muted-foreground whitespace-pre-line leading-snug mb-1">{ss.bio}</p>}
               {socialSection.instagramHandle && (
-                <p className="text-sm font-medium mb-0">{socialSection.instagramHandle}</p>
+                <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
+                  className="text-sm font-medium mb-0 hover:text-gold transition-colors block">{socialSection.instagramHandle}</a>
               )}
               {socialButtons}
             </div>
