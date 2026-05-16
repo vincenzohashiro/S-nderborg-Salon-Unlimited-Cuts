@@ -32,6 +32,7 @@ export interface Review {
   author: string;
   initials: string;
   avatarUrl?: string;
+  reviewUrl?: string;
   rating: number;
   text: string;
   date: string;

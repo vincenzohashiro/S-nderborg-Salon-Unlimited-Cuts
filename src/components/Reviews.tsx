@@ -26,10 +26,18 @@ const ReviewCard = ({ review }: { review: Review }) => (
   <div className="flex-shrink-0 w-[320px] md:w-[360px] bg-background border border-border rounded-sm p-6 mx-3 flex flex-col gap-4 shadow-soft">
     <div className="flex items-start justify-between gap-3">
       <StarRating rating={review.rating} />
-      <div className="flex items-center gap-1 text-muted-foreground">
-        <GoogleIcon />
-        <span className="text-[10px] font-medium tracking-wide">Google</span>
-      </div>
+      {review.reviewUrl ? (
+        <a href={review.reviewUrl} target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+          <GoogleIcon />
+          <span className="text-[10px] font-medium tracking-wide">Google</span>
+        </a>
+      ) : (
+        <div className="flex items-center gap-1 text-muted-foreground">
+          <GoogleIcon />
+          <span className="text-[10px] font-medium tracking-wide">Google</span>
+        </div>
+      )}
     </div>
     <p className="text-sm text-foreground/80 leading-relaxed flex-1">
       &ldquo;{review.text}&rdquo;

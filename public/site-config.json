@@ -295,51 +295,63 @@
   "reviews": [
     {
       "id": "1",
-      "author": "Mikkel Hansen",
-      "initials": "MH",
+      "author": "Manzar Malik",
+      "initials": "MM",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLD8AoHZZD08HSr4Usc5w-LryQfIcYg7iuGjxh9FOXBAOTt3Q=w45-h45-p-rp-mo-ba4-br100",
+      "reviewUrl": "https://maps.app.goo.gl/CnDSUphYw8NXMR8u9",
       "rating": 5,
-      "text": "Fantastisk oplevelse! Wasim er utrolig dygtig og tog sig tid til at forstå præcis, hvad jeg ønskede. Kommer helt sikkert igen.",
-      "date": "For 2 uger siden"
+      "text": "Had a really pleasant experience he did exactly same haircut what i asked and beard trimming was also nice.",
+      "date": "For 3 dage siden"
     },
     {
       "id": "2",
-      "author": "Ahmed Al-Rashidi",
-      "initials": "AA",
+      "author": "Rizan Hannan",
+      "initials": "RH",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJ3rSxGAsCbDQfKIh2HlPWNQMMgY554k0Sy6OvDGaJlIb09mA=w45-h45-p-rp-mo-br100",
+      "reviewUrl": "https://maps.app.goo.gl/cfbFfrGTwCW553yZ8",
       "rating": 5,
-      "text": "Bedste barber i Sønderborg! Professionel service og et super hyggeligt sted. Klipningen sidder altid perfekt.",
-      "date": "For 1 måned siden"
+      "text": "Good service, nice mood and skilled hairdresser",
+      "date": "For 3 dage siden"
     },
     {
       "id": "3",
-      "author": "Jonas Petersen",
-      "initials": "JP",
+      "author": "Sedin",
+      "initials": "SE",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocLoNmDmsQYe3g2dRqNrz6c75mWx8UdnO4JBGe9cnaqO2LgHww=w45-h45-p-rp-mo-br100",
+      "reviewUrl": "https://maps.app.goo.gl/uJ5jPiexBkqDkxWt8",
       "rating": 5,
-      "text": "Har været her flere gange og er aldrig blevet skuffet. Præcist arbejde og god atmosfære. Stærkt anbefalet!",
-      "date": "For 3 uger siden"
+      "text": "Good haircut, good service and great mood. Definitely recommended 😊😊",
+      "date": "For 4 dage siden"
     },
     {
       "id": "4",
-      "author": "Christoffer Larsen",
-      "initials": "CL",
+      "author": "Najla Issa",
+      "initials": "NI",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocL880GMf_-qBNwCHMePpKY6i0T75X2a8XMfDwDrWJDpr_rmWw=w45-h45-p-rp-mo-br100",
+      "reviewUrl": "https://maps.app.goo.gl/gzU8uriFq7q2ncHM8",
       "rating": 5,
-      "text": "Virkelig imponerende håndværk. Wasim ved præcis hvad han laver og resultatet er altid i top. 5 stjerner fortjent!",
-      "date": "For 2 måneder siden"
-    },
-    {
-      "id": "5",
-      "author": "Rasmus Nielsen",
-      "initials": "RN",
-      "rating": 5,
-      "text": "Kom ind uden aftale og blev taget imod med et smil. Klipningen var perfekt og prisen fair. Super sted!",
+      "text": "Really good hairdresser, who has his things under control. Good service, communication - this will definitely NOT be the last time we come 💜 👏",
       "date": "For 1 uge siden"
     },
     {
-      "id": "6",
-      "author": "Omar Khalid",
-      "initials": "OK",
+      "id": "5",
+      "author": "laith alsalti",
+      "initials": "LA",
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjVYxOUFspfRnDBE2IRj6gCzkBDYoKIdmhfG2vRF_5aXlMQYMAc=w45-h45-p-rp-mo-br100",
+      "reviewUrl": "https://maps.app.goo.gl/mf87RL5CasNcodeC6",
       "rating": 5,
-      "text": "Har gået her i over et år. Altid tilfreds med resultatet. Wasim er en rigtig dygtig barber og et godt menneske.",
-      "date": "For 3 måneder siden"
+      "text": "Fantastic experience! Super skilled hairdresser, great results and friendly service. Will definitely come again",
+      "date": "For 2 uger siden"
+    },
+    {
+      "id": "6",
+      "author": "Amigo Khalil",
+      "initials": "AK",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKAOwYtiZty70PXMwGQ1q-rAGxX-XVFrZBwlz1-_GyUtPzoOw=w45-h45-p-rp-mo-br100",
+      "reviewUrl": "https://maps.app.goo.gl/QqS3m8bhppRvw2Rz5",
+      "rating": 5,
+      "text": "Wasim is an incredibly talented hairdresser, and everything is top quality. The salon is really nicely decorated, and the atmosphere is great! 💜",
+      "date": "For 1 måned siden"
     }
   ],
   "seo": {
