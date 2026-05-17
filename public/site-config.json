@@ -384,7 +384,7 @@
   ],
   "customCode": {
     "head": "",
-    "footer": "<!-- Meta Pixel Schedule Event - Book knapper -->\n<script>\ndocument.addEventListener('click', function(e) {\n  var link = e.target.closest('a[href=\"/booking\"]');\n  if (link) {\n    fbq('track', 'Schedule');\n  }\n});\n</script>"
+    "footer": ""
   },
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
