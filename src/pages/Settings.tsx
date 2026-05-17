@@ -45,13 +45,14 @@ interface LogEntry {
   message: string;
 }
 
-type Tab = "forside" | "services" | "booking" | "seo" | "publish" | "advanced";
+type Tab = "forside" | "services" | "booking" | "seo" | "tracking" | "publish" | "advanced";
 
 const TABS: { id: Tab; label: string; icon: string; path: string }[] = [
   { id: "forside",  label: "Forside",   icon: "🏠", path: "/"        },
   { id: "services", label: "Services",  icon: "✂️", path: "/services" },
   { id: "booking",  label: "Book Tid",  icon: "📅", path: "/booking"  },
   { id: "seo",      label: "SEO",       icon: "🔍", path: "/"        },
+  { id: "tracking", label: "Tracking",  icon: "📊", path: "/"        },
   { id: "publish",  label: "Udgiv",     icon: "🚀", path: "/"        },
   { id: "advanced", label: "Avanceret", icon: "⚙️", path: "/"        },
 ];
@@ -823,6 +824,36 @@ export default function Settings() {
           <GooglePreview page={config.seo[seoPage]} config={config} />
           <SocialPreview page={config.seo[seoPage]} config={config} />
         </div>
+      </div>
+    );
+
+    if (activeTab === "tracking") return (
+      <div>
+        <div className="flex items-center gap-2 mb-5">
+          <span className="text-xl">📊</span>
+          <h3 className="font-semibold text-gray-900 text-sm">Tracking & Custom Code</h3>
+        </div>
+        <p className="text-xs text-gray-500 mb-5 leading-relaxed">
+          Indsæt tracking-scripts (Google Analytics, Meta Pixel, GTM osv.) her. Koden udføres på alle sider af websitet.
+        </p>
+        <SectionBlock title="&lt;head&gt; kode">
+          <p className="text-[10px] text-gray-400 mb-2">Indsættes i &lt;head&gt; — brug til gtag, fbq, GTM script-tag osv.</p>
+          <Textarea
+            value={config.customCode?.head ?? ""}
+            onChange={(e) => setConfig((c) => ({ ...c, customCode: { ...c.customCode, head: e.target.value } }))}
+            placeholder={"<!-- Google Analytics -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'G-XXXXXXXX');\n</script>"}
+            className="font-mono text-xs h-48 resize-y"
+          />
+        </SectionBlock>
+        <SectionBlock title="&lt;/body&gt; kode (footer)">
+          <p className="text-[10px] text-gray-400 mb-2">Indsættes i bunden af &lt;body&gt; — brug til noscript-tags, chat-widgets osv.</p>
+          <Textarea
+            value={config.customCode?.footer ?? ""}
+            onChange={(e) => setConfig((c) => ({ ...c, customCode: { ...c.customCode, footer: e.target.value } }))}
+            placeholder={"<!-- Meta Pixel noscript -->\n<noscript><img height=\"1\" width=\"1\" src=\"https://www.facebook.com/tr?id=XXXXXXXX&ev=PageView&noscript=1\"/></noscript>"}
+            className="font-mono text-xs h-32 resize-y"
+          />
+        </SectionBlock>
       </div>
     );
 

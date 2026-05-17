@@ -42,6 +42,10 @@ export const mergeConfig = (data: unknown): SiteConfig => {
       bio: (d.socialSection as { bio?: string } | undefined)?.bio ?? defaultConfig.socialSection.bio,
       following: (d.socialSection as { following?: string } | undefined)?.following ?? defaultConfig.socialSection.following,
     },
+    customCode: {
+      head:   (d.customCode as { head?: string } | undefined)?.head   ?? defaultConfig.customCode.head,
+      footer: (d.customCode as { footer?: string } | undefined)?.footer ?? defaultConfig.customCode.footer,
+    },
     services:    d.services    ?? defaultConfig.services,
     memberships: d.memberships ?? defaultConfig.memberships,
     reviews:     d.reviews     ?? defaultConfig.reviews,

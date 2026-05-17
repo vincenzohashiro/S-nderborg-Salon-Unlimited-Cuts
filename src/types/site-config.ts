@@ -164,4 +164,8 @@ export interface SiteConfig {
     services: SEOPage;
     booking: SEOPage;
   };
+  customCode: {
+    head: string;
+    footer: string;
+  };
 }

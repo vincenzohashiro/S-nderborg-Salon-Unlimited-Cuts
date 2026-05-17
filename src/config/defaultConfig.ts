@@ -195,6 +195,10 @@ export const defaultConfig: SiteConfig = {
     { id: "5", author: "Rizan Hannan",             initials: "RH", avatarUrl: "https://lh3.googleusercontent.com/a/ACg8ocJFLqRBNhxbUdkjtcKVJBAXyPgHENeuvXllSBiNAfb8mP9UFQ=w96-h96-p-rp-mo-br100",          rating: 5, text: "Good service, nice mood and skilled hairdresser",                                                              date: "For 1 dag siden"   },
     { id: "6", author: "Sedin",                    initials: "SE", avatarUrl: "https://lh3.googleusercontent.com/a-/ALV-UjWMmsVVqJcu9YQtKyQi1qu6TmQl_Bu9NsCabkFpC2lwg1xo5GQ=w96-h96-p-rp-mo-br100",         rating: 5, text: "Good haircut, good service and great mood. Definitely recommended 😊",                                        date: "For 2 dage siden"  },
   ],
+  customCode: {
+    head: "",
+    footer: "",
+  },
   seo: {
     canonicalBase: "https://ab-barberlounge2.dk",
     ogImage: "https://ab-barberlounge2.dk/og-image.jpg",
