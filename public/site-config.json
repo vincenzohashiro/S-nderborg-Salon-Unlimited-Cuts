@@ -384,7 +384,7 @@
   ],
   "customCode": {
     "head": "",
-    "footer": ""
+    "footer": "<!-- Meta Pixel Schedule Event - Bekræft bestilling -->\n<script>\ndocument.addEventListener('click', function(e) {\n  var btn = e.target.closest('button.confirm[name=\"submit\"]');\n  if (btn) {\n    fbq('track', 'Schedule');\n  }\n}, true);\n</script>"
   },
   "seo": {
     "canonicalBase": "https://ab-barberlounge2.dk",
