@@ -20,7 +20,7 @@
     "badge": "Sønderborg",
     "headline1": "Frisør i sønderborg ",
     "headline2": "A&B Barber Lounge 2",
-    "subtext": "Ubegrænset hårklip for 449 kr/4 uger eller Ubegrænset hårklip & skægtrimning for 599 kr/4 uger. Drop-in eller book online.",
+    "subtext": "Ubegrænset hårklip for 449 kr/md eller Ubegrænset hårklip & skægtrimning for 599 kr/md. Drop-in eller book online.",
     "ctaBook": "Book din tid",
     "stats": [
       {
@@ -237,7 +237,7 @@
       "price": "449",
       "tagline": "Ubegrænset hårklip i 4 uger.",
       "perks": [
-        "Ubegrænset antal hår klipninger i 4 uger.",
+        "Ubegrænset antal hår klipninger.",
         "Drop-in eller online booking",
         "Også samme dag",
         "Ingen binding — opsig når du vil"
@@ -251,8 +251,8 @@
       "price": "599",
       "tagline": "Ubegrænset hårklip + skægtrimning i 4 uger.",
       "perks": [
-        "Ubegrænset hårklip i 4 uger",
-        "Ubegrænset skægtrimninger i 4 uger",
+        "Ubegrænset hårklip",
+        "Ubegrænset skægtrimninger",
         "Drop-in eller online booking",
         "10% rabat på produkter",
         "Ingen binding — opsig når du vil"
