@@ -305,16 +305,6 @@
       "date": "For 3 dage siden"
     },
     {
-      "id": "2",
-      "author": "Rizan Hannan",
-      "initials": "RH",
-      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJ3rSxGAsCbDQfKIh2HlPWNQMMgY554k0Sy6OvDGaJlIb09mA=w45-h45-p-rp-mo-br100",
-      "reviewUrl": "https://maps.app.goo.gl/cfbFfrGTwCW553yZ8",
-      "rating": 5,
-      "text": "God service, god stemning og dygtig frisør.",
-      "date": "For 3 dage siden"
-    },
-    {
       "id": "3",
       "author": "Sedin",
       "initials": "SE",
@@ -434,6 +424,15 @@
       "text": "Fik i dag en herreklip med barbering af skæg. Virkelig god og professionel oplevelse, hvor servicen er i top hele vejen rundt. Alt spillede virkelig, og gav samlet set en fornøjelig oplevelse. Derudover leverede han også et fantastisk resultat, og jeg er maks tilfreds med frisuren og skægget⭐️⭐️⭐️⭐️⭐️",
       "date": "1 uge siden",
       "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjXnrsuZGE36L89do9_VOW9OjdQw2uduxKFC79Y2Vxa4nNYmNLI=s72-c-rp-mo-br100"
+    },
+    {
+      "id": "d101e32e-cd14-4b0f-92bd-87300088a25a",
+      "author": "Henrik Lindahl",
+      "initials": "HL",
+      "rating": 5,
+      "text": "Er lige flyttet til byen og der er 27 frisørsaloner at vælge mellem, og tror jeg fandt min nye frisør i første forsøg! God klipning og rigtig behagelig atmosfære, afsluttende med en omgang voks…perfekt 👌",
+      "date": "For nylig",
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWCojN0uUcIROCy_BCYY2NYoWutPi3KOoVzV4-HxA6MsP7v5teT=s36-c-rp-mo-ba4-br100"
     }
   ],
   "customCode": {
