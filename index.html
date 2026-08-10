@@ -90,5 +90,37 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- FERIE POPUP START -->
+<div id="ferie-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; display:flex; align-items:center; justify-content:center; padding:1rem;">
+  <div style="background:#1a2a2a; border-radius:12px; border:1px solid #c9a84c; padding:2rem; max-width:420px; width:100%; position:relative; text-align:center;">
+    <button onclick="lukPopup()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:#c9a84c; font-size:22px; cursor:pointer; line-height:1;">×</button>
+    <div style="color:#c9a84c; font-size:13px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">A&B Barber Lounge 2</div>
+    <h2 style="color:#fff; font-size:22px; font-weight:500; margin:0 0 1rem;">Wasim holder ferie</h2>
+    <div style="background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:8px; padding:0.75rem 1rem; margin-bottom:1.25rem;">
+      <div style="color:#c9a84c; font-size:20px; font-weight:500;">Uge 37 & 38</div>
+      <div style="color:#fff; font-size:14px; margin-top:2px;">7. september – 19. september</div>
+    </div>
+    <p style="color:#ccc; font-size:14px; line-height:1.6; margin-bottom:1rem;">Mohammad er i salonen — der er fortsat normale åbningstider og mulighed for online booking til <strong style="color:#fff;">50% rabat</strong>.</p>
+    <p style="color:#aaa; font-size:13px; line-height:1.6; margin-bottom:1.5rem;">Har du aktivt medlemskab? Du mister ingen dage — feriedagene lægges automatisk til dit medlemskab.</p>
+    <a href="/booking" style="display:block; background:#c9a84c; color:#1a2a2a; font-weight:500; padding:0.75rem 1.5rem; border-radius:8px; text-decoration:none; font-size:15px; margin-bottom:0.75rem;">Book tid i dag</a>
+    <button onclick="lukPopup()" style="background:none; border:none; color:#666; font-size:13px; cursor:pointer; text-decoration:underline;">Luk</button>
+  </div>
+</div>
+<script>
+  function lukPopup() {
+    document.getElementById('ferie-overlay').style.display = 'none';
+    sessionStorage.setItem('ferie-popup-lukket', '1');
+  }
+  (function() {
+    var nu = new Date();
+    var start = new Date('2026-08-10');
+    var slut = new Date('2026-09-19');
+    slut.setHours(23,59,59);
+    if (nu >= start && nu <= slut && !sessionStorage.getItem('ferie-popup-lukket')) {
+      document.getElementById('ferie-overlay').style.display = 'flex';
+    }
+  })();
+</script>
+<!-- FERIE POPUP SLUT -->
   </body>
 </html>
